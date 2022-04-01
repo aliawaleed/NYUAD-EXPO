@@ -12,9 +12,9 @@
   <!-- Enter chat messages here -->
   <form class="sub-container " id="join-form">
     <!-- hard coded values for easier testing -->
-    <input type="text" class="chat-input-name" id="name-input" placeholder="Name" value="Alia" required/>
+    <input type="text" class="name-input" id="name-input" placeholder="Name" value="Alia" required/>
     <!-- have the rooms as a drop down menu -->
-    <input list="rooms" name="myRooms" type="text" class="chat-input-msg" id="room-input" placeholder="Room" value="Field" required/></label>
+    <input list="rooms" name="myRooms" type="text" class="room-input" id="room-input" placeholder="Room" value="Field" required/></label>
     <datalist id="rooms">
       <option value="A2">
       <option value="C2">
@@ -22,7 +22,7 @@
       <option value="Field">
     </datalist>
 
-    <button id="join-button"> Join Room</button>
+    <button id="join-button">Enter Game</button>
   </form>
 
   <script src="landingPage.js"></script>
