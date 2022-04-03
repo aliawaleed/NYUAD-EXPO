@@ -1,3 +1,49 @@
-p{
-    color: purple;
+body{
+    background-image: url('/d2/images/d2.png');
+}
+
+#order{
+    text-align: center;
+    top: 20%;
+    margin-top: 6%;
+    color: white;
+}
+
+#menu{
+    width:600px;
+    height:400px;
+    background-color:white;
+    position:absolute;
+    top:50%;
+    left:35%;
+    transform:translate(-50%,-50%);
+}
+
+td{
+    text-align:center
+}
+
+img{
+    width: 100px;
+    cursor: pointer;
+}
+
+#choices{
+    width:300px;
+    height:400px;
+    background-color:white;
+    position:absolute;
+    top:50%;
+    left:75%;
+    transform:translate(-50%,-50%);
+}
+
+#instructions{
+    text-align: center;
+    margin-top: 40%;
+    color: white;
+}
+
+#submit-button{
+    left: 90%;
 }
