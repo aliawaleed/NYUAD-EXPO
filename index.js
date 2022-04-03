@@ -35,6 +35,7 @@ io.sockets.on('connect', (socket) => {
             rooms[socket.roomName] = 1;
         }
         console.log("#######",rooms['Field']);
+        console.log("#######",rooms['C2']);
     })
 
     //if this particular socket disconnects
@@ -44,6 +45,9 @@ io.sockets.on('connect', (socket) => {
         delete users[socket.name];
         console.log("The users left are: ", users)
     })
+
+
+    /******************** FIELD ********************/
 
     //listen for a message from this client
     socket.on('positionData', (pos) => {
@@ -65,7 +69,58 @@ io.sockets.on('connect', (socket) => {
         console.log("This is client: ", rooms['Field'], socket.id);
         socket.emit('morePlayers', ''); 
     }
+
+    /******************** C2 ********************/
+   //listen for a message from a client
+    socket.on('mousePositionData',(data)=>{
+        console.log(data);
+        io.sockets.emit('mouseDataFromServer', data);
+    })
+
+
+    //Listen for a message named 'msg' from this client
+    socket.on('msg', function(data) {
+        //Data can be numbers, strings, objects
+        console.log("Received a 'msg' event");
+        console.log(data);
+
+        //Send a response to all clients, including this one
+        io.sockets.emit('msg', data);
+    });
+
+    //Listen for a message named 'randomword' from this client
+    socket.on('randomword', function(data) {
+        //Data can be numbers, strings, objects
+        console.log("Received a 'randomword' event");
+        console.log(data);
+
+        //Send a response to all other clients, not including this one
+        socket.broadcast.emit('randomword', data);
+
+    });
+
+        //Listen for a message named 'displayrandomword' from this client
+        socket.on('displayrandomword', function(data) {
+            //Data can be numbers, strings, objects
+            console.log("Received a 'displayrandomword' event");
+            console.log(data);
+    
+            //Send a response to just this client
+            socket.emit('displayrandomword', data);
+    
+        });
+
+
+            //Listen for a message named 'matchingword' 
+            socket.on('matchingword', function(data) {
+          
+                 //Send a response to all cients 
+                io.sockets.emit('matchingword', data);
+        
+            });
 })
+
+
 
 //run the createServer
 let port = process.env.PORT || 2000;

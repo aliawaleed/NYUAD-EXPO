@@ -1,3 +1,173 @@
-p{
-    color: rgb(206, 206, 6);
+html, body {
+    margin:0;
+    padding:0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+
+.background-container {
+    width:100%;
+    height:100%;
+}
+
+.background-container img {
+    width:100%;
+    height:100%;
+    position:absolute;
+    z-index: -3;
+}
+
+/* title */
+#title{
+    width:100%;
+    text-align: center;
+    height:20%;
+    font-size: 2vw;
+    font-family: 'Architects Daughter', cursive;
+    color:white;
+
+}
+
+/* games */
+#game-container{
+    display: flex;
+    width:100%;
+    height:80%;
+}
+
+
+/* sketch */
+#sketch-container {
+    padding-top:5vh;
+    padding-bottom:5vh;
+    display: flex;
+    width:70vw;
+    margin:0;
+    flex-direction: column;
+    align-items: center;
+}
+
+.getwordbutton{
+    width:50vw;
+    display: flex;
+
+}
+
+.drawword-text{
+    padding:1vw;
+       margin-top:2vw;
+       margin-left:5vw;
+       font-weight:600;
+       font-size: 1.8vw;
+
+}
+
+#getword-button{
+       /* remove default behavior */
+       appearance:none;
+       -webkit-appearance:none;
+     
+       /* usual styles */
+       cursor: pointer;
+       font-family: 'Architects Daughter', cursive;
+       padding:1vw;
+       margin-top:2vw;
+       border:none;
+       color:#fff;
+       font-weight:600;
+       border-radius:5px;
+       font-size: 1.8vw;
+       border-radius:5px;
+       background-color: #2E1F59;
+
+}
+
+#draw_this{
+    color:white;
+    
+}
+
+#getword-button:disabled,
+#getword-button[disabled]{
+    background-color:#424384;
+    opacity:0.1;
+
+}
+
+/* chat */
+#chat-container {
+    display: flex;
+    float: right;
+    width:30vw;
+    margin:0;
+    padding-top:5vh;
+    padding-bottom:5vh;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sub-container {
+    display: flex;
+    width: 80%;
+}
+
+.chat-input{
+    flex-direction: row;
+    align-items: left;
+}
+
+
+.chat-feed{
+    flex-direction: column;  
+    align-items: left;
+}
+
+input{
+    appearance:none;
+    margin-top:2vw;
+    -webkit-appearance:none;
+    border:none;
+    padding:1vw;
+    font-size: 1.5vw;
+    width:70%;
+    margin-right:5%;
+    border-radius:5px;
+}
+
+.chat-input-msg{
+    width: 85%;
+    font-family: 'Architects Daughter', cursive;
+}
+
+#send-button{
+      /* remove default behavior */
+      appearance:none;
+      -webkit-appearance:none;
+    
+      /* usual styles */
+      font-family: 'Architects Daughter', cursive;
+      cursor: pointer;
+      position:relative;
+      padding:1vw;
+      margin-top:2vw;
+      border:none;
+      color:#fff;
+      font-weight:600;
+      border-radius:5px;
+      font-size: 1.5vw;
+      border-radius:5px;
+      background-color: #2E1F59;
+}
+
+.chat-box{
+    height: 60vh;
+    background-color:#E5D8F6;
+    overflow: auto;
+}
+
+.chat-feed p{
+    margin-left:10%;
+    color:black;
+    overflow-wrap: break-word;
 }
