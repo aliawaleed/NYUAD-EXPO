@@ -13,9 +13,13 @@
     <title>D2</title>
 </head>
 <body>
+      <!-- Title -->
+    <div id="title">
+        <p> <span style="font-weight:bold"> D2 </span> | Make The Meal </p>
+    </div>
 
     <div class="order", id="order">
-        <p class="generated", id="generated"> The order is: </p>
+        <p class="generated", id="generated"> </p>
         <button id="generate-button" onclick="generateOrder()"> order </button>
     </div>
     <div class="menu" id="menu"> 
@@ -43,12 +47,15 @@
           </table>
     </div>
     <div class="choices" id="choices">
-        <img id="ans1">
-        <img id="ans2">
-        <img id="ans3">
+        <img src="/d2/images/tray.png" alt="tray to add food items" id="tray">
+        <img id="ans1" onclick="removeItem(this.id)">
+        <img id="ans2" onclick="removeItem(this.id)">
+        <img id="ans3" onclick="removeItem(this.id)">
         <button id="submit-button" onclick="submitOrder()"> submit </button>
     </div>
-    <div class="instructions" id="instructions"> Click on the food items to make the order. </div>
+    <div class="instructions" id="instructions"> 
+        <p> Press on the order button to display an order! </p>
+    </div>
 
 </body>
 </html>

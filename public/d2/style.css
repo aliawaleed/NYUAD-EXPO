@@ -1,12 +1,24 @@
+/* fix relative positions */
+html{font-family: 'Montserrat', sans-serif;}
+
 body{
     background-image: url('/d2/images/d2.png');
+    background-repeat:no-repeat;
+}
+
+#title{
+    display: flex;
+    font-size: 24px;
+    color:white;
 }
 
 #order{
     text-align: center;
-    top: 20%;
-    margin-top: 6%;
     color: white;
+}
+
+#generated{
+    font-size: 20px;
 }
 
 #menu{
@@ -19,7 +31,8 @@ body{
     transform:translate(-50%,-50%);
 }
 
-td{
+/* to center table data within column */
+td{ 
     text-align:center
 }
 
@@ -29,21 +42,66 @@ img{
 }
 
 #choices{
-    width:300px;
-    height:400px;
-    background-color:white;
-    position:absolute;
-    top:50%;
-    left:75%;
-    transform:translate(-50%,-50%);
+    position: fixed;
+    /* position:relative; */
+    left: 60%;
 }
 
-#instructions{
-    text-align: center;
-    margin-top: 40%;
-    color: white;
+#tray{
+    position:relative;
+    width:300px;
+    height:440px;
+}
+
+#ans1{
+    position: absolute;
+    top: 50px;
+    left: 100px;
+}
+
+#ans2{
+    position: absolute;
+    top: 150px;
+    left: 100px;
+}
+
+#ans3{
+    position: absolute;
+    top: 250px;
+    left: 100px;
 }
 
 #submit-button{
-    left: 90%;
+    position: absolute;
+    top: 360px;
+    left: 80px;
+    width: 50%;
+}
+
+#instructions{
+    padding-top: 32%;  /* fix relative positions */
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+
+button{
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+
+    /* add styling */
+    cursor: pointer;
+    border:none;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    font-size: 20px;
+    border-radius:5px;
+    background-color: #d16725;
+}
+
+#generate-button{
+    width: 7%;
+    padding: 0.5%;
 }

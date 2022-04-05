@@ -1,6 +1,7 @@
-NYUAD EXPO - Project 2
+NYUAD EXPO - Project 2 Documentation
 ----------------------
 
 ### SETUP 
 * Run `npm install` to load the necessary node packages
 * Run the browser pointing to `localhost:2000`
+
