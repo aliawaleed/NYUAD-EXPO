@@ -34,10 +34,33 @@ io.sockets.on('connect', (socket) => {
         } else {
             rooms[socket.roomName] = 1;
         }
+<<<<<<< HEAD
         console.log("#######",rooms[socket.roomName]);
+=======
+
+        // check the number of users inside each game and print the instructions accordingly
+        for (const [key, value] of Object.entries(rooms)) {
+            console.log("Room, number of people:", `${key}: ${value}`);
+            // console.log("The number of players in the room is: ", rooms[key]);
+            if (value == 1){
+                console.log("This is client 1 ", socket.id);
+                socket.emit('player1', '');
+            }
+            else if (value == 2){
+                console.log("This is client 2 ", socket.id);
+                socket.emit('player2', ''); 
+                socket.to(key).emit('message', '');
+            }
+            else{
+                /******************** BLOCK ACCESS ********************/
+                console.log("Client > 2: ", socket.id);
+                socket.emit('morePlayers', ''); 
+            }
+        }
+>>>>>>> 413d39546367c049ffd58520fa580ed3c9b1b495
     })
 
-    //if this particular socket disconnects
+    //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => { 
         console.log("socket has been disconnected ", socket.id);
         rooms[socket.roomName]--;
@@ -47,28 +70,14 @@ io.sockets.on('connect', (socket) => {
 
 
     /******************** FIELD ********************/
-
     //listen for a message from this client
     socket.on('positionData', (pos) => {
         io.sockets.emit('positionDataFromServer', pos); //send the same data back to all clients
     })
 
-    console.log("number of people ******", rooms['Field']);
-    if (rooms['Field'] == undefined){
-        console.log("This is client 1 ", socket.id);
-        socket.emit('player1', '');
-    }
-    else if (rooms['Field'] == 1){
-        console.log("This is client 2 ", socket.id);
-        socket.emit('player2', ''); 
-        socket.to("Field").emit('message', '');
-    }
-    else{
-        /******************** BLOCK ACCESS ********************/
-        console.log("This is client: ", rooms['Field'], socket.id);
-        socket.emit('morePlayers', ''); 
-    }
+    /******************** D2 ********************/
 
+<<<<<<< HEAD
     /******************** C2 ********************/
     //listen for a message from this client
 console.log("number of people ******", rooms['C2']);
@@ -86,12 +95,17 @@ else if (rooms['C2'] > 1){
     console.log("This is client: ", rooms['Field'], socket.id);
     socket.emit('morePlayers', ''); 
 }
+=======
+
+
+
+    /******************** C2 ********************/
+>>>>>>> 413d39546367c049ffd58520fa580ed3c9b1b495
    //listen for a message from a client
     socket.on('mousePositionData',(data)=>{
         console.log(data);
         io.sockets.emit('mouseDataFromServer', data);
     })
-
 
     //Listen for a message named 'msg' from this client
     socket.on('msg', function(data) {
@@ -111,9 +125,9 @@ else if (rooms['C2'] > 1){
 
         //Send a response to all other clients, not including this one
         socket.broadcast.emit('randomwordguess', data);
-
     });
 
+<<<<<<< HEAD
         //Listen for a message named 'displayrandomword' from this client
         socket.on('displayrandomword', function(data) {
             //Data can be numbers, strings, objects
@@ -154,10 +168,27 @@ else if (rooms['C2'] > 1){
 
 
 })
+=======
+    //Listen for a message named 'displayrandomword' from this client
+    socket.on('displayrandomword', function(data) {
+        //Data can be numbers, strings, objects
+        console.log("Received a 'displayrandomword' event");
+        console.log(data);
+>>>>>>> 413d39546367c049ffd58520fa580ed3c9b1b495
 
+        //Send a response to just this client
+        socket.emit('displayrandomword', data);
 
+    });
 
-//run the createServer
+    //Listen for a message named 'matchingword' 
+    socket.on('matchingword', function(data) {
+            //Send a response to all cients 
+        io.sockets.emit('matchingword', data);
+    });
+})
+
+// run the server on port 2000
 let port = process.env.PORT || 2000;
 server.listen(port, () => {
     console.log("Server listening at port: " + port);
