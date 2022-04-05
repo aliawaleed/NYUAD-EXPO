@@ -34,8 +34,7 @@ io.sockets.on('connect', (socket) => {
         } else {
             rooms[socket.roomName] = 1;
         }
-        console.log("#######",rooms['Field']);
-        console.log("#######",rooms['C2']);
+        console.log("#######",rooms[socket.roomName]);
     })
 
     //if this particular socket disconnects
@@ -71,29 +70,22 @@ io.sockets.on('connect', (socket) => {
     }
 
     /******************** C2 ********************/
-
-    //Check number of players
-    //Check if the player is the only person in the room 
-    console.log("number of people ******", rooms['C2']);
-    if (rooms['C2'] == undefined){
-        console.log("This is client 1 ", socket.id);
-        socket.emit('player1', '');
-    }
-
-    //Check If there is one player in the room
-    else if (rooms['C2'] == 1){
-        console.log("This is client 2 ", socket.id);
-        socket.emit('player2', ''); 
-        socket.to("C2").emit('message', '');
-    }
-    //Check if the room is full (2people)
-    else{
-        /******************** BLOCK ACCESS ********************/
-        console.log("This is client: ", rooms['C2'], socket.id);
-        socket.emit('morePlayers', ''); 
-    }
-
-
+    //listen for a message from this client
+console.log("number of people ******", rooms['C2']);
+if (rooms['C2'] == undefined){
+    console.log("This is client 1 ", socket.id);
+    socket.emit('player1', '');
+}
+else if (rooms['C2'] == 1){
+    console.log("This is client 2 ", socket.id);
+    socket.emit('player2', ''); 
+    socket.to("Field").emit('message', '');
+}
+else if (rooms['C2'] > 1){
+    /******************** BLOCK ACCESS ********************/
+    console.log("This is client: ", rooms['Field'], socket.id);
+    socket.emit('morePlayers', ''); 
+}
    //listen for a message from a client
     socket.on('mousePositionData',(data)=>{
         console.log(data);
@@ -141,6 +133,26 @@ io.sockets.on('connect', (socket) => {
                 io.sockets.emit('matchingword', data);
         
             });
+
+    /******************** A2 ********************/
+    //listen for a message from this client
+    console.log("number of people ******", rooms['A2']);
+    if (rooms['A2'] == undefined){
+        console.log("This is client 1 ", socket.id);
+        socket.emit('player1', '');
+    }
+    else if (rooms['A2'] == 1){
+        console.log("This is client 2 ", socket.id);
+        socket.emit('player2', ''); 
+        socket.to("Field").emit('message', '');
+    }
+    else if (rooms['A2'] > 1){
+        /******************** BLOCK ACCESS ********************/
+        console.log("This is client: ", rooms['A2'], socket.id);
+        socket.emit('morePlayers', ''); 
+    }
+
+
 })
 
 
