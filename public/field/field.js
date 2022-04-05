@@ -42,26 +42,26 @@ socket.on('message', () => {
 
 //////////////////p5 code//////////////////
 //global variables
-let x = -350;
-let y = 265;
+let x = 0;
+let y = 20;
 let rope;
-let garden;
 
 function preload() {
     rope = loadImage('/field/tugOfWarImages/rope.png');
-    garden = loadImage('/field/tugOfWarImages/garden.png');
 }
 
 function setup() {
-    var canvas = createCanvas(800, 600);
+    var canvas = createCanvas(windowWidth, 80);
     canvas.parent('p5');
-    background(garden);
+    x = windowWidth/2;
+    console.log(x);
+    background(255,0);
     //have the rope initialized on the screen
     fill(238, 210, 100)
     stroke(255, 204, 0);
     strokeWeight(3);
-    triangle(380, 360, x + 750, 310, 420, 360);
-    image(rope, x - 100, y, 1800, 100);
+    triangle(x - 20, y + 50, x, y, x + 20, y + 50);
+    image(rope, x - windowWidth, y - 50, windowWidth*2, 100);
     socket.on('positionDataFromServer', (data) =>{ //send to all clients
         drawData(data);
     })
@@ -70,7 +70,6 @@ function setup() {
 function keyPressed() {
     if (keyIsDown(RIGHT_ARROW)) { //if right arrow key is pressed, move to the right
         x += 30;
-        console.log(x)                      
     }
     if (keyIsDown(LEFT_ARROW)) { //if left arrow key is pressed, move to the left
         x -= 30;                      
@@ -81,26 +80,26 @@ function keyPressed() {
 }
 
 function drawData(pos) {
-    background(garden)
+    clear();
     x = pos.x;
     console.log(x)
     fill(238, 210, 100)
     stroke(255, 204, 0);
     strokeWeight(3);
-    triangle(pos.x + 730, 360, pos.x + 750, 310, pos.x + 770, 360);
-    image(rope, x - 100, y, 1800, 100);
-    if (pos.x + 750 < 0 || pos.x + 750 > 800){
+    triangle(pos.x - 20, y + 50, pos.x, y, pos.x + 20, y + 50);
+    image(rope, x - windowWidth, y - 50, windowWidth*2, 100);
+    if (pos.x < 0 || pos.x > windowWidth){
         background(139,0,0);
         textSize(32);
         fill(255);
         noStroke();
-        if (pos.x + 750 < 0){
+        if (pos.x < 0){
             let winner = "Player 1 won!";
             text(winner, 290, 300);
             text("Refresh to play again!", 240, 350);
             x = -4000;
         }
-        if (pos.x + 750 > 800){
+        if (pos.x > windowWidth){
             let winner = "Player 2 won!";
             text(winner, 290, 300);
             text("Refresh to play again!", 240, 350);

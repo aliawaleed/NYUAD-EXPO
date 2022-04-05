@@ -1,26 +1,35 @@
-html, body {
-    height: 100%;
-    background-color: rgb(176, 221, 247);
+html{
+    margin: 0;
 }
 
-main{
-    display: flex;
-    justify-content: center;  /* To center the sketch horizontally */
-    align-items: center;
+body{
+    height: 100%;
+    background-image: url("/field/tugOfWarImages/tugOfWarBG.png");
 }
 
 h1{
     font-family: 'American Typewriter', serif;
+    color: white;
 }
 
 p{
     font-size: 20px;
+    color: white;
     font-family: 'American Typewriter', serif;
 }
 
 .p5{
-    border-style: solid;
-    width: 800px;
-    height: 600px;
-    border-width: 10px;
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    height: 80px;
+    padding: 0;
+}
+
+#instructions {
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    width:100%;
+    top: 80%;
 }
