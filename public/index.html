@@ -18,17 +18,11 @@
 
   <!-- Enter chat messages here -->
   <form class="sub-container " id="join-form">
-    <!-- hard coded values for easier testing -->
+    <!-- to get the name of the user joining -->
     <input type="text" class="name-input" id="name-input" placeholder="Name" required/>
-    <!-- have the rooms as a drop down menu -->
-    <input list="rooms" name="myRooms" type="text" class="room-input" id="room-input" placeholder="Room" required/></label>
-    <datalist id="rooms">
-      <option value="A2">
-      <option value="C2">
-      <option value="D2">
-      <option value="Field">
-    </datalist>
+    <button id="join-button">Add name</button>
 
+<<<<<<< HEAD
     <div class="location" id="A2"> A2 
       <img src="images/a2.png" id="A2img" alt="">
     </div>
@@ -40,9 +34,21 @@
     </div>
     <div class="location" id="Field"> Field
       <img src="images/field.png" id="Fieldimg" alt="">
+=======
+    <div class="location" id="A2" onclick="joinRoom(this)"> A2 
+      <!-- <img src="images/a2.png" alt=""> -->
+    </div>
+    <div class="location" id="C2" onclick="joinRoom(this)"> C2 
+      <!-- <img src="images/c2.png" alt=""> -->
+    </div>
+    <div class="location" id="D2" onclick="joinRoom(this)"> D2 
+      <!-- <img src="images/d2.png" alt=""> -->
+    </div>
+    <div class="location" id="Field" onclick="joinRoom(this)"> Field
+      <!-- <img src="images/field.png" alt=""> -->
+>>>>>>> cad842018347c01da5dc7dddd93391f1753e84a1
     </div>
 
-    <button id="join-button">Enter Game</button>
   </form>
 
   <script src="landingPage.js"></script>

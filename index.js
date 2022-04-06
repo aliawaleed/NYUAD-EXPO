@@ -53,11 +53,6 @@ io.sockets.on('connect', (socket) => {
     })
 
     /******************** D2 ********************/
-    // socket.on('submit',(data)=>{
-    //     console.log("Order Submitted!", data);
-    //     socket.to("D2").emit('submitDataFromServer', data);
-    // })
-
     socket.on('start',()=>{
         console.log("started");
         socket.to("D2").emit('startDataFromServer', '');
