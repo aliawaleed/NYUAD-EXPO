@@ -202,12 +202,12 @@ getwordButton.addEventListener('click', function () {
 //CLEAN Canvas
 resizeCanvas(windowWidth/2, windowHeight*0.6);
 background(255);
-  //Load the word.json data file 
+//Load the word.json data file 
  fetch('word.json')
  .then(response => response.json())
  .then(data => {
-      console.log(data);
-      //Do something with 'data'
+   console.log(data);
+   //Do something with 'data'
    let wordlist = data.words;
    let randomItem = wordlist[Math.floor(Math.random()*wordlist.length)];
    console.log(randomItem);

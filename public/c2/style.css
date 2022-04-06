@@ -65,14 +65,13 @@ html, body {
 }
 
 .drawword-text{
-       padding:1vh 1vw;
-       margin-top:2vh;
+    padding:1vw;
+    margin-top:2vw;
        width:60%;
        margin-left:10%;;
        font-weight:600;
        border-radius:5px;
        font-size: 1.5vw;
-
 }
 
 #getword-button{
@@ -186,6 +185,7 @@ input{
     overflow-wrap: break-word;
 }
 
+  /*Instructions*/
 #instruction {
     display: flex;
     position: relative;
