@@ -22,7 +22,7 @@ html, body {
     width:10%;
 }
 
-/*a2*/
+/*Field*/
 
 #Field { 
     width:32vw;
@@ -30,4 +30,32 @@ html, body {
     position:absolute;
     left: 34%;
     top:2%;
+}
+
+/*A2*/
+#A2 { 
+    width:19vw;
+    height:19vh;
+    position:absolute;
+    left: 21%;
+    bottom:2.5%;
+}
+
+/*C2*/
+
+#C2 { 
+    width:14vw;
+    height:14vh;
+    position:absolute;
+    left: 38.3%;
+    bottom:32.7%;
+}
+
+/*D2*/
+#D2 {
+    width: 2.9vw;
+    height: 10.6vh;
+    position: absolute;
+    left: 77.3%;
+    top: 67.1%;
 }
