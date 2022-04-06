@@ -58,6 +58,11 @@ io.sockets.on('connect', (socket) => {
     //     socket.to("D2").emit('submitDataFromServer', data);
     // })
 
+    socket.on('start',()=>{
+        console.log("started");
+        socket.to("D2").emit('startDataFromServer', '');
+    })
+
     socket.on('finish',(completed)=>{
         // console.log("Game Over! The other user completed: ", completed);
         console.log(completed);

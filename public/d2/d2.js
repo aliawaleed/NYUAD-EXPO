@@ -97,8 +97,19 @@ function startTimer(){
         timeLeft--;
         }
     }
-    generateOrder()
+    generateOrder();
+    socket.emit('start', ''); //start game for the rest of the users
 }
+
+//to ensure starting the game only once for the other users (that didn't press on the order button)
+let started = 0;
+socket.on('startDataFromServer', ()=>{
+    if (started == 0){
+        console.log("game started"); // shows how many orders the other player completed 
+        startTimer();
+    }
+    started = 1;
+})
 
 //to get the key given the value of it
 function getKeyByValue(object, value) {
@@ -153,9 +164,7 @@ function submitOrder(){
         // increase the number of completed orders and reflect it on the screen
         completed++;
         complete.textContent = "Completed orders: " + completed;
-        //let the other player know that this player has submitted a correct answer
-        // socket.emit('submit', '');
-        //empty the tray 
+        //empty the tray
         removeItem('ans1');
         removeItem('ans2');
         removeItem('ans3');
@@ -167,7 +176,7 @@ function submitOrder(){
     }
 }
 
-// to remove item from the tray
+// to remove item from the tray and decrement the answer number
 function removeItem(clickedItem){
     let item = document.getElementById(clickedItem);
     item.src = "";
