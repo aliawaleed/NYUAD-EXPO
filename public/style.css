@@ -6,7 +6,7 @@ html, body {
     color:white;
 }
 
-/* title */
+/* background-img*/
 .background-container {
     width:100vw;
 }
@@ -18,10 +18,17 @@ html, body {
     z-index: -3;
 }
 
-.location{
-    height: 50px;
-    width: 50px;
-    background-color: beige;
-    color: black;
-    margin: 1cm;
+
+#Fieldimg, #A2img, #C2img, #D2img {
+    width:10%;
+}
+
+/*a2*/
+
+#Fieldimg { 
+    width:32vw;
+    height:22vh;
+    position:absolute;
+    left: 34%;
+    top:2%;
 }
