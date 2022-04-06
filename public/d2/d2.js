@@ -18,6 +18,8 @@ let allMainCourses = {'burger':'https://i.pinimg.com/originals/3a/f9/bf/3af9bf97
 let allDesserts = {'cake': 'https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png', 'acai': 'https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png', 'profiterole': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM'};
 
 let answerNumber = 0; //to check how many fooditems the user clicked
+let completed = 0; //to track number of correct completed orders
+let timeLeft = 29; //initialized at 29 as the timer takes 1 second to start
 
 let orderAppetizer = 0;
 let orderMainCourse = 0;
@@ -27,7 +29,7 @@ let chosenAppetizer = 1;
 let chosenMainCourse = 1;
 let chosenDessert = 1;
 
-window.addEventListener("load", () => { // on load
+window.addEventListener("load", () => { // on load    
     let app1 = document.getElementById('appetizer1');
     app1.src = allAppetizers['salad'];
 
@@ -56,6 +58,7 @@ window.addEventListener("load", () => { // on load
     dessert3.src = allDesserts['profiterole'];
 })
 
+// function to generate order
 function generateOrder(){
     let order = document.getElementById('generated');
     let button = document.getElementById('generate-button');
@@ -75,7 +78,26 @@ function generateOrder(){
 
     let instructions = document.getElementById('instructions');
     instructions.innerHTML = 'Click on the food items to make the order.';
+}
 
+//function to start a 30 second timer and have it initialized on the screen
+function startTimer(){
+    var timer = document.getElementById('timer');
+    timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+    
+    var timerId = setInterval(countdown, 1000);
+    
+    function countdown() {
+        if (timeLeft == -1) {
+        clearTimeout(timerId);
+        alert("Time is up!");
+        socket.emit('finish', completed);
+        } else {
+        timer.innerHTML = 'Time left: ' + timeLeft;
+        timeLeft--;
+        }
+    }
+    generateOrder()
 }
 
 //to get the key given the value of it
@@ -102,6 +124,7 @@ function addAnswer(img) {
         chosenDessert = getKeyByValue(allDesserts,image);
     }
 
+    //depending on number of items on the tray, add to specific position defined in CSS
     if (answerNumber == 0) {
         let answerBox = document.getElementById('ans1')
         answerBox.src = img.src;
@@ -123,12 +146,21 @@ function addAnswer(img) {
     }
 }
 
-
 // submit order to check the answer
 function submitOrder(){
+    let complete = document.getElementById('completed-orders');
     if (orderAppetizer == chosenAppetizer && orderMainCourse == chosenMainCourse && orderDessert == chosenDessert) {
-        alert("That's correct!");
-        socket.emit('submit', '');
+        // increase the number of completed orders and reflect it on the screen
+        completed++;
+        complete.textContent = "Completed orders: " + completed;
+        //let the other player know that this player has submitted a correct answer
+        // socket.emit('submit', '');
+        //empty the tray 
+        removeItem('ans1');
+        removeItem('ans2');
+        removeItem('ans3');
+        //generate new order and display on the screen
+        generateOrder();
     }
     else{
         alert("Wrong!");
@@ -142,11 +174,7 @@ function removeItem(clickedItem){
     answerNumber--;
 }
 
-function sendAlert(data){
-    alert("The other player guessed it!", data);
-}
-
-//if another user has submitted the order
-socket.on('submitDataFromServer', (data)=>{
-    sendAlert(data);
+socket.on('finishDataFromServer', (completed)=>{
+    console.log("they completed", completed); // shows how many orders the other player completed 
+    alert("The other player completed: ", completed); //doesn't show on alert *******************
 })

@@ -53,15 +53,18 @@ io.sockets.on('connect', (socket) => {
     })
 
     /******************** D2 ********************/
-    socket.on('submit',(data)=>{
-        console.log("Order Submitted!", data);
-        socket.to("D2").emit('submitDataFromServer', data);
+    // socket.on('submit',(data)=>{
+    //     console.log("Order Submitted!", data);
+    //     socket.to("D2").emit('submitDataFromServer', data);
+    // })
+
+    socket.on('finish',(completed)=>{
+        // console.log("Game Over! The other user completed: ", completed);
+        console.log(completed);
+        socket.to("D2").emit('finishDataFromServer', completed);
     })
 
-
-
     /******************** C2 ********************/
->>>>>>> 413d39546367c049ffd58520fa580ed3c9b1b495
    //listen for a message from a client
     socket.on('mousePositionData',(data)=>{
         console.log(data);
@@ -110,35 +113,16 @@ io.sockets.on('connect', (socket) => {
 
     /******************** A2 ********************/
     //listen for a message from this client
-    console.log("number of people ******", rooms['A2']);
-    if (rooms['A2'] == undefined){
-        console.log("This is client 1 ", socket.id);
-        socket.emit('player1', '');
-    }
-    else if (rooms['A2'] == 1){
-        console.log("This is client 2 ", socket.id);
-        socket.emit('player2', '');
-        socket.to("Field").emit('message', '');
-    }
-    else if (rooms['A2'] > 1){
-        /******************** BLOCK ACCESS ********************/
-        console.log("This is client: ", rooms['A2'], socket.id);
-        socket.emit('morePlayers', '');
-    }
-
-
-})
-
         //Send a response to just this client
-        socket.emit('displayrandomword', data);
+        // socket.emit('displayrandomword', data);
 
-    });
+    // });
 
     //Listen for a message named 'matchingword'
     socket.on('matchingword', function(data) {
             //Send a response to all cients
         io.sockets.emit('matchingword', data);
-    });
+    })
 })
 
 // run the server on port 2000
@@ -146,3 +130,4 @@ let port = process.env.PORT || 2000;
 server.listen(port, () => {
     console.log("Server listening at port: " + port);
 });
+
