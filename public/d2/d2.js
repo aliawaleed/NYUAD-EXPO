@@ -187,3 +187,5 @@ socket.on('finishDataFromServer', (completed)=>{
     console.log("they completed", completed); // shows how many orders the other player completed 
     alert("The other player completed: ", completed); //doesn't show on alert *******************
 })
+
+//code used for timer https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward
