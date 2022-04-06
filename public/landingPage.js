@@ -9,8 +9,8 @@ window.addEventListener('load', () => {
     })
 })
 
-function joinRoom(div) {
-    let room = div.id;
+function joinRoom(img) {
+    let room = img.id;
     //redirect the user to game.html
     console.log(room)
     if (room == 'Field') {
