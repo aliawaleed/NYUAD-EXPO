@@ -16,28 +16,29 @@
   </div>
 
 
-  <!-- Enter chat messages here -->
-<form class="sub-container " id="join-form">
-    <!-- to get the name of the user joining -->
-    <input type="text" class="name-input" id="name-input" placeholder="Name" required/>
-    <button id="join-button">Add name</button>
+    <!-- Enter name to join the game -->
+  <form class="sub-container " id="join-form">
+      <!-- to get the name of the user joining -->
+      <input type="text" class="name-input" id="name-input" placeholder="Name" required/>
+      <button id="join-button">Add name</button>
+  </form>
 
-    <div class="location">  
-      <img src="images/a2.png" id="A2" alt="" onclick="joinRoom(this)">
-    </div>
-
-    <div class="location">
-      <img src="images/c2.png" id="C2" alt="" onclick="joinRoom(this)">
-    </div>
-
-    <div class="location">
-      <img src="images/d2.png"id="D2" alt="" onclick="joinRoom(this)">
-    </div>
-
-    <div class="location">
-      <img src="images/field.png" id="Field" alt="" onclick="joinRoom(this)">
+  <!-- set the locations on the map -->
+  <div class="location">  
+    <img src="images/a2.png" id="A2" alt="" onclick="joinRoom(this)">
   </div>
-</form>
+
+  <div class="location">
+    <img src="images/c2.png" id="C2" alt="" onclick="joinRoom(this)">
+  </div>
+
+  <div class="location">
+    <img src="images/d2.png"id="D2" alt="" onclick="joinRoom(this)">
+  </div>
+
+  <div class="location">
+    <img src="images/field.png" id="Field" alt="" onclick="joinRoom(this)">
+  </div>
 
   <script src="landingPage.js"></script>
 </body>
