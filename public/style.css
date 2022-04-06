@@ -19,7 +19,7 @@ html, body {
 }
 
 #Field, #A2, #C2, #D2 {
-    width:10%;
+    cursor: pointer;
 }
 
 /*Field*/
@@ -34,11 +34,11 @@ html, body {
 
 /*A2*/
 #A2 { 
-    width:19vw;
-    height:19vh;
+    width:17vw;
+    height:18.2vh;
     position:absolute;
-    left: 21%;
-    bottom:2.5%;
+    left: 22%;
+    bottom:2.8%;
 }
 
 /*C2*/
