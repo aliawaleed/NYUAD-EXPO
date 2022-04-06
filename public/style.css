@@ -17,3 +17,11 @@ html, body {
     position:absolute;
     z-index: -3;
 }
+
+.location{
+    height: 50px;
+    width: 50px;
+    background-color: beige;
+    color: black;
+    margin: 1cm;
+}
