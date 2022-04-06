@@ -59,7 +59,8 @@ html, body {
     position: absolute;
     left: 77.3%;
     top: 67.1%;
-=======
+}
+
 /*a2*/
 #A2 { 
     width:32vw;
@@ -67,5 +68,4 @@ html, body {
     position:absolute;
     left: 20%;
     top:2%;
->>>>>>> Stashed changes
 }
