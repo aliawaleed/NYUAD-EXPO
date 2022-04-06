@@ -18,12 +18,11 @@ html, body {
     z-index: -3;
 }
 
-#Field, #A2, #C2, #D2 {
+.location {
     cursor: pointer;
 }
 
-/*Field*/
-
+/*Field overlay*/
 #Field { 
     width:32vw;
     height:22vh;
@@ -32,7 +31,7 @@ html, body {
     top:2%;
 }
 
-/*A2*/
+/*A2 overlay*/
 #A2 { 
     width:17vw;
     height:18.2vh;
@@ -41,8 +40,7 @@ html, body {
     bottom:2.8%;
 }
 
-/*C2*/
-
+/*C2 overlay*/
 #C2 { 
     width:14vw;
     height:14vh;
@@ -51,7 +49,7 @@ html, body {
     bottom:32.7%;
 }
 
-/*D2*/
+/*D2 overlay*/
 #D2 {
     width: 2.9vw;
     height: 10.6vh;
