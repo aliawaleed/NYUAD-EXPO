@@ -20,7 +20,7 @@ io.sockets.on('connect', (socket) => {
     console.log("we have a new client: ", socket.id);
 
     //get user data
-    socket.on('userData', (data) =>{
+    socket.on('userData', (data) => {
         //save username in an array with their ID
         socket.name = data.name;
         users[socket.name] = socket.id;
@@ -29,30 +29,29 @@ io.sockets.on('connect', (socket) => {
         //let the socket join room of choice
         socket.roomName = data.room;
         socket.join(socket.roomName);
-        if(rooms[socket.roomName]){ //if room exists
-            rooms[socket.roomName] ++;
+        if (rooms[socket.roomName]) { //if room exists
+            rooms[socket.roomName]++;
         } else {
             rooms[socket.roomName] = 1;
         }
-        console.log("#######",rooms[socket.roomName]);
         for (const [key, value] of Object.entries(rooms)) {
             console.log("Room, number of people:", `${key}: ${value}`);
             // console.log("The number of players in the room is: ", rooms[key]);
-            if (value == 1){
+            if (value == 1) {
                 console.log("This is client 1 ", socket.id);
-                socket.emit('player1', '');
+                // socket.emit('player1', '');
             }
-            else if (value == 2){
+            else if (value == 2) {
                 console.log("This is client 2 ", socket.id);
-                socket.emit('player2', ''); 
-                socket.to(key).emit('message', '');
+                // socket.emit('player2', ''); 
+                // socket.to(key).emit('message', '');
             }
-            else{
+            else {
                 /******************** BLOCK ACCESS ********************/
                 console.log("Client > 2: ", socket.id);
-                socket.emit('morePlayers', ''); 
+                // socket.emit('morePlayers', ''); 
             }
-        }    
+        }
     })
 
     //if this particular socket disconnects remove from room number of people in the and delete from users
@@ -71,26 +70,26 @@ io.sockets.on('connect', (socket) => {
     })
 
     /******************** D2 ********************/
-    socket.on('start',()=>{
+    socket.on('start', () => {
         console.log("started");
         socket.to("D2").emit('startDataFromServer', '');
     })
 
-    socket.on('finish',(completed)=>{
+    socket.on('finish', (completed) => {
         // console.log("Game Over! The other user completed: ", completed);
         console.log(completed);
         socket.to("D2").emit('finishDataFromServer', completed);
     })
 
     /******************** C2 ********************/
-   //listen for a message from a client
-    socket.on('mousePositionData',(data)=>{
+    //listen for a message from a client
+    socket.on('mousePositionData', (data) => {
         console.log(data);
         io.sockets.emit('mouseDataFromServer', data);
     })
 
     //Listen for a message named 'msg' from this client
-    socket.on('msg', function(data) {
+    socket.on('msg', function (data) {
         //Data can be numbers, strings, objects
         console.log("Received a 'msg' event");
         console.log(data);
@@ -100,7 +99,7 @@ io.sockets.on('connect', (socket) => {
     });
 
     //Listen for a message named 'randomword' from this client
-    socket.on('randomwordguess', function(data) {
+    socket.on('randomwordguess', function (data) {
         //Data can be numbers, strings, objects
         console.log("Received a 'randomword' event");
         console.log(data);
@@ -110,7 +109,7 @@ io.sockets.on('connect', (socket) => {
     });
 
     //Listen for a message named 'displayrandomword' from this client
-    socket.on('displayrandomword', function(data) {
+    socket.on('displayrandomword', function (data) {
         //Data can be numbers, strings, objects
         console.log("Received a 'displayrandomword' event");
         console.log(data);
@@ -120,26 +119,30 @@ io.sockets.on('connect', (socket) => {
 
     });
 
-
     //Listen for a message named 'matchingword'
-    socket.on('matchingword', function(data) {
-
-            //Send a response to all cients
+    socket.on('matchingword', function (data) {
+        //Send a response to all cients
         io.sockets.emit('matchingword', data);
 
     });
 
     /******************** A2 ********************/
-    //listen for a message from this client
-        //Send a response to just this client
-        // socket.emit('displayrandomword', data);
+    //listen for majoradd from client
+    socket.on('majoradd', (data) => {
+        console.log('this is the major received' + data);
+        io.sockets.emit('majoradd', data);
+    });
 
-    // });
+    //timer
+    socket.on('A2TimerStart', () => {
+        console.log("started");
+        socket.to("A2").emit('startDataFromServer', '');
+    })
 
-    //Listen for a message named 'matchingword'
-    socket.on('matchingword', function(data) {
-            //Send a response to all cients
-        io.sockets.emit('matchingword', data);
+    socket.on('A2TimerFinish', (completed) => {
+        // console.log("Game Over! The other user completed: ", completed);
+        console.log(completed);
+        socket.to("A2").emit('finishDataFromServer', completed);
     })
 })
 

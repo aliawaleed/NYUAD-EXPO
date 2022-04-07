@@ -14,36 +14,12 @@ socket.on('connect', () => {
     socket.emit('userData', data);
 })
 
-
-/* Instructions for players based on when they joined*/
-socket.on('player1', () => {
-    player1 = "Hello player 1! Please wait for another player to join!";
-    let inst = document.getElementById('instructions');
-    inst.textContent = player1;
-})
-
-socket.on('player2', (player2) => {
-    player2 = "Hello player 2! Use the right arrow key to win! ";
-    let inst = document.getElementById('instructions');
-    inst.textContent = player2;
-})
-
-socket.on('morePlayers', (morePlayers) => {
-    morePlayers = "Please wait! There are 2 players in the game already!";
-    let inst = document.getElementById('instructions');
-    inst.textContent = morePlayers;
-    // alert("There are 2 players in the game!");
-})
-
-socket.on('message', () => {
-    let inst = document.getElementById('instructions');
-    inst.textContent = "Another player has joined. Use the left arrow key to win! ";
-})
-
 //////////////////p5 code//////////////////
 //global variables
 let x = 0;
 let y = 20;
+
+let gameOn = true;
 
 function setup() {
     var canvas = createCanvas(windowWidth, 80);
@@ -85,23 +61,29 @@ function keyPressed() {
 
 function drawData(pos) {
     clear(); // to avoid printing the rope again in the background since the p5 window is transparent
-    x = pos.x;
-    //formatting for line and triangle
-    stroke(230);
-    fill(255)
-    strokeWeight(3);
-    triangle(x - 20, y + 50, x, y, x + 20, y + 50);
-    stroke(255);
-    strokeWeight(10);
-    line(x - windowWidth, y, windowWidth*2, y);
-    // for rope motion effect
-    stroke(200);
-    for (let i = 1; i < 12; i++) {
-        line(x-100*i, y, (x-100*i) - 30, y);
-        line(x+100*i, y, (x+100*i) + 30, y);
+    if (gameOn == true) {
+        x = pos.x;
+        //formatting for line and triangle
+        stroke(230);
+        fill(255)
+        strokeWeight(3);
+        triangle(x - 20, y + 50, x, y, x + 20, y + 50);
+        stroke(255);
+        strokeWeight(10);
+        line(x - windowWidth, y, windowWidth*2, y);
+        // for rope motion effect
+        stroke(200);
+        for (let i = 1; i < 12; i++) {
+            line(x-100*i, y, (x-100*i) - 30, y);
+            line(x+100*i, y, (x+100*i) + 30, y);
+        }
+        // check win conditions
+        if (pos.x < 0 || pos.x > windowWidth){
+            gameOn = false;    
+        }        
     }
-    // check win conditions
-    if (pos.x < 0 || pos.x > windowWidth){
+    else{
+        console.log(gameOn);
         clear();
         textSize(24);
         fill(255);
@@ -127,5 +109,6 @@ function drawData(pos) {
             text(refresh, 0, 54, width);
             x = 4000;
         }
+
     }
 }
