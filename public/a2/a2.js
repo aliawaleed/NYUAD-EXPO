@@ -1,36 +1,11 @@
 // JavaScript file for A2
 // opens and connect to socket
 let socket = io();
-let majorList = [ "Arab Crossroads Studies",
-"Art and Art History",
-"Bioengineering",
-"Biology",
-"Business Organizations and Society",
-"Chemistry",
-"Civil Engineering",
-"Computer Engineering",
-"Computer Science",
-"Economics",
-"Electrical Engineering",
-"Film and New Media",
-"General Engineering",
-"History",
-"Interactive Media",
-"Legal Studies",
-"Literature and Creative Writing",
-"Mathematics",
-"Mechanical Engineering",
-"Music",
-"Philosophy",
-"Physics",
-"Psychology",
-"Social Research and Public Policy",
-"Theater"];
-
+let majorList = [ "Arab Crossroads Studies","Art and Art History","Bioengineering","Biology","Business Organizations and Society","Chemistry","Civil Engineering","Computer Engineering","Computer Science","Economics","Electrical Engineering","Film and New Media","General Engineering","History","Interactive Media","Legal Studies","Literature and Creative Writing","Mathematics","Mechanical Engineering","Music","Philosophy","Physics","Psychology","Social Research and Public Policy","Theater"];
 //declare Bubble Array
 let majors = [];
 
-let timeLeft = 29; //initialized at 29 as the timer takes 1 second to start
+let timeLeft = 119; //initialized at 29 as the timer takes 1 second to start
 
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
@@ -46,21 +21,20 @@ socket.on('connect', () => {
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
    var timer = document.getElementById('timer');
-   timer.innerHTML = 'Time left: 30'; //preset before the timer starts
-   
+   timer.innerHTML = 'Time left: 120'; //preset before the timer starts
    var timerId = setInterval(countdown, 1000);
    
    function countdown() {
        if (timeLeft == -1) {
        clearTimeout(timerId);
        alert("Time is up!");
-       socket.emit('finish', completed);
+       socket.emit('A2TimerFinish', completed);
        } else {
        timer.innerHTML = 'Time left: ' + timeLeft;
        timeLeft--;
        }
    }
-   socket.emit('start', ''); //start game for the rest of the users
+   socket.emit('A2TimerStart', ''); //start game for 
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
@@ -113,21 +87,29 @@ function checkMajor(){
             console.log('Existing Major')
             alert('Existing Major');
       } else {
-         majors.push(majorInput.value);
-         pushBubble();
-        console.log(majorInput.value + 'was just added')
+         socket.emit('majoradd',majorInput.value);
+
       }
 }
 };
 
+let currentMajor;
 
+socket.on('majoradd',(data)=> {
+majors.push(data);
+console.log(data + 'was just added')
+console.log(majors)
+currentMajor = data;
+console.log(currentMajor);
+pushBubble();
+})
 
 //declare Bubble Array
 let Bubbles = [];
 
 function pushBubble() {
 
-   Bubbles.push(new bubble(majorInput.value,width/2,height/2, random(1,2),width/5));
+   Bubbles.push(new bubble(currentMajor,width/2,height/2, random(1,2),width/5));
    console.log(Bubbles);
 }
 
@@ -199,7 +181,7 @@ let randomColor = `hsl(${hue}, 70%, 80%)`;
 
 
 function draw() {
-   fill(49,43,61);
+   fill(255);
    rect(0,0,width,height);
    noStroke();
      //display bubbles
@@ -211,27 +193,3 @@ function draw() {
    }
  
 
-  
- /* Instruction for Major Hunt */
-socket.on('player1', () => {
-    player1 = "Hello player 1! Please wait for another player to join!";
-    let inst = document.getElementById('instructions');
-    inst.textContent = player1;
- })
- 
- socket.on('player2', (player2) => {
-    player2 = "Hello player 2! Start Guessing what the other player is drawing";
-    let inst = document.getElementById('instructions');
-    inst.textContent = player2;
- })
- 
- socket.on('morePlayers', (morePlayers) => {
-    morePlayers = "Please wait! There are 2 players in the game already!";
-    let inst = document.getElementById('instructions');
-    inst.textContent = morePlayers;
- })
- 
- socket.on('message', () => {
-    let inst = document.getElementById('instructions');
-    inst.textContent = "Another player has joined. Click Pick Button to Receive the word ";
- })

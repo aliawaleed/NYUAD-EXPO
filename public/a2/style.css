@@ -48,10 +48,23 @@ html, body {
     padding:0;
 }
 
+.timerScore{
+    margin:0;
+    padding:1vw;
+    padding-left:10vw;
+    display:relative;
+}
+
+
 #timer {
+    display:relative;
     margin:0;
     padding:0;
-    padding-left:10vw;
+}
+
+#p1score {
+    display:relative;
+    padding:0;
 }
   /*User Input*/
   #userInput {
@@ -60,21 +73,28 @@ html, body {
   
   #game p{
     margin:auto;
-    width:60%;
+    width:50%;
     padding:2vw;
     border-width: 2px;
     color:#ffffff;
     font-size: 1.8vw;
   }
+
+  #sketch-canvas{
+    margin:auto;
+    margin-left: 25%;
+}
   
   #name{
     appearance:none;
     -webkit-appearance:none;
     border:none;
+    margin-left: 25%;
     padding:1vw;
     font-size: 1.5vw;
     border-radius:5px;
-    width:70%;
+    width:28%;
+    margin-right:5%;
   }
   
   #submit {
@@ -83,7 +103,7 @@ html, body {
       -webkit-appearance:none;
       /* usual styles */
       position:relative;
-      width:30%;
+      width:15%;
       cursor: pointer;
       padding:1vw;
       margin-top:3vw;
@@ -95,39 +115,3 @@ html, body {
       background-color: #2E1F59;
   }
   
-  /*Data Output*/
-  #dataOutput {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-     }
-  
-/* sketch */
-#sketch-container {
-    padding:5vh 5vw;
-    position:absolute;
-    margin-left:20%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-  
- /*Instructions*/
- #instruction {
-    display: flex;
-    position: absolute;
-    width:100%;
-    font-size: 1.5vw;
-    height: 10vh;
-}
-
-#instructions {
-    margin: 0;
-    position: absolute;
-    text-align: center;
-    width:100%;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0;
-}
