@@ -7,15 +7,16 @@ html{
 body{
     height: 100%;
     background-image: url("/field/tugOfWarImages/tugOfWarBG.png");
+    margin: 0;
 }
 
 #title{
-    display: flex;
-    position: relative;
     width:100%;
     height: 10vh;
-    font-size: 24px;
-    color:white;
+}
+
+#moveTitle{
+    margin: 3%;
 }
 
 p{
@@ -27,7 +28,7 @@ p{
 .p5{
     width: 100%;
     position: absolute;
-    top: 40%;
+    top: 45%;
     height: 80px;
     padding: 0;
 }

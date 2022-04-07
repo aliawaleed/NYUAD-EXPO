@@ -78,18 +78,17 @@ function drawData(pos) {
             line(x+100*i, y, (x+100*i) + 30, y);
         }
         // check win conditions
-        if (pos.x < 0 || pos.x > windowWidth){
+        if (pos.x <= 10 || pos.x >= windowWidth - 10){
             gameOn = false;    
         }        
     }
-    else{
-        console.log(gameOn);
+    else {
         clear();
         textSize(24);
         fill(255);
         noStroke();
         let refresh = "Refresh to play again!"
-        if (pos.x < 0){ //if player 1 won and passed the triangle on the left side
+        if (pos.x <= 10){ //if player 1 won and passed the triangle on the left side
             let winner = "Player 1 won!";
             line(0, 10, width, 10);
             textAlign(CENTER, TOP);
@@ -99,7 +98,7 @@ function drawData(pos) {
             text(refresh, 0, 54, width);
             x = -4000;
         }
-        if (pos.x > windowWidth){ //if player 1 won and passed the triangle on the right side
+        if (pos.x >= windowWidth - 10){ //if player 1 won and passed the triangle on the right side
             let winner = "Player 2 won!";
             line(0, 10, width, 10);
             textAlign(CENTER, TOP);
