@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript" src="/socket.io/socket.io.js"></script> <!-- add sockets library -->
-  <title>NYUAD Pictionary</title>
+  <title>C2 Pictionary</title>
   <!-- Two below for p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
@@ -16,7 +16,7 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <title>C2</title>
+  <title>C2 Pictionary</title>
 </head>
 
 <body>
@@ -27,23 +27,26 @@
   </div>
 
   <!-- Write Title Here -->
-  <div id="title">
-    <p> <span style="font-weight:bold"> C2 </span> | Pictionary </p>
+  <div class="description">
+    <div class ="description-center">
+    <p id="gameName"> <span style="font-weight:bold"> C2 </span> | Pictionary </p>
+    <p id="gameDescription"> In this collaborative game, you need to either draw, or guess what the other person is drawing. How many can you guess within 100 seconds?</p>
+    </div>
   </div>
-
-
   <!-- Game Container -->
-  <div id="game-container">
+  <div class="game-container">
+    <p id="timer"></p>
+
+    <div class="canvasChat">
     <!-- View drawing canvas here -->
     <div id="sketch-container">
-      <div id="sketch-canvas"></div>
+      <div id="sketch-canvas"> </div>
       <!-- Get-Word Button section -->
       <div class="getwordbutton">
-        <button id="getword-button">Draw</button>
+        <button id="getword-button" onclick="startTimer()">Draw</button>
         <text class="drawword-text"><span id="draw_this"></span></text>
       </div>
-
-    </div>
+      </div>
 
     <!-- Chat Container -->
     <div id="chat-container">
@@ -53,18 +56,15 @@
         <div class="chat-box" id="chat-box-msgs">
         </div>
       </div>
-
+      </div>
+    </div>
       <!-- Enter chat messages here -->
       <div id="chat-input" class="sub-container chat-input">
         <input type="text" class="chat-input-msg" id="msg-input" placeholder="Answer" >
         <button id="send-button">Send</button>
       </div>
-    </div>
   </div>
-    <!-- Instruction Written Here -->
-  <div id="instruction">
-    <p id="instructions"> </p>
-  </div>
+  
   <script src="c2.js"></script>
 </body>
 

@@ -39,17 +39,19 @@ io.sockets.on('connect', (socket) => {
             // console.log("The number of players in the room is: ", rooms[key]);
             if (value == 1) {
                 console.log("This is client 1 ", socket.id);
-                // socket.emit('player1', '');
+                socket.emit('player1', ''); 
+                socket.to(key).emit('message', '');
             }
             else if (value == 2) {
                 console.log("This is client 2 ", socket.id);
-                // socket.emit('player2', ''); 
-                // socket.to(key).emit('message', '');
+                socket.emit('player2', ''); 
+                socket.to(key).emit('message', '');
             }
             else {
                 /******************** BLOCK ACCESS ********************/
                 console.log("Client > 2: ", socket.id);
-                // socket.emit('morePlayers', ''); 
+                socket.emit('morePlayers', ''); 
+                socket.to(key).emit('message', '');
             }
         }
     })
@@ -77,12 +79,25 @@ io.sockets.on('connect', (socket) => {
 
     socket.on('finish', (completed) => {
         // console.log("Game Over! The other user completed: ", completed);
-        console.log(completed);
+        console.log('completed');
         socket.to("D2").emit('finishDataFromServer', completed);
     })
 
     /******************** C2 ********************/
     //listen for a message from a client
+
+    socket.on('C2start', () => {
+        console.log("C2started");
+        socket.to("C2").emit('startDataFromServer', '');
+    })
+
+    socket.on('C2finish', (completed) => {
+        // console.log("Game Over! The other user completed: ", completed);
+        console.log('C2completed');
+        socket.to("C2").emit('finishDataFromServer', completed);
+    })
+
+
     socket.on('mousePositionData', (data) => {
         console.log(data);
         io.sockets.emit('mouseDataFromServer', data);

@@ -1,9 +1,6 @@
 // opens and connect to socket
 let socket = io();
 
-//p5 variables
-let r,g,b;
-
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
    console.log("client connected via sockets");
@@ -15,30 +12,38 @@ socket.on('connect', () => {
    socket.emit('userData', data);
 })
 
+//function to start a 30 second timer and have it initialized on the screen
+function startTimer(){
+   let timer = document.getElementById('timer');
+   timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+   //generateOrder();
+   socket.emit('C2start', ''); //start game for the rest of the users
+}
 
-/* Instruction for Pictionary */
-socket.on('player1', () => {
-   player1 = "Hello player 1! Please wait for another player to join!";
-   let inst = document.getElementById('instructions');
-   inst.textContent = player1;
+//to ensure starting the game only once for the other users (that didn't press on the order button)
+let started = 0;
+socket.on('startDataFromServer', ()=>{
+   if (started == 0){
+       console.log("game started"); // shows how many orders the other player completed 
+       startTimer();
+       //to decrement timer
+       let timerId = setInterval(countdown, 1000);
+       
+       function countdown() {
+           if (timeLeft == -1) {
+               clearTimeout(timerId);
+               // alert("Time is up!");
+               socket.emit('C2finish', myCompletedOrders);
+           } else {
+               timer.innerHTML = 'Time left: ' + timeLeft;
+               console.log(timeLeft);
+               timeLeft--;
+           }
+       }
+   }
+   started = 1;
 })
 
-socket.on('player2', (player2) => {
-   player2 = "Hello player 2! Start Guessing what the other player is drawing";
-   let inst = document.getElementById('instructions');
-   inst.textContent = player2;
-})
-
-socket.on('morePlayers', (morePlayers) => {
-   morePlayers = "Please wait! There are 2 players in the game already!";
-   let inst = document.getElementById('instructions');
-   inst.textContent = morePlayers;
-})
-
-socket.on('message', () => {
-   let inst = document.getElementById('instructions');
-   inst.textContent = "Another player has joined. Click Pick Button to Receive the word ";
-})
 
 
 //p5.js code
@@ -46,11 +51,8 @@ function setup() {
    let canvas = createCanvas(windowWidth/2, windowHeight*0.6);
    canvas.parent('sketch-canvas');
    background(255);
-   r = random(0,255);
-   g = random(0,255);
-   b = random(0,255);
    socket.on('mouseDataFromServer', (data)=>{
-       drawWithData(data);
+   drawWithData(data);
    })
 }
 
@@ -67,9 +69,7 @@ function mouseDragged() {
        y:round(mouseY),
        px:round(pmouseX),
        py:round(pmouseY),
-       red:r,
-       blue:b,
-       green:g,
+
    };
 
    //emit htis information to the server
@@ -77,8 +77,7 @@ function mouseDragged() {
 }
 
 function drawWithData(data) {
-
-   stroke(data.red,data.green,data.blue);
+   stroke(0);
    strokeWeight(2);
    line(data.x, data.y, data.px, data.py);
 }
@@ -150,7 +149,6 @@ socket.on('randomwordguess', function (data) {
    getwordButton.disabled = true;
    sendButton.disabled = false;
 });
-
 
 //Listen for word named 'matchingword' from the server
 socket.on('matchingword',function(data){
