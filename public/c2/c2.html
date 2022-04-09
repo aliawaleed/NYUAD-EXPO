@@ -26,18 +26,31 @@
     <img src="images/pictionarybg.png" alt="C2-img">
   </div>
 
-  <!-- Write Title Here -->
-  <div class="description">
-    <div class ="description-center">
-    <p id="gameName"> <span style="font-weight:bold"> C2 </span> | Pictionary </p>
-    <p id="gameDescription"> In this collaborative game, you need to either draw, or guess what the other person is drawing. How many can you guess within 100 seconds?</p>
-    </div>
+  <!--Instructions -->
+  <div class="rules" id="rules">
+    <h1 class="rules-instructions">How to Play?</h1>
+    <p class="specific-instructions"> This is a collaborative game. You need to either draw, or guess what the other
+      person is drawing. How many can you guess within 100 seconds?</p>
+    <button id="start-button" onclick="startGame()"> START </button>
   </div>
-  <!-- Game Container -->
-  <div class="game-container">
-    <p id="timer"></p>
 
-    <div class="canvasChat">
+    <!--finished note -->
+    <div class="finished" id="finished">
+      <h1 class="rules-instructions">Congratulations</h1>
+      <p id="finalScore"></p>
+      <button id="Home" onclick="goHome()"> Home</button>
+    </div>
+
+  <!--GamePage -->
+  <div id="gamePage">
+
+    <div id="title">
+      <p class="title"> <span style="font-weight:bold"> C2 </span> | PICTIONARY </p>
+      <p class="completed-orders" id="completed-orders">Points: 0</p>
+      <p id="timer">Time left: 100</p>
+      <p id="players">PLAYERS</p>
+    </div>
+
     <!-- View drawing canvas here -->
     <div id="sketch-container">
       <div id="sketch-canvas"> </div>
@@ -46,25 +59,23 @@
         <button id="getword-button" onclick="startTimer()">Draw</button>
         <text class="drawword-text"><span id="draw_this"></span></text>
       </div>
-      </div>
+    </div>
 
     <!-- Chat Container -->
     <div id="chat-container">
-
       <!-- View chat messages here here -->
       <div class="sub-container chat-feed">
         <div class="chat-box" id="chat-box-msgs">
         </div>
       </div>
-      </div>
-    </div>
       <!-- Enter chat messages here -->
       <div id="chat-input" class="sub-container chat-input">
-        <input type="text" class="chat-input-msg" id="msg-input" placeholder="Answer" >
+        <input type="text" class="chat-input-msg" id="msg-input" placeholder="Answer">
         <button id="send-button">Send</button>
       </div>
+    </div>
   </div>
-  
+
   <script src="c2.js"></script>
 </body>
 

@@ -6,7 +6,7 @@ html, body {
     color:white;
 }
 
-/* title */
+/* Background image */
 .background-container {
     width:100vw;
 
@@ -19,47 +19,91 @@ html, body {
     z-index: -3;
 }
 
-/* title */
-#title{
-    display: flex;
-    position: relative;
-    width:100%;
-    height: 10vh;
+/* Instruction Page */
+.rules ,.finished{
+    width: 45vw;
+    height: 50vh;
+    background-color:rgb(192, 161, 161, 0.79);
+    position:absolute;
+    display:relative;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    box-sizing: border-box;
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-top: 3%;
+    padding-bottom: 5%;
+    text-align: center;
     font-size: 1.5vw;
-    margin:0;
-    padding:0;
+}
+
+.rules h1{
+    color: #471010;
+}
+
+.specific-instructions{
+    text-align: justify;
+}
+
+button{
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+
+    /* add styling */
+    cursor: pointer;
+    border:none;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color: #471010;
+    cursor: pointer;
+}
+
+#start-button{
+    width: 25%;
+    height: 15%;
+    font-size: 1.5vw;
+}
+
+#players {
+    position:absolute;
+    top:10vh;
+    text-align: center;
+  }
+  
+/* GamePage */
+#gamePage{
+    width:90vw;
+    height:90vh;
+    padding: 5vh 5vw;
+    position:relative;
+}
+
+/* title-Container */
+
+#title{
+    font-size: 1.5vw;
     color:white;
-}
-
-#title p {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    height:10%;
-    margin:0;
-    padding: 0;
-    padding-left:10vw;
-}
-
-.game {
-    height:80vh;
-    margin:0;
-    padding:0;
-}
-
-.timerScore{
-    margin:0;
-    padding:1vw;
-    padding-left:10vw;
-    display:relative;
+    height:10vh;
 }
 
 
-#timer {
-    display:relative;
-    margin:0;
-    padding:0;
+.title{
+    float: left;
+    width:20%;
+}
+
+.completed-orders{
+    float: right;
+}
+
+/* timer */
+#timer{
+  float:left;
 }
 
 #p1score {

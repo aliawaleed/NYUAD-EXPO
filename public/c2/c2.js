@@ -1,6 +1,17 @@
 // opens and connect to socket
 let socket = io();
 
+let game = document.getElementById('gamePage');
+let finished = document.getElementById('finished');
+let rules = document.getElementById('rules');
+let getwordButton = document.getElementById('getword-button');
+let msgInput = document.getElementById('msg-input');
+let sendButton = document.getElementById('send-button');
+let drawing;
+let timeLeft =10;
+let myCompletedOrders =0; //to track number of correct completed orders
+let completed = document.getElementById('completed-orders');
+
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
    console.log("client connected via sockets");
@@ -12,18 +23,68 @@ socket.on('connect', () => {
    socket.emit('userData', data);
 })
 
+
+//onload start showing rules only
+window.addEventListener("load", () => { // on load  
+   game.style.display = "none";
+   finished.style.display = "none";
+   rules.style.display = "block";
+
+
+   socket.on('player1',()=>{
+      console.log('wait for another player to join');
+      let players = document.getElementById('players');
+      players.innerHTML = 'wait for another player to join'; //preset before the timer starts
+      onePlayer();
+   })
+
+   socket.on('message',()=>{
+      let players = document.getElementById('players');
+      players.innerHTML = 'Click draw button to begin'; //preset before the timer starts
+      twoPlayers();
+   })
+
+})
+
+
+//function to start game
+function startGame(){
+   let rules = document.getElementById('rules');
+   rules.style.display = "none";
+   let game = document.getElementById('gamePage');
+   game.style.display = "block";
+}
+
+//function to disable game until 2 players are in
+function onePlayer(){
+   getwordButton.disabled = true;
+   getwordButton.style.opacity = "0.6";
+   drawing = false;
+   msgInput.disabled =true;
+   sendButton.style.opacity = "0.6";
+}
+
+//two players are in
+function twoPlayers(){
+   getwordButton.disabled = false;
+   getwordButton.style.opacity = "1";
+   msgInput.disabled =false;
+   sendButton.style.opacity = "1";
+}
+
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
    let timer = document.getElementById('timer');
-   timer.innerHTML = 'Time left: 30'; //preset before the timer starts
-   //generateOrder();
+   timer.innerHTML = 'Time left: 100'; //preset before the timer starts
    socket.emit('C2start', ''); //start game for the rest of the users
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
-socket.on('startDataFromServer', ()=>{
+
+socket.on('C2startDataFromServer', ()=>{
    if (started == 0){
+      players.style.display = "none";
        console.log("game started"); // shows how many orders the other player completed 
        startTimer();
        //to decrement timer
@@ -35,7 +96,7 @@ socket.on('startDataFromServer', ()=>{
                // alert("Time is up!");
                socket.emit('C2finish', myCompletedOrders);
            } else {
-               timer.innerHTML = 'Time left: ' + timeLeft;
+               timer.innerHTML = 'Time Left: ' + timeLeft;
                console.log(timeLeft);
                timeLeft--;
            }
@@ -44,7 +105,13 @@ socket.on('startDataFromServer', ()=>{
    started = 1;
 })
 
-
+socket.on('C2finishDataFromServer', (Points)=>{
+   let finalScore = document.getElementById('finalScore');
+   finalScore.innerHTML = 'Your Score:' + Points;  
+   game.style.display = "none";
+   finished.style.display = "block";
+   rules.style.display = "none";
+});
 
 //p5.js code
 function setup() {
@@ -71,9 +138,10 @@ function mouseDragged() {
        py:round(pmouseY),
 
    };
-
+   if (drawing){
    //emit htis information to the server
    socket.emit('mousePositionData',mousePos);
+   };
 }
 
 function drawWithData(data) {
@@ -102,7 +170,6 @@ socket.on('msg', function (data) {
    //check if the answer matches the word
    if(currentword == receivedMsg){
    let matchingdata = currentword;
-
    //Send detection of matchingword to the server
    socket.emit('matchingword', matchingdata);
 
@@ -125,6 +192,9 @@ socket.on('displayrandomword', function (data) {
    console.log("displayrandomword arrived");
    console.log(data);
 
+   //enabledrawing
+   drawing = true;
+
    //Create a message string and page element
    let receiveword = data;
    currentword = receiveword;
@@ -133,43 +203,39 @@ socket.on('displayrandomword', function (data) {
    //A perosn who draws can't guess the word
    sendButton.disabled = true;
    msgInput.disabled =true;
-   sendButtonDisabled();
 });
 
-//disable Send Button 
-function sendButtonDisabled(){
-   document.getElementById("chat-input").className = "chat-input-opacity";
-}
 
 //Listen for word named 'randomwordguess' from the server
 socket.on('randomwordguess', function (data) {
+   //CLEAN Canvas
    console.log("randomword arrived");
    console.log(data);
    //when a client received randomword, then the rest of the client can't access getwordButton
    getwordButton.disabled = true;
+   msgInput.disabled =false;
    sendButton.disabled = false;
+   drawing = false;
 });
 
 //Listen for word named 'matchingword' from the server
 socket.on('matchingword',function(data){
    console.log('its matching');
-
+   console.log(myCompletedOrders);
+   myCompletedOrders++;
+   completed.textContent = "Points: " + myCompletedOrders;
+   //clearcanvas
+   clear();
+   background(255);
    //enable getwordButton again
    getwordButton.disabled = false;
    sendButton.disabled = false;
-   //CLEAN Canvas
-   resizeCanvas(windowWidth/2, windowHeignt/0.6);
-   background(255);
    //Empty drawthis text
    drawthis.innerHTML = "";
-   //alert correct answer
-   alert ("Correct Answer!");  
 })
 
 
 /* --- Code to SEND a socket message to the Server --- */
-let msgInput = document.getElementById('msg-input');
-let sendButton = document.getElementById('send-button');
 
 //allow press ENTER to add words
 msgInput.addEventListener("keyup", function(event) {
@@ -195,7 +261,6 @@ function disableButton() {
 }
 
 /* --- Code to SEND a received randomword to the Server --- */
-let getwordButton = document.getElementById('getword-button');
 getwordButton.addEventListener('click', function () {
 //CLEAN Canvas
 resizeCanvas(windowWidth/2, windowHeight*0.6);
@@ -210,10 +275,15 @@ background(255);
    let randomItem = wordlist[Math.floor(Math.random()*wordlist.length)];
    console.log(randomItem);
 
-   //Send the randomword to the server to be sent to all clients
+   //send the data to update for all
+   socket.emit ('drawClicked','');
+
+   //Send the randomwordguess to the clients who will be guessing
    socket.emit('randomwordguess', randomItem);
 
-   //Send the randomword to the server to be displayed by specific client
+   //Send the randomword to the client who clicked draW
    socket.emit('displayrandomword', randomItem);
+
+
 });
 });

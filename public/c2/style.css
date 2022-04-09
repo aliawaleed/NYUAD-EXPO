@@ -6,7 +6,7 @@ html, body {
     color:white;
 }
 
-/* title */
+/* Background image */
 .background-container {
     width:100vw;
 
@@ -19,60 +19,108 @@ html, body {
     z-index: -3;
 }
 
-/* title */
-.description {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 10vh;
+/* Instruction Page */
+.rules ,.finished{
+    width: 45vw;
+    height: 50vh;
+    background-color:rgb(192, 161, 161, 0.79);
+    position:absolute;
+    display:relative;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    box-sizing: border-box;
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-top: 3%;
+    padding-bottom: 5%;
+    text-align: center;
+    font-size: 1.5vw;
+}
+
+.rules h1{
+    color: #471010;
+}
+
+.specific-instructions{
+    text-align: justify;
+}
+
+button{
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+
+    /* add styling */
+    cursor: pointer;
+    border:none;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    font-size: 20px;
+    border-radius:5px;
+    background-color: #471010;
+    cursor: pointer;
+}
+
+#start-button{
+    width: 25%;
+    height: 15%;
+    font-size: 1.5vw;
+}
+
+#players {
+    position:absolute;
+    top:10vh;
+    text-align: center;
+  }
+  
+/* GamePage */
+#gamePage{
+    width:90vw;
+    height:90vh;
+    padding: 5vh 5vw;
+    position:relative;
+}
+
+/* title-Container */
+
+#title{
     font-size: 1.5vw;
     color:white;
-    background-color: pink;
-    padding-left:10vw;
+    height:10vh;
 }
 
-.description-center {
-      margin:0;
-      width:100%;
-      background-color: yellow;
-}
 
-#gameName {
-    display: inline-block;
+.title{
+    float: left;
     width:20%;
 }
 
-#gameDescription {
-    display: inline-block;
-    vertical-align: top;
-    background-color: #2E1F59;
-    width:60%;
+.completed-orders{
+    float: right;
 }
 
 /* timer */
 #timer{
-    padding: 0;
-    margin-left:10vw;
-    position:absolute;
-    background-color: pink;
+  float:left;
 }
-/* games */
-.game-container{
-    width:100%;
-    height:80vh;
-}
+
+/* Game-Container */
+
 .canvasChat{
     display: flex;
 }
 
 /* sketch */
 #sketch-container {
-    padding:5vh 5vw;
+    padding:5vh 0vw;
     display: flex;
     width:70%;
     margin:0;
     flex-direction: column;
     align-items: center;
+    float:left;
 }
 
 .getwordbutton{
@@ -107,7 +155,7 @@ html, body {
        border-radius:5px;
        font-size: 1.5vw;
        border-radius:5px;
-       background-color: #2E1F59;
+       background-color: #e28e20;
 }
 
 #draw_this{
@@ -118,18 +166,18 @@ html, body {
 /* customize when getword button is disabled */
 #getword-button:disabled,
 #getword-button[disabled]{
-    background-color:#424384;
+    background-color:#ac5c26;
     opacity:0.1;
 
 }
 
 /* chat */
 #chat-container {
-    display: flex;
-    float: right;
+    float:left;
+    display:flex;
+    padding:5vh 0vw;
     width:30%;
     margin:0;
-    padding:5vh 5vw;
     flex-direction: column;
     align-items: center;
 }
@@ -187,7 +235,7 @@ input{
       border-radius:5px;
       font-size: 1.5vw;
       border-radius:5px;
-      background-color: #2E1F59;
+      background-color: #e28e20;
 }
 
 .chat-box{
@@ -200,23 +248,4 @@ input{
     margin-left:10%;
     color:black;
     overflow-wrap: break-word;
-}
-
-  /*Instructions*/
-#instruction {
-    display: flex;
-    position: relative;
-    width:100%;
-    font-size: 1.5vw;
-    height: 10vh;
-}
-
-#instructions {
-    margin: 0;
-    position: absolute;
-    text-align: center;
-    width:100%;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0;
 }

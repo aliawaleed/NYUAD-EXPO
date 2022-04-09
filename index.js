@@ -28,7 +28,9 @@ io.sockets.on('connect', (socket) => {
 
         //let the socket join room of choice
         socket.roomName = data.room;
+
         socket.join(socket.roomName);
+
         if (rooms[socket.roomName]) { //if room exists
             rooms[socket.roomName]++;
         } else {
@@ -40,18 +42,16 @@ io.sockets.on('connect', (socket) => {
             if (value == 1) {
                 console.log("This is client 1 ", socket.name, socket.id);
                 socket.emit('player1', socket.name); 
-                socket.to(key).emit('message', '');
             }
             else if (value == 2) {
                 console.log("This is client 2 ", socket.name, socket.id);
                 socket.emit('player2', ''); 
-                socket.to(key).emit('message', '');
+                io.in(key).emit('message', '');
             }
             else {
                 /******************** BLOCK ACCESS ********************/
                 console.log("Client > 2: ", socket.id);
-                socket.emit('morePlayers', ''); 
-                socket.to(key).emit('message', '');
+                socket.emit('morePlayers', '');
             }
         }
     })
@@ -61,9 +61,8 @@ io.sockets.on('connect', (socket) => {
         console.log("socket has been disconnected ", socket.id);
         rooms[socket.roomName]--;
         delete users[socket.name];
-        console.log("The users left are: ", users)
+        console.log("The users left are: ", users);
     })
-
 
     /******************** FIELD ********************/
     //listen for a message from this client
@@ -88,13 +87,13 @@ io.sockets.on('connect', (socket) => {
 
     socket.on('C2start', () => {
         console.log("C2started");
-        socket.to("C2").emit('startDataFromServer', '');
+        socket.to("C2").emit('C2startDataFromServer', '');
     })
 
     socket.on('C2finish', (completed) => {
         // console.log("Game Over! The other user completed: ", completed);
         console.log('C2completed');
-        socket.to("C2").emit('finishDataFromServer', completed);
+        socket.to("C2").emit('C2finishDataFromServer', completed);
     })
 
     socket.on('mousePositionData', (data) => {
@@ -110,6 +109,10 @@ io.sockets.on('connect', (socket) => {
 
         //Send a response to all clients, including this one
         io.sockets.emit('msg', data);
+    });
+
+    socket.on('drawClicked',function(){
+        console.log('drawClicked');
     });
 
     //Listen for a message named 'randomword' from this client
@@ -140,23 +143,25 @@ io.sockets.on('connect', (socket) => {
 
     });
 
+
     /******************** A2 ********************/
     //listen for majoradd from client
     socket.on('majoradd', (data) => {
         console.log('this is the major received' + data);
         io.sockets.emit('majoradd', data);
+        socket.emit('scoreadd',data);
     });
 
-    //timer
-    socket.on('A2TimerStart', () => {
-        console.log("started");
-        socket.to("A2").emit('startDataFromServer', '');
+    //A2 start and finish
+    socket.on('A2start', () => {
+        console.log("A2started");
+        socket.to("A2").emit('A2startDataFromServer', '');
     })
 
-    socket.on('A2TimerFinish', (completed) => {
+    socket.on('A2finish', (completed) => {
         // console.log("Game Over! The other user completed: ", completed);
-        console.log(completed);
-        socket.to("A2").emit('finishDataFromServer', completed);
+        console.log('A2completed');
+        io.sockets.to("A2").emit('A2finishDataFromServer', completed);
     })
 })
 
