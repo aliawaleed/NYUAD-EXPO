@@ -38,12 +38,12 @@ io.sockets.on('connect', (socket) => {
             console.log("Room, number of people:", `${key}: ${value}`);
             // console.log("The number of players in the room is: ", rooms[key]);
             if (value == 1) {
-                console.log("This is client 1 ", socket.id);
-                socket.emit('player1', ''); 
+                console.log("This is client 1 ", socket.name, socket.id);
+                socket.emit('player1', socket.name); 
                 socket.to(key).emit('message', '');
             }
             else if (value == 2) {
-                console.log("This is client 2 ", socket.id);
+                console.log("This is client 2 ", socket.name, socket.id);
                 socket.emit('player2', ''); 
                 socket.to(key).emit('message', '');
             }
@@ -96,7 +96,6 @@ io.sockets.on('connect', (socket) => {
         console.log('C2completed');
         socket.to("C2").emit('finishDataFromServer', completed);
     })
-
 
     socket.on('mousePositionData', (data) => {
         console.log(data);

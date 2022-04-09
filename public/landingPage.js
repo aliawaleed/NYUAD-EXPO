@@ -1,4 +1,10 @@
 window.addEventListener('load', () => {
+    let game = document.getElementById('container');
+    game.style.display = "none";
+
+    let rules = document.getElementById('rules');
+    rules.style.display = "block";
+
     let joinForm = document.getElementById('join-form');
     
     joinForm.addEventListener('submit', (e) => {
@@ -6,6 +12,9 @@ window.addEventListener('load', () => {
       let name = document.getElementById('name-input').value;
       //save the name and the room in session storage
       sessionStorage.setItem('name', name);
+      rules.style.display = "none";
+      game.style.display = "block";
+      
     })
 })
 

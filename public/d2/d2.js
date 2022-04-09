@@ -30,6 +30,14 @@ let chosenMainCourse = 1;
 let chosenDessert = 1;
 
 window.addEventListener("load", () => { // on load    
+    let game = document.getElementById('container');
+    game.style.display = "none";
+    let completed = document.getElementById('completed-orders');
+    completed.style.display = "none";
+
+    let rules = document.getElementById('rules');
+    rules.style.display = "block";
+
     let app1 = document.getElementById('appetizer1');
     app1.src = allAppetizers['salad'];
 
@@ -57,6 +65,17 @@ window.addEventListener("load", () => { // on load
     let dessert3 = document.getElementById('dessert3');
     dessert3.src = allDesserts['profiterole'];
 })
+
+//function to start game
+function startGame(){
+    let rules = document.getElementById('rules');
+    rules.style.display = "none";
+    let completed = document.getElementById('completed-orders');
+    completed.style.display = "block";
+    let game = document.getElementById('container');
+    game.style.display = "block";
+}
+
 
 // function to generate order
 function generateOrder(){
@@ -195,5 +214,6 @@ socket.on('finishDataFromServer', (theirCompletedOrders)=>{
     let instructions = document.getElementById('instructions');
     instructions.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;  
 })
+
 
 //code used for timer https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward

@@ -18,6 +18,48 @@ html, body {
     z-index: -3;
 }
 
+.rules{
+    width: 45%;
+    height: 60%;
+    background-color:rgba(134, 117, 154, 0.79);
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    box-sizing: border-box;
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-top: 10%;
+    padding-bottom: 5%;
+    text-align: center;
+    font-size: 20px;}
+
+button{
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+
+    /* add styling */
+    cursor: pointer;
+    border:none;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    font-size: 20px;
+    border-radius:5px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: #3c0c6f;
+}
+
+#name-input{
+    padding: 2.3%;
+    border-radius: 10px;
+    padding-bottom: 1%;
+}
+
 .location {
     cursor: pointer;
 }

@@ -22,7 +22,6 @@ body{
 p{
     font-size: 20px;
     color: white;
-    font-family: 'American Typewriter', serif;
 }
 
 .p5{
@@ -39,4 +38,51 @@ p{
     text-align: center;
     width:100%;
     top: 80%;
+}
+
+.rules{
+    width: 45%;
+    height: 60%;
+    background-color:rgb(192, 161, 161, 0.79);
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    box-sizing: border-box;
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-top: 3%;
+    padding-bottom: 5%;
+    text-align: center;
+    font-size: 20px;
+}
+
+.specific-instructions{
+    text-align: justify;
+}
+
+button{
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+
+    /* add styling */
+    cursor: pointer;
+    border:none;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    font-size: 20px;
+    border-radius:5px;
+    background-color: #471010;
+}
+
+h1{
+    color: #471010;
+}
+
+#start-button{
+    width: 25%;
+    height: 15%;
+    font-size: 22px;
 }

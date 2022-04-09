@@ -14,6 +14,22 @@ socket.on('connect', () => {
     socket.emit('userData', data);
 })
 
+window.addEventListener("load", () => { // on load    
+    let game = document.getElementById('container');
+    game.style.display = "none";
+
+    let rules = document.getElementById('rules');
+    rules.style.display = "block";
+})
+
+//function to start game
+function startGame(){
+    let rules = document.getElementById('rules');
+    rules.style.display = "none";
+    let game = document.getElementById('container');
+    game.style.display = "block";
+}
+
 //////////////////p5 code//////////////////
 //global variables
 let x = 0;

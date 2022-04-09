@@ -16,49 +16,56 @@
       <!-- Title -->
     <div id="title">
         <p class="title"> <span style="font-weight:bold"> D2 </span> | Make The Meal </p>
-        <p class="completed-orders" id="completed-orders"> Completed orders: 0 </p>
+        <p class="completed-orders" id="completed-orders">Completed orders: 0</p>
     </div>
 
-    <div class="order", id="order">
-        <p class="generated", id="generated"> </p>
-        <button id="generate-button" onclick="startTimer()"> order </button>
-        <p id="timer"></p>
+    <div class="rules" id="rules">
+        <h1 class="rules-instructions">Instructions</h1>
+        <p class="specific-instructions"> The goal of this game is to make to make as many meals as possible before the time is up. </br> </br> To add an item: click on it in the menu. </br> </br>To remove an item: click on it on the tray!</p>
+        <button id="start-button" onclick="startGame()"> START </button>
     </div>
 
-    <div class="menu" id="menu"> 
-        <table style="width:100%">
-            <tr>
-              <th>Appetizers</th>
-              <th>Main Course</th>
-              <th>Dessert</th>
-            </tr>
-            <tr>
-              <td><img class="appetizers" id="appetizer1" onclick="addAnswer(this)"></td>
-              <td><img class="main-courses" id="main-course1" onclick="addAnswer(this)"></td>
-              <td><img  class="desserts" id="dessert1" onclick="addAnswer(this)"></td>
-            </tr>
-            <tr>
-                <td><img class="appetizers" id="appetizer2" onclick="addAnswer(this)"></td>
-                <td><img class="main-courses" id="main-course2" onclick="addAnswer(this)"></td>
-                <td><img class="desserts" id="dessert2" onclick="addAnswer(this)"></td>
-            </tr>
-            <tr>
-                <td><img class="appetizers" id="appetizer3" onclick="addAnswer(this)"></td>
-                <td><img class="main-courses" id="main-course3" onclick="addAnswer(this)"></td>
-                <td><img class="desserts" id="dessert3" onclick="addAnswer(this)"></td>
-            </tr>
-          </table>
+    <div class="container" id="container">
+        <div class="order", id="order">
+            <p class="generated", id="generated"> </p>
+            <button id="generate-button" onclick="startTimer()"> order </button>
+            <p id="timer"></p>
+        </div>
+    
+        <div class="menu" id="menu"> 
+            <table style="width:100%">
+                <tr>
+                  <th>Appetizers</th>
+                  <th>Main Course</th>
+                  <th>Dessert</th>
+                </tr>
+                <tr>
+                  <td><img class="appetizers" id="appetizer1" onclick="addAnswer(this)"></td>
+                  <td><img class="main-courses" id="main-course1" onclick="addAnswer(this)"></td>
+                  <td><img  class="desserts" id="dessert1" onclick="addAnswer(this)"></td>
+                </tr>
+                <tr>
+                    <td><img class="appetizers" id="appetizer2" onclick="addAnswer(this)"></td>
+                    <td><img class="main-courses" id="main-course2" onclick="addAnswer(this)"></td>
+                    <td><img class="desserts" id="dessert2" onclick="addAnswer(this)"></td>
+                </tr>
+                <tr>
+                    <td><img class="appetizers" id="appetizer3" onclick="addAnswer(this)"></td>
+                    <td><img class="main-courses" id="main-course3" onclick="addAnswer(this)"></td>
+                    <td><img class="desserts" id="dessert3" onclick="addAnswer(this)"></td>
+                </tr>
+              </table>
+        </div>
+        <div class="choices" id="choices">
+            <img src="/d2/images/tray.png" alt="tray to add food items" id="tray">
+            <img id="ans1" onclick="removeItem(this.id)">
+            <img id="ans2" onclick="removeItem(this.id)">
+            <img id="ans3" onclick="removeItem(this.id)">
+            <button id="submit-button" onclick="submitOrder()"> submit </button>
+        </div>
+        <div class="instructions" id="instructions"> 
+            <p> Press on the order button to display an order! </p>
+        </div>
     </div>
-    <div class="choices" id="choices">
-        <img src="/d2/images/tray.png" alt="tray to add food items" id="tray">
-        <img id="ans1" onclick="removeItem(this.id)">
-        <img id="ans2" onclick="removeItem(this.id)">
-        <img id="ans3" onclick="removeItem(this.id)">
-        <button id="submit-button" onclick="submitOrder()"> submit </button>
-    </div>
-    <div class="instructions" id="instructions"> 
-        <p> Press on the order button to display an order! </p>
-    </div>
-
 </body>
 </html>
