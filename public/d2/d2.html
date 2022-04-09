@@ -32,40 +32,49 @@
             <p id="timer"></p>
         </div>
     
-        <div class="menu" id="menu"> 
-            <table style="width:100%">
-                <tr>
-                  <th>Appetizers</th>
-                  <th>Main Course</th>
-                  <th>Dessert</th>
-                </tr>
-                <tr>
-                  <td><img class="appetizers" id="appetizer1" onclick="addAnswer(this)"></td>
-                  <td><img class="main-courses" id="main-course1" onclick="addAnswer(this)"></td>
-                  <td><img  class="desserts" id="dessert1" onclick="addAnswer(this)"></td>
-                </tr>
-                <tr>
-                    <td><img class="appetizers" id="appetizer2" onclick="addAnswer(this)"></td>
-                    <td><img class="main-courses" id="main-course2" onclick="addAnswer(this)"></td>
-                    <td><img class="desserts" id="dessert2" onclick="addAnswer(this)"></td>
-                </tr>
-                <tr>
-                    <td><img class="appetizers" id="appetizer3" onclick="addAnswer(this)"></td>
-                    <td><img class="main-courses" id="main-course3" onclick="addAnswer(this)"></td>
-                    <td><img class="desserts" id="dessert3" onclick="addAnswer(this)"></td>
-                </tr>
-              </table>
-        </div>
-        <div class="choices" id="choices">
-            <img src="/d2/images/tray.png" alt="tray to add food items" id="tray">
-            <img id="ans1" onclick="removeItem(this.id)">
-            <img id="ans2" onclick="removeItem(this.id)">
-            <img id="ans3" onclick="removeItem(this.id)">
-            <button id="submit-button" onclick="submitOrder()"> submit </button>
+        <div class="game-container" id="game-container">
+            <div class="menu" id="menu"> 
+                <table style="width:100%">
+                    <tr>
+                      <th>Appetizers</th>
+                      <th>Main Course</th>
+                      <th>Dessert</th>
+                    </tr>
+                    <tr>
+                      <td><img class="appetizers" id="appetizer1" onclick="addAnswer(this)"></td>
+                      <td><img class="main-courses" id="main-course1" onclick="addAnswer(this)"></td>
+                      <td><img  class="desserts" id="dessert1" onclick="addAnswer(this)"></td>
+                    </tr>
+                    <tr>
+                        <td><img class="appetizers" id="appetizer2" onclick="addAnswer(this)"></td>
+                        <td><img class="main-courses" id="main-course2" onclick="addAnswer(this)"></td>
+                        <td><img class="desserts" id="dessert2" onclick="addAnswer(this)"></td>
+                    </tr>
+                    <tr>
+                        <td><img class="appetizers" id="appetizer3" onclick="addAnswer(this)"></td>
+                        <td><img class="main-courses" id="main-course3" onclick="addAnswer(this)"></td>
+                        <td><img class="desserts" id="dessert3" onclick="addAnswer(this)"></td>
+                    </tr>
+                  </table>
+            </div>
+            <div class="choices" id="choices">
+                <img src="/d2/images/tray.png" alt="tray to add food items" id="tray">
+                <img id="ans1" onclick="removeItem(this.id)">
+                <img id="ans2" onclick="removeItem(this.id)">
+                <img id="ans3" onclick="removeItem(this.id)">
+                <button id="submit-button" onclick="submitOrder()"> submit </button>
+            </div>
         </div>
         <div class="instructions" id="instructions"> 
-            <p> Press on the order button to display an order! </p>
+            <p id="players"> Please wait for another player to join! </p>
         </div>
     </div>
+
+    <div class="end" id="end">
+        <h1 class="game-over"> Game Over! </h1>
+        <p class="results" id="results"></p>
+        <button id="Home" onclick="joinRoom(this)"> Home </button>
+    </div>
+
 </body>
 </html>

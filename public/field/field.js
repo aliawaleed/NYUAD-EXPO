@@ -20,7 +20,30 @@ window.addEventListener("load", () => { // on load
 
     let rules = document.getElementById('rules');
     rules.style.display = "block";
+
+    let players = document.getElementById('players');
+    players.style.display = "none";
+
+    let end = document.getElementById('end');
+    end.style.display = "none";    
+
+    socket.on('player1',()=>{
+        console.log('wait for another player to join');
+    })
+  
+    socket.on('message',()=>{
+        let players = document.getElementById('players');
+        players.innerHTML = 'START!'; //preset before the timer starts
+        twoPlayers();
+    })
 })
+
+let start = false;
+ 
+ //two players are in
+ function twoPlayers(){
+    start = true;
+}
 
 //function to start game
 function startGame(){
@@ -28,6 +51,12 @@ function startGame(){
     rules.style.display = "none";
     let game = document.getElementById('container');
     game.style.display = "block";
+    let players = document.getElementById('players');
+    players.style.display = "block";
+}
+
+function joinRoom() {
+    window.location = '/';
 }
 
 //////////////////p5 code//////////////////
@@ -64,15 +93,20 @@ function setup() {
 }
 
 function keyPressed() {
-    if (keyIsDown(RIGHT_ARROW)) { //if right arrow key is pressed, move to the right
-        x += 30;
+    if (start == true) {
+        if (keyIsDown(RIGHT_ARROW)) { //if right arrow key is pressed, move to the right
+            x += 30;
+        }
+        if (keyIsDown(LEFT_ARROW)) { //if left arrow key is pressed, move to the left
+            x -= 30;                      
+        }
+        let pos = {x: x};
+        //emit this information to the server
+        socket.emit('positionData', pos);//send to all the connected clients
     }
-    if (keyIsDown(LEFT_ARROW)) { //if left arrow key is pressed, move to the left
-        x -= 30;                      
+    else{
+        alert("Please wait for another player to join!");
     }
-    let pos = {x: x};
-    //emit this information to the server
-    socket.emit('positionData', pos);//send to all the connected clients
 }
 
 function drawData(pos) {
@@ -103,6 +137,8 @@ function drawData(pos) {
         textSize(24);
         fill(255);
         noStroke();
+        let players = document.getElementById('players');
+        players.style.display = "none";
         let refresh = "Refresh to play again!"
         if (pos.x <= 10){ //if player 1 won and passed the triangle on the left side
             let winner = "Player 1 won!";
@@ -124,6 +160,7 @@ function drawData(pos) {
             text(refresh, 0, 54, width);
             x = 4000;
         }
-
+        let end = document.getElementById('end');
+        end.style.display = "block";    
     }
 }

@@ -19,7 +19,7 @@ let allDesserts = {'cake': 'https://clipart.world/wp-content/uploads/2020/12/Pie
 
 let answerNumber = 0; //to check how many fooditems the user clicked
 let myCompletedOrders = 0; //to track number of correct completed orders
-let timeLeft = 29; //initialized at 29 as the timer takes 1 second to start
+let timeLeft = 5; //initialized at 29 as the timer takes 1 second to start
 
 let orderAppetizer = 0;
 let orderMainCourse = 0;
@@ -29,11 +29,14 @@ let chosenAppetizer = 1;
 let chosenMainCourse = 1;
 let chosenDessert = 1;
 
-window.addEventListener("load", () => { // on load    
+//on load, load the data and show the game rules
+window.addEventListener("load", () => {    
     let game = document.getElementById('container');
     game.style.display = "none";
     let completed = document.getElementById('completed-orders');
     completed.style.display = "none";
+    let end = document.getElementById('end');
+    end.style.display = "none";    
 
     let rules = document.getElementById('rules');
     rules.style.display = "block";
@@ -64,7 +67,37 @@ window.addEventListener("load", () => { // on load
 
     let dessert3 = document.getElementById('dessert3');
     dessert3.src = allDesserts['profiterole'];
+
+    socket.on('player1',()=>{
+        console.log('wait for another player to join');
+        onePlayer();
+     })
+  
+     socket.on('message',()=>{
+        let players = document.getElementById('players');
+        players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
+        twoPlayers();
+     })
 })
+
+let allow_start = false;
+//function to disable game until 2 players are in
+function onePlayer(){
+    let submit = document.getElementById("submit-button");
+    submit.style.opacity = "0.6";
+    let order = document.getElementById("generate-button");
+    order.style.opacity = "0.6";
+ }
+ 
+ //two players are in
+ function twoPlayers(){
+    let submit = document.getElementById("submit-button");
+    let order = document.getElementById("generate-button");
+    order.style.opacity = "1";
+    submit.style.opacity = "1";
+    allow_start = true;
+ }
+
 
 //function to start game
 function startGame(){
@@ -75,7 +108,6 @@ function startGame(){
     let game = document.getElementById('container');
     game.style.display = "block";
 }
-
 
 // function to generate order
 function generateOrder(){
@@ -101,10 +133,15 @@ function generateOrder(){
 
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
-    let timer = document.getElementById('timer');
-    timer.innerHTML = 'Time left: 30'; //preset before the timer starts
-    generateOrder();
-    socket.emit('start', ''); //start game for the rest of the users
+    if (allow_start == true) {
+        let timer = document.getElementById('timer');
+        timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+        generateOrder();
+        socket.emit('D2start', ''); //start game for the rest of the users
+    } 
+    else{
+        alert("Please wait for another player to join!");
+    }
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
@@ -121,8 +158,8 @@ socket.on('startDataFromServer', ()=>{
                 clearTimeout(timerId);
                 
                 //remove elements on the screen when time is up
-                let menu = document.getElementById('menu');
-                let tray = document.getElementById('choices');
+                let menu = document.getElementById('game-container');
+                let tray = document.getElementById('container');
                 menu.style.display = "none";
                 tray.style.display = "none";
 
@@ -186,20 +223,25 @@ function addAnswer(img) {
 
 // submit order to check the answer
 function submitOrder(){
-    let complete = document.getElementById('completed-orders');
-    if (orderAppetizer == chosenAppetizer && orderMainCourse == chosenMainCourse && orderDessert == chosenDessert) {
-        // increase the number of completed orders and reflect it on the screen
-        myCompletedOrders++;
-        complete.textContent = "Completed orders: " + myCompletedOrders;
-        //empty the tray
-        removeItem('ans1');
-        removeItem('ans2');
-        removeItem('ans3');
-        //generate new order and display on the screen
-        generateOrder();
+    if (allow_start == true) {
+        let complete = document.getElementById('completed-orders');
+        if (orderAppetizer == chosenAppetizer && orderMainCourse == chosenMainCourse && orderDessert == chosenDessert) {
+            // increase the number of completed orders and reflect it on the screen
+            myCompletedOrders++;
+            complete.textContent = "Completed orders: " + myCompletedOrders;
+            //empty the tray
+            removeItem('ans1');
+            removeItem('ans2');
+            removeItem('ans3');
+            //generate new order and display on the screen
+            generateOrder();
+        }
+        else{
+            alert("Wrong!");
+        }
     }
     else{
-        alert("Wrong!");
+        alert("Please wait for another player to join!");
     }
 }
 
@@ -211,9 +253,13 @@ function removeItem(clickedItem){
 }
 
 socket.on('finishDataFromServer', (theirCompletedOrders)=>{
-    let instructions = document.getElementById('instructions');
-    instructions.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;  
+    let end = document.getElementById('end');
+    end.style.display = "block";    
+    let results = document.getElementById('results');
+    results.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;  
 })
 
-
+function joinRoom() {
+    window.location = '/';
+}
 //code used for timer https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward

@@ -9,12 +9,12 @@ body{
 }
 
 /* Instruction Page */
-.rules ,.finished{
-    width: 45vw;
-    height: 50vh;
+.rules ,.end{
+    width: 45%;
+    height: 60%;
     background-color:rgb(192, 161, 161, 0.79);
     position:absolute;
-    display:relative;
+    display:relative; 
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
@@ -29,6 +29,10 @@ body{
 
 .specific-instructions{
     text-align: justify;
+}
+
+.results{
+    text-align: center;
 }
 
 #title{

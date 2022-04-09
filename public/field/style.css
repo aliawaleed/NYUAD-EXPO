@@ -40,7 +40,7 @@ p{
     top: 80%;
 }
 
-.rules{
+.rules, .end{
     width: 45%;
     height: 60%;
     background-color:rgb(192, 161, 161, 0.79);
@@ -84,4 +84,8 @@ h1{
     width: 25%;
     height: 15%;
     font-size: 1.5vw;
+}
+
+#players{
+    padding-top: 30%;
 }

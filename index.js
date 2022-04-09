@@ -71,8 +71,8 @@ io.sockets.on('connect', (socket) => {
     })
 
     /******************** D2 ********************/
-    socket.on('start', () => {
-        console.log("started");
+    socket.on('D2start', () => {
+        console.log("D2 started");
         socket.to("D2").emit('startDataFromServer', '');
     })
 
@@ -84,15 +84,14 @@ io.sockets.on('connect', (socket) => {
 
     /******************** C2 ********************/
     //listen for a message from a client
-
     socket.on('C2start', () => {
-        console.log("C2started");
+        console.log("C2 started");
         socket.to("C2").emit('C2startDataFromServer', '');
     })
 
     socket.on('C2finish', (completed) => {
         // console.log("Game Over! The other user completed: ", completed);
-        console.log('C2completed');
+        console.log('C2 completed');
         socket.to("C2").emit('C2finishDataFromServer', completed);
     })
 

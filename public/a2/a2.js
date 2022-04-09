@@ -197,6 +197,10 @@ function pushBubble() {
 let xspeed = 1;
 let yspeed =1;
 
+let r = Math.floor(Math.random() * 256);
+let g = Math.floor(Math.random() * 256);
+let b = Math.floor(Math.random() * 256);
+
 class bubble {
    constructor(major,x, y,speed,din) {
         //Create Random Pastel Color
@@ -218,11 +222,11 @@ class bubble {
       this.diameter = din;
    }
 
-
-    //diaplsy bubble
-    display() {
+    //display bubble
+      display() {
       noStroke();
-      fill(10);
+
+      fill(r, g, b);
       //fill ellipse with random color
       //Create ellipse at the position r
       ellipse(this.x, this.y,this.diameter,this.diameter);
@@ -234,7 +238,6 @@ class bubble {
       text(this.m,this.x,this.y);
        //radius of ellipse change according to the value of age
     }
-
         //Animate Bubbles
         move() {
          //When bump into wall, change direction
@@ -267,11 +270,11 @@ function draw() {
    rect(0,0,width,height);
    noStroke();
      //display bubbles
-     for (let i = 0; i < Bubbles.length; i++) {
+   for (let i = 0; i < Bubbles.length; i++) {
       let p = Bubbles[i];
       p.display();
       p.move();
-    }
    }
+}
  
 
