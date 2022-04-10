@@ -36,9 +36,30 @@ io.sockets.on('connect', (socket) => {
         } else {
             rooms[socket.roomName] = 1;
         }
-        for (const [key, value] of Object.entries(rooms)) {
-            console.log(`${key}: ${value}`);
-            // console.log("The number of players in the room is: ", rooms[key]);
+        for ([key, value] of Object.entries(rooms)) {
+
+            if (key == "A2") {
+                console.log(rooms["A2"]);
+                io.sockets.emit('A2PlayerNum', rooms["A2"]);
+            }
+
+            if (key == "C2") {
+                console.log(rooms["C2"]);
+                io.sockets.emit('C2PlayerNum', rooms["C2"]);
+            }
+
+            if (key == "D2") {
+                console.log(rooms["D2"]);
+                io.sockets.emit('D2PlayerNum', rooms["D2"]);
+            }
+
+            if (key == "Field") {
+                console.log(rooms["Field"]);
+                io.sockets.emit('FieldPlayerNum', rooms["Field"]);
+            }
+
+            //emit number of people in each room to all clients for map
+            console.log("The number of players in the room is: ", rooms[key]);
             if (value == 1) {
                 console.log("Client 1: ", socket.name, socket.id);
                 socket.emit('player1', socket.name); 
@@ -59,7 +80,9 @@ io.sockets.on('connect', (socket) => {
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
         console.log("socket has been disconnected ", socket.id);
-        rooms[socket.roomName]--;
+        if( rooms[socket.roomName]>-1) {
+            rooms[socket.roomName]--;
+            }
         delete users[socket.name];
         console.log("The users left in: ", socket.roomName, users);
     })
