@@ -3,7 +3,7 @@ let socket = io(); //opens and connects to the socket
 
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
-    console.log("client connected via sockets");
+    console.log("client connected via sockets to map");
     // now that client has connected to server, emit name and room information
     let data = {
         'name' : sessionStorage.getItem('name'),
@@ -33,3 +33,43 @@ function joinRoom(img) {
     }
     sessionStorage.setItem('room', room); //save to session storage
 }
+
+//listen to number of players in room A2
+socket.on('A2PlayerNum',(data)=> {
+
+  console.log(data);
+  let A2Num = document.getElementById('A2Num');
+ 
+  A2Num.innerHTML = '(' +data + '/2)'; 
+
+});
+
+//listen to number of players in room C2
+socket.on('C2PlayerNum',(data)=> {
+
+  console.log(data);
+  let C2Num = document.getElementById('C2Num');
+ 
+  C2Num.innerHTML = '(' +data + '/2)'; 
+
+});
+
+//listen to number of players in room D2
+socket.on('D2PlayerNum',(data)=> {
+
+  console.log(data);
+  let D2Num = document.getElementById('D2Num');
+ 
+  D2Num.innerHTML = '(' +data + '/2)'; 
+
+});
+
+//listen to number of players in room Field
+socket.on('FieldPlayerNum',(data)=> {
+
+  console.log(data);
+  let FieldNum = document.getElementById('FieldNum');
+ 
+  FieldNum.innerHTML = '(' +data + '/2)'; 
+
+});

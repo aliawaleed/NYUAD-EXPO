@@ -29,7 +29,13 @@ body{
 
 .specific-instructions{
     text-align: justify;
+    color:white;
 }
+
+.rules h1{
+    color: #471010;
+}
+
 
 .results{
     text-align: center;
@@ -136,7 +142,7 @@ button{
     border-radius:5px;
     font-size: 1.5vw;
     border-radius:5px;
-    background-color: #d16725;
+    background-color: #471010;
 }
 
 #submit-button{

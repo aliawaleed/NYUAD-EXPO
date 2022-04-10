@@ -30,7 +30,12 @@ html, body {
     left: 34%;
     top:2%;
 }
+#FieldName {
+    position:absolute;
+    left: 49%;
+    top:26%;
 
+}
 /*A2 overlay*/
 #A2 { 
     width:17vw;
@@ -38,6 +43,13 @@ html, body {
     position:absolute;
     left: 22%;
     bottom:2.8%;
+}
+
+#A2Name {
+    position:absolute;
+    left: 23%;
+    bottom:22%;
+
 }
 
 /*C2 overlay*/
@@ -49,6 +61,13 @@ html, body {
     bottom:32.7%;
 }
 
+#C2Name {
+    position:absolute;
+    left: 38.3%;
+    bottom:47.7%;
+}
+
+
 /*D2 overlay*/
 #D2 {
     width: 2.9vw;
@@ -56,4 +75,10 @@ html, body {
     position: absolute;
     left: 77.3%;
     top: 67.1%;
+}
+
+#D2Name {
+    position:absolute;
+    right: 17.3%;
+    top: 64%;
 }

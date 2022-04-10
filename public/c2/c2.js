@@ -11,6 +11,10 @@ let drawing;
 let timeLeft =10;
 let myCompletedOrders =0; //to track number of correct completed orders
 let completed = document.getElementById('completed-orders');
+let allow_start = false;
+
+let players = document.getElementById('players');
+
 
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
@@ -33,16 +37,19 @@ window.addEventListener("load", () => { // on load
 
    socket.on('player1',()=>{
       console.log('wait for another player to join');
-      let players = document.getElementById('players');
       players.innerHTML = 'wait for another player to join'; //preset before the timer starts
       onePlayer();
    })
 
    socket.on('message',()=>{
-      let players = document.getElementById('players');
-      players.innerHTML = 'Click draw button to begin'; //preset before the timer starts
-      twoPlayers();
+      players.innerHTML = 'wait for another player to join'; //preset before the timer starts
+      //twoPlayers();
    })
+
+   socket.on('morePlayers',()=>{
+      alert("There are 2 players in the game already! Please try again later!");
+      window.location = '/map/index.html';
+  })
 
 })
 
@@ -70,13 +77,19 @@ function twoPlayers(){
    getwordButton.style.opacity = "1";
    msgInput.disabled =false;
    sendButton.style.opacity = "1";
+   allow_start = true;
 }
 
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
-   let timer = document.getElementById('timer');
-   timer.innerHTML = 'Time left: 100'; //preset before the timer starts
-   socket.emit('C2start', ''); //start game for the rest of the users
+   if (allow_start == true) {
+      let timer = document.getElementById('timer');
+      timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+      socket.emit('C2start', ''); //start game for the rest of the users
+  } 
+  else{
+      alert("Please wait for another player to join!");
+  }
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
@@ -86,7 +99,6 @@ socket.on('C2startDataFromServer', ()=>{
    if (started == 0){
       players.style.display = "none";
        console.log("game started"); // shows how many orders the other player completed 
-       startTimer();
        //to decrement timer
        let timerId = setInterval(countdown, 1000);
        

@@ -42,11 +42,11 @@ io.sockets.on('connect', (socket) => {
             // console.log("The number of players in the room is: ", rooms[key]);
             if (value == 1) {
                 console.log("Client 1: ", socket.name, socket.id);
-                socket.emit('player1', socket.name); 
+                socket.emit('player1', socket.name);
             }
             else if (value == 2) {
                 console.log("Client 2: ", socket.name, socket.id);
-                socket.emit('player2', ''); 
+                socket.emit('player2', '');
                 io.in(key).emit('message', '');
             }
             else if (value > 2){
@@ -60,7 +60,9 @@ io.sockets.on('connect', (socket) => {
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
         console.log("socket has been disconnected ", socket.id);
-        rooms[socket.roomName]--;
+        if( rooms[socket.roomName]>-1) {
+            rooms[socket.roomName]--;
+            }
         delete users[socket.name];
         console.log("The users left in: ", socket.roomName, users);
     })
