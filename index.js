@@ -37,18 +37,18 @@ io.sockets.on('connect', (socket) => {
             rooms[socket.roomName] = 1;
         }
         for (const [key, value] of Object.entries(rooms)) {
-            console.log("Room, number of people:", `${key}: ${value}`);
+            console.log(`${key}: ${value}`);
             // console.log("The number of players in the room is: ", rooms[key]);
             if (value == 1) {
-                console.log("This is client 1 ", socket.name, socket.id);
+                console.log("Client 1: ", socket.name, socket.id);
                 socket.emit('player1', socket.name); 
             }
             else if (value == 2) {
-                console.log("This is client 2 ", socket.name, socket.id);
+                console.log("Client 2: ", socket.name, socket.id);
                 socket.emit('player2', ''); 
                 io.in(key).emit('message', '');
             }
-            else {
+            else if (value > 2){
                 /******************** BLOCK ACCESS ********************/
                 console.log("Client > 2: ", socket.id);
                 socket.emit('morePlayers', '');
@@ -61,7 +61,7 @@ io.sockets.on('connect', (socket) => {
         console.log("socket has been disconnected ", socket.id);
         rooms[socket.roomName]--;
         delete users[socket.name];
-        console.log("The users left are: ", users);
+        console.log("The users left in: ", socket.roomName, users);
     })
 
     /******************** FIELD ********************/
@@ -141,7 +141,6 @@ io.sockets.on('connect', (socket) => {
         io.sockets.emit('matchingword', data);
 
     });
-
 
     /******************** A2 ********************/
     //listen for majoradd from client

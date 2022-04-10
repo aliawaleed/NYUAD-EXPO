@@ -262,7 +262,7 @@ class bubble {
 }
 
 function joinRoom() {
-   window.location = '/';
+   window.location = '/map/index.html';
 }
 
 function draw() {

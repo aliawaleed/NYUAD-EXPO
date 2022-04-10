@@ -33,8 +33,13 @@ window.addEventListener("load", () => { // on load
   
     socket.on('message',()=>{
         let players = document.getElementById('players');
-        players.innerHTML = 'START!'; //preset before the timer starts
+        players.innerHTML = 'START!'; 
         twoPlayers();
+    })
+
+    socket.on('morePlayers',()=>{
+        alert("There are 2 players in the game already! Please try again later!");
+        window.location = '/map/index.html';
     })
 })
 
@@ -42,6 +47,7 @@ let start = false;
  
  //two players are in
  function twoPlayers(){
+    console.log("two players are in"); 
     start = true;
 }
 
@@ -56,7 +62,7 @@ function startGame(){
 }
 
 function joinRoom() {
-    window.location = '/';
+    window.location = '/map/index.html';
 }
 
 //////////////////p5 code//////////////////
@@ -95,10 +101,10 @@ function setup() {
 function keyPressed() {
     if (start == true) {
         if (keyIsDown(RIGHT_ARROW)) { //if right arrow key is pressed, move to the right
-            x += 30;
+            x += 60;
         }
         if (keyIsDown(LEFT_ARROW)) { //if left arrow key is pressed, move to the left
-            x -= 30;                      
+            x -= 60;                      
         }
         let pos = {x: x};
         //emit this information to the server
@@ -128,7 +134,7 @@ function drawData(pos) {
             line(x+100*i, y, (x+100*i) + 30, y);
         }
         // check win conditions
-        if (pos.x <= 10 || pos.x >= windowWidth - 10){
+        if (pos.x <= 20 || pos.x >= windowWidth - 20){
             gameOn = false;    
         }        
     }
@@ -139,28 +145,18 @@ function drawData(pos) {
         noStroke();
         let players = document.getElementById('players');
         players.style.display = "none";
-        let refresh = "Refresh to play again!"
-        if (pos.x <= 10){ //if player 1 won and passed the triangle on the left side
-            let winner = "Player 1 won!";
-            line(0, 10, width, 10);
-            textAlign(CENTER, TOP);
-            text(winner, 0, 10, width);
-            line(0, 54, width, 54);
-            textAlign(CENTER, CENTER);
-            text(refresh, 0, 54, width);
-            x = -4000;
+        let winner;
+        if (pos.x <= 20){ //if player 1 won and passed the triangle on the left side
+            winner = "Player 1 won!";
         }
-        if (pos.x >= windowWidth - 10){ //if player 1 won and passed the triangle on the right side
-            let winner = "Player 2 won!";
-            line(0, 10, width, 10);
-            textAlign(CENTER, TOP);
-            text(winner, 0, 10, width);
-            line(0, 54, width, 54);
-            textAlign(CENTER, CENTER);
-            text(refresh, 0, 54, width);
-            x = 4000;
+        if (pos.x >= windowWidth - 20){ //if player 1 won and passed the triangle on the right side
+            winner = "Player 2 won!";
         }
+        let displayWinner = document.getElementById('winner');
+        displayWinner.textContent = winner;    
         let end = document.getElementById('end');
         end.style.display = "block";    
+        let rules = document.getElementById('rules');
+        rules.style.display = "none";
     }
 }

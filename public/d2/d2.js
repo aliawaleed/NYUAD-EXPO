@@ -73,11 +73,16 @@ window.addEventListener("load", () => {
         onePlayer();
      })
   
-     socket.on('message',()=>{
+    socket.on('message',()=>{
         let players = document.getElementById('players');
         players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
         twoPlayers();
      })
+
+    socket.on('morePlayers',()=>{
+        alert("There are 2 players in the game already! Please try again later!");
+        window.location = '/map/index.html';
+    })
 })
 
 let allow_start = false;
@@ -97,7 +102,6 @@ function onePlayer(){
     submit.style.opacity = "1";
     allow_start = true;
  }
-
 
 //function to start game
 function startGame(){
@@ -260,6 +264,6 @@ socket.on('finishDataFromServer', (theirCompletedOrders)=>{
 })
 
 function joinRoom() {
-    window.location = '/';
+    window.location = '/map/index.html';
 }
 //code used for timer https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward

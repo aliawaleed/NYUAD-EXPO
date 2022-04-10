@@ -21,28 +21,9 @@
         <!-- to get the name of the user joining -->
         <p> Welcome to NYUAD EXPO! Enter your name to join! </p>
         <input type="text" class="name-input" id="name-input" placeholder="Name" required/>
-        <button id="join-button"> Enter </button>
+        <button id="join-button" onclick="joinRoom()"> Enter </button>
     </form>
     </div>
-
-  <div class="container" id="container">
-      <!-- set the locations on the map -->
-      <div class="location">  
-        <img src="images/a2.png" id="A2" alt="" onclick="joinRoom(this)">
-      </div>
-
-      <div class="location">
-        <img src="images/c2.png" id="C2" alt="" onclick="joinRoom(this)">
-      </div>
-
-      <div class="location">
-        <img src="images/d2.png"id="D2" alt="" onclick="joinRoom(this)">
-      </div>
-
-      <div class="location">
-        <img src="images/field.png" id="Field" alt="" onclick="joinRoom(this)">
-      </div>
-  </div>
 
   <script src="landingPage.js"></script>
 </body>

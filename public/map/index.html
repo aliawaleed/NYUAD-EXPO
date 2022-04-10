@@ -1,0 +1,40 @@
+<!-- The landing page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script> <!-- add sockets library -->
+  <link rel="shortcut icon" href="#">
+  <link rel="stylesheet" href="style.css">
+  <title>NYUAD Expo</title>
+</head>
+<body>
+  <!--Background Container -->
+  <div class="background-container">
+    <img src="images/main.png" alt="C2-img">
+  </div>
+
+  <div class="container" id="container">
+      <!-- set the locations on the map -->
+      <div class="location">  
+        <img src="images/a2.png" id="A2" alt="" onclick="joinRoom(this)">
+      </div>
+
+      <div class="location">
+        <img src="images/c2.png" id="C2" alt="" onclick="joinRoom(this)">
+      </div>
+
+      <div class="location">
+        <img src="images/d2.png"id="D2" alt="" onclick="joinRoom(this)">
+      </div>
+
+      <div class="location">
+        <img src="images/field.png" id="Field" alt="" onclick="joinRoom(this)">
+      </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
