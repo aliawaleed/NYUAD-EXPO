@@ -14,6 +14,8 @@ socket.on('connect', () => {
     socket.emit('userData', data);
 })
 
+let allow_start = false;
+
 window.addEventListener("load", () => { // on load    
     let game = document.getElementById('container');
     game.style.display = "none";
@@ -27,13 +29,16 @@ window.addEventListener("load", () => { // on load
     let end = document.getElementById('end');
     end.style.display = "none";    
 
-    socket.on('player1',()=>{
+    socket.on('player1',() =>{
         console.log('wait for another player to join');
+        let inst = document.getElementById("player-instructions");
+        inst.textContent = "You are player 1! Use the LEFT arrow key to win!";
     })
   
     socket.on('message',()=>{
-        let players = document.getElementById('players');
-        players.innerHTML = 'START!'; 
+        let inst = document.getElementById("player-instructions");
+        inst.textContent = "You are player 2! Use the RIGHT arrow key to win!";
+        allow_start = true; 
         twoPlayers();
     })
 
@@ -42,15 +47,13 @@ window.addEventListener("load", () => { // on load
         window.location = '/map/index.html';
     })
 })
-
-let start = false;
  
  //two players are in
  function twoPlayers(){
     console.log("two players are in"); 
-    start = true;
 }
 
+let start = false;
 //function to start game
 function startGame(){
     let rules = document.getElementById('rules');
@@ -59,9 +62,20 @@ function startGame(){
     game.style.display = "block";
     let players = document.getElementById('players');
     players.style.display = "block";
+    if (allow_start == true) {
+        console.log("two players are in"); 
+        socket.emit('fieldStart', ''); //start game for the rest of the users
+    }
 }
 
-function joinRoom() {
+socket.on('fieldStartDataFromServer', ()=>{
+    console.log("you can start now");
+    let players = document.getElementById('players');
+    players.innerHTML = 'START!';
+    start = true;
+})
+
+function home() {
     window.location = '/map/index.html';
 }
 

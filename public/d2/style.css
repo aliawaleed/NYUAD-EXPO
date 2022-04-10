@@ -19,8 +19,8 @@ body{
     left:50%;
     transform:translate(-50%,-50%);
     box-sizing: border-box;
-    padding-right: 6%;
-    padding-left: 6%;
+    padding-right: 4%;
+    padding-left: 4%;
     padding-top: 3%;
     padding-bottom: 5%;
     text-align: center;

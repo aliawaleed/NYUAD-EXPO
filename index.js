@@ -70,6 +70,11 @@ io.sockets.on('connect', (socket) => {
         io.sockets.emit('positionDataFromServer', pos); //send the same data back to all clients
     })
 
+    socket.on('fieldStart', () => {
+        console.log("Field started");
+        socket.to("Field").emit('fieldStartDataFromServer', '');
+    })
+
     /******************** D2 ********************/
     socket.on('D2start', () => {
         console.log("D2 started");
@@ -139,7 +144,6 @@ io.sockets.on('connect', (socket) => {
     socket.on('matchingword', function (data) {
         //Send a response to all cients
         io.sockets.emit('matchingword', data);
-
     });
 
     /******************** A2 ********************/
