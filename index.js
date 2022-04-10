@@ -38,6 +38,7 @@ io.sockets.on('connect', (socket) => {
         }
         for (const [key, value] of Object.entries(rooms)) {
             console.log(`${key}: ${value}`);
+
             // console.log("The number of players in the room is: ", rooms[key]);
             if (value == 1) {
                 console.log("Client 1: ", socket.name, socket.id);
