@@ -4,18 +4,26 @@ let socket = io();
 let game = document.getElementById('gamePage');
 let finished = document.getElementById('finished');
 let rules = document.getElementById('rules');
+
+//p5.js
 let getwordButton = document.getElementById('getword-button');
 let msgInput = document.getElementById('msg-input');
 let sendButton = document.getElementById('send-button');
 let drawing;
 let timeLeft =10;
-let myCompletedOrders =0; //to track number of correct completed orders
+
+//to track number of answers
+let myCompletedOrders =0; 
 let completed = document.getElementById('completed-orders');
+
 let allow_start = false;
 let start = false;
 
+//show player status
 let players = document.getElementById('players');
 
+let onePlayer = false;
+let twoPlayers = false;
 
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
@@ -39,7 +47,7 @@ window.addEventListener("load", () => { // on load
    socket.on('player1',()=>{
       console.log('Player 1: wait for another player to join');
       players.innerHTML = 'wait for another player to join'; //preset before the timer starts
-      onePlayer();
+      onePlayer = true;
    })
 
    socket.on('player2',()=>{
@@ -47,9 +55,9 @@ window.addEventListener("load", () => { // on load
       //players.innerHTML = 'You are Player 2'; //preset before the timer starts
       if(start == true){
            socket.emit('c2_2playersIn','');
-           // twoPlayers();
          } else{
             console.log('act as still one player')
+            onePlayer= true;
          }
    })
 
@@ -58,8 +66,34 @@ window.addEventListener("load", () => { // on load
       window.location = '/map/index.html';
   })
 
+  //function to disable game until 2 players are in
+if(onePlayer == true){
+   getwordButton.disabled = true;
+   getwordButton.style.opacity = "0.6";
+   drawing = false;
+   msgInput.disabled =true;
+   sendButton.style.opacity = "0.6";
+   console.log('not started yet');
+   twoPlayers = false;
+}
+
+//two players are have clicked start button
+if(twoPlayers == true){
+   getwordButton.disabled = false;
+   getwordButton.style.opacity = "1";
+   msgInput.disabled =false;
+   sendButton.style.opacity = "1";
+   allow_start = true;
+   onePlayer = false;
+}
+
 })
 
+socket.on('c2_2playersInFromServer', ()=>{
+   console.log('twoplayers really in');
+   twoPlayers = true;
+   onePlayer = false;
+})
 
 //function to start game
 function startGame(){
@@ -70,24 +104,7 @@ function startGame(){
    start = true;
 }
 
-//function to disable game until 2 players are in
-function onePlayer(){
-   getwordButton.disabled = true;
-   getwordButton.style.opacity = "0.6";
-   drawing = false;
-   msgInput.disabled =true;
-   sendButton.style.opacity = "0.6";
-   console.log('not started yet');
-}
 
-//two players are have clicked start button
-function twoPlayers(){
-   getwordButton.disabled = false;
-   getwordButton.style.opacity = "1";
-   msgInput.disabled =false;
-   sendButton.style.opacity = "1";
-   allow_start = true;
-}
 
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
@@ -100,12 +117,6 @@ function startTimer(){
     console.log('wait');
   }
 }
-
-
-socket.on('c2_2playersInFromServer', ()=>{
-   console.log('twoplayers really in');
-   twoPlayers();
-})
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;

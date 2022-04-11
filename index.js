@@ -94,14 +94,15 @@ io.sockets.on('connect', (socket) => {
 
     /******************** C2 ********************/
     //listen for a message from a client
-    socket.on('C2start', () => {
-        console.log("C2 started");
-        socket.to("C2").emit('C2startDataFromServer', '');
-    })
 
     socket.on('c2_2playersIn', () => {
         console.log("c2_2playersIn");
         io.to('C2').emit('c2_2playersInFromServer', '');
+    })
+
+    socket.on('C2start', () => {
+        console.log("C2 started");
+        socket.to("C2").emit('C2startDataFromServer', '');
     })
 
     socket.on('C2finish', (completed) => {
