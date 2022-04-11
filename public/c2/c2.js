@@ -12,6 +12,7 @@ let timeLeft =10;
 let myCompletedOrders =0; //to track number of correct completed orders
 let completed = document.getElementById('completed-orders');
 let allow_start = false;
+let start = false;
 
 let players = document.getElementById('players');
 
@@ -36,14 +37,20 @@ window.addEventListener("load", () => { // on load
 
 
    socket.on('player1',()=>{
-      console.log('wait for another player to join');
+      console.log('Player 1: wait for another player to join');
       players.innerHTML = 'wait for another player to join'; //preset before the timer starts
       onePlayer();
    })
 
-   socket.on('message',()=>{
-      players.innerHTML = 'wait for another player to join'; //preset before the timer starts
-      //twoPlayers();
+   socket.on('player2',()=>{
+      console.log('second-player');
+      //players.innerHTML = 'You are Player 2'; //preset before the timer starts
+      if(start == true){
+           socket.emit('c2_2playersIn','');
+           // twoPlayers();
+         } else{
+            console.log('act as still one player')
+         }
    })
 
    socket.on('morePlayers',()=>{
@@ -60,6 +67,7 @@ function startGame(){
    rules.style.display = "none";
    let game = document.getElementById('gamePage');
    game.style.display = "block";
+   start = true;
 }
 
 //function to disable game until 2 players are in
@@ -69,9 +77,10 @@ function onePlayer(){
    drawing = false;
    msgInput.disabled =true;
    sendButton.style.opacity = "0.6";
+   console.log('not started yet');
 }
 
-//two players are in
+//two players are have clicked start button
 function twoPlayers(){
    getwordButton.disabled = false;
    getwordButton.style.opacity = "1";
@@ -83,14 +92,20 @@ function twoPlayers(){
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
    if (allow_start == true) {
+      socket.emit('C2start', ''); //start game for the rest of the users
       let timer = document.getElementById('timer');
       timer.innerHTML = 'Time left: 30'; //preset before the timer starts
-      socket.emit('C2start', ''); //start game for the rest of the users
   } 
   else{
-      alert("Please wait for another player to join!");
+    console.log('wait');
   }
 }
+
+
+socket.on('c2_2playersInFromServer', ()=>{
+   console.log('twoplayers really in');
+   twoPlayers();
+})
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;

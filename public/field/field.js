@@ -35,7 +35,7 @@ window.addEventListener("load", () => { // on load
         inst.textContent = "You are player 1! Use the LEFT arrow key to win!";
     })
   
-    socket.on('message',()=>{
+    socket.on('player2',()=>{
         let inst = document.getElementById("player-instructions");
         inst.textContent = "You are player 2! Use the RIGHT arrow key to win!";
         allow_start = true; 
