@@ -10,6 +10,7 @@ html, body{
 /* background-img*/
 .background-container {
     width:100vw;
+    display:relative;
 }
 
 .background-container img {
@@ -17,6 +18,13 @@ html, body{
     height:100%;
     position:absolute;
     z-index: -3;
+}
+
+#mainHome {
+    cursor: pointer;
+    position:absolute;
+    top:5vh;
+    left:5vw;
 }
 
 /* Instruction Page */
@@ -55,11 +63,16 @@ html, body{
     text-align: center;
 }
 
+#title p{
+    margin:0;
+    margin-top:5vh;
+}
+
 #title{
     font-size: 1.5vw;
     color:white;
-    margin-left: 14%;
-    margin-right: 20%;
+    margin-left: 13vw;
+    margin-right: 13vw;
 }
 
 .title{
@@ -181,4 +194,12 @@ button{
 #generate-button{
     width: 7%;
     padding: 0.5%;
+}
+
+#Home {
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: #471010;
 }
