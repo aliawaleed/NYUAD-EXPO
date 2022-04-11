@@ -169,6 +169,7 @@ io.sockets.on('connect', (socket) => {
     socket.on('matchingword', function (data) {
         //Send a response to all cients
         io.sockets.emit('matchingword', data);
+        socket.broadcast.emit('scoreadd', data);
     });
 
     /******************** A2 ********************/
