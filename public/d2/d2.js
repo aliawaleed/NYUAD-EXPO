@@ -19,7 +19,7 @@ let allDesserts = {'cake': 'https://clipart.world/wp-content/uploads/2020/12/Pie
 
 let answerNumber = 0; //to check how many fooditems the user clicked
 let myCompletedOrders = 0; //to track number of correct completed orders
-let timeLeft = 5; //initialized at 29 as the timer takes 1 second to start
+let timeLeft = 59; //initialized at 29 as the timer takes 1 second to start
 
 let orderAppetizer = 0;
 let orderMainCourse = 0;
@@ -77,9 +77,6 @@ window.addEventListener("load", () => {
   
     socket.on('message',()=>{
         allow_start = true;
-        // let players = document.getElementById('players');
-        // players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
-        // twoPlayers();
      })
 
     socket.on('morePlayers',()=>{
@@ -98,15 +95,14 @@ function onePlayer(){
  }
  
  //two players are in
- function twoPlayers(){
+function twoPlayers(){
     let submit = document.getElementById("submit-button");
     let order = document.getElementById("generate-button");
     order.style.opacity = "1";
     submit.style.opacity = "1";
     let players = document.getElementById('players');
     players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
-    // allow_start = true;
- }
+}
 
 //function to start game
 function startGame(){
@@ -118,7 +114,6 @@ function startGame(){
     game.style.display = "block";
     if (allow_start == true) {
         socket.emit('canStart', ''); //start game for the rest of the users
-        // twoPlayers();
     }
 }
 
@@ -126,8 +121,10 @@ socket.on('canStartDataFromServer', ()=>{
     twoPlayers();
 })
 
+let canAdd = false;
 // function to generate order
 function generateOrder(){
+    canAdd = true;
     let order = document.getElementById('generated');
     let button = document.getElementById('generate-button');
     button.style.display = 'none';
@@ -150,11 +147,11 @@ function generateOrder(){
 
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
+    socket.emit('D2start', ''); //start game for the rest of the users
     if (allow_start == true) {
         let timer = document.getElementById('timer');
-        timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+        timer.innerHTML = 'Time left: 60'; //preset before the timer starts
         generateOrder();
-        socket.emit('D2start', ''); //start game for the rest of the users
     } 
     else{
         alert("Please wait for another player to join!");
@@ -197,45 +194,76 @@ function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
+let array = [0,0,0];
+let num = 0;
+let free = -1;
+
 // function to add clicked images to tray
 function addAnswer(img) {
-    let image = img.src;
+    if (canAdd == true) {
 
-    // get the name of the item that the user has pressed within each category and store in vrespective ariable;
-    if(img.className == 'appetizers') {
-        console.log(getKeyByValue(allAppetizers,image));
-        chosenAppetizer = getKeyByValue(allAppetizers,image);
-    }
-    
-    else if(img.className == 'main-courses'){
-        console.log(getKeyByValue(allMainCourses,image));
-        chosenMainCourse = getKeyByValue(allMainCourses,image);
-    }
-    else if(img.className == 'desserts'){
-        console.log(getKeyByValue(allDesserts,image));
-        chosenDessert = getKeyByValue(allDesserts,image);
-    }
+        if (array[0] == 1 && array[1] == 1 && array[2] == 1) {
+            alert("The tray is full, please remove an item from thr tray first by clicking on it!");
+        }
 
-    //depending on number of items on the tray, add to specific position defined in CSS
-    if (answerNumber == 0) {
-        let answerBox = document.getElementById('ans1')
-        answerBox.src = img.src;
-        answerNumber++;
-    }
-    else if (answerNumber == 1){
-        let answerBox = document.getElementById('ans2')
-        answerBox.src = img.src;
-        answerNumber++;
-    }
-    else if (answerNumber == 2){
-        let answerBox = document.getElementById('ans3')
-        answerBox.src = img.src;
-        answerNumber++;
+        let image = img.src;
+
+        // get the name of the item that the user has pressed within each category and store in respective variable;
+        if(img.className == 'appetizers') {
+            console.log(getKeyByValue(allAppetizers,image));
+            chosenAppetizer = getKeyByValue(allAppetizers,image);
+        }
+        
+        else if(img.className == 'main-courses'){
+            console.log(getKeyByValue(allMainCourses,image));
+            chosenMainCourse = getKeyByValue(allMainCourses,image);
+        }
+        else if(img.className == 'desserts'){
+            console.log(getKeyByValue(allDesserts,image));
+            chosenDessert = getKeyByValue(allDesserts,image);
+        }
+
+        if (num == 3){
+            for (let i = 0; i < array.length; i++) {
+                if (array[i] == 0) {
+                    free = i;
+                    break;
+                }
+            }
+            let answerBox = document.getElementById('ans' + free);
+            answerBox.src = img.src;
+            array[free] = 1;
+        }
+        else{
+            let answerBox = document.getElementById('ans' + num);
+            console.log(answerBox, num);
+            answerBox.src = img.src;
+            array[num] = 1;
+            num ++;
+        }
+        console.log(array);
+        console.log(num);
     }
     else{
-        let instructions = document.getElementById('instructions');
-        instructions.innerHTML = 'You already have 3 items on the tray! Remove by clicking on the items on the tray!';   
+        alert("The game needs to start first!");
     }
+}
+
+// to remove item from the tray and decrement the answer number
+function removeItem(clickedItem){
+    let item = document.getElementById(clickedItem);
+    console.log(item.id);
+    item.src = "";
+    if (item.id == "ans0") {
+        array[0] = 0;
+    }
+    else if (item.id == "ans1") {
+        array[1] = 0;
+    }
+    else if (item.id == "ans2") {
+        array[2] = 0;
+    }
+    console.log(array);
 }
 
 // submit order to check the answer
@@ -245,11 +273,11 @@ function submitOrder(){
         if (orderAppetizer == chosenAppetizer && orderMainCourse == chosenMainCourse && orderDessert == chosenDessert) {
             // increase the number of completed orders and reflect it on the screen
             myCompletedOrders++;
-            complete.textContent = "Completed orders: " + myCompletedOrders;
+            complete.textContent = "My orders: " + myCompletedOrders;
             //empty the tray
+            removeItem('ans0');
             removeItem('ans1');
             removeItem('ans2');
-            removeItem('ans3');
             //generate new order and display on the screen
             generateOrder();
         }
@@ -260,13 +288,6 @@ function submitOrder(){
     else{
         alert("Please wait for another player to join!");
     }
-}
-
-// to remove item from the tray and decrement the answer number
-function removeItem(clickedItem){
-    let item = document.getElementById(clickedItem);
-    item.src = "";
-    answerNumber--;
 }
 
 socket.on('finishDataFromServer', (theirCompletedOrders)=>{

@@ -23,7 +23,7 @@ html, body{
 .rules ,.end{
     width: 45%;
     height: 60%;
-    background-color:rgb(192, 161, 161, 0.79);
+    background-color:rgb(193, 153, 153, 0.79);
     position:absolute;
     display:relative; 
     top:50%;
@@ -120,24 +120,23 @@ img{
 
 #tray{
     position:relative;
-    padding-top: 5%;
     width: 300px;
     height:440px;
 }
 
-#ans1{
+#ans0{
     position: absolute;
     top: 50px;
     left: 100px;
 }
 
-#ans2{
+#ans1{
     position: absolute;
     top: 150px;
     left: 100px;
 }
 
-#ans3{
+#ans2{
     position: absolute;
     top: 250px;
     left: 100px;
