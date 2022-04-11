@@ -71,6 +71,7 @@ socket.on('fieldStartDataFromServer', ()=>{
 })
 
 function home() {
+    socket.emit('userLeft', '');
     window.location = '/map/index.html';
 }
 
