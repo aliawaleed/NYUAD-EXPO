@@ -23,8 +23,11 @@ html, body{
 #mainHome {
     cursor: pointer;
     position:absolute;
-    top:5vh;
-    left:5vw;
+    top: 4vh;
+    left: 9vw;
+    width: 3%;
+    height: 5%;
+    z-index: 10;
 }
 
 /* Instruction Page */
