@@ -78,11 +78,7 @@ io.sockets.on('connect', (socket) => {
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
         console.log("socket has been disconnected ", socket.id);
-<<<<<<< HEAD
-        if( rooms[socket.roomName]>0) {
-=======
         if(rooms[socket.roomName]>0) {
->>>>>>> feaa25756fa5c3917478a72a3c9aa5e44accfe78
             rooms[socket.roomName]--;
             }
         delete users[socket.name];
