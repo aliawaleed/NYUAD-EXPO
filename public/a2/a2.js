@@ -26,13 +26,18 @@ let players = document.getElementById('players');
 //declare Bubble Array
 let majors = [];
 
-let timeLeft =10;
+let timeLeft = 30;
 let myCompletedOrders =0; //to track number of correct completed orders
 let completed = document.getElementById('completed-orders');
 let color;
 
 let allow_start = false;
 let start = false;
+
+//for bubble color
+let red = Math.floor(Math.random() * 256);
+let green = Math.floor(Math.random() * 256);
+let blue = Math.floor(Math.random() * 256);
 
 
 //onload start showing rules only
@@ -177,8 +182,18 @@ function checkMajor(){
             console.log('Existing Major')
             alert('Existing Major');
       } else {
-         socket.emit('majoradd',majorInput.value);
-         socket.emit('color',color);
+         // socket.emit('majoradd',majorInput.value);
+
+         //send the color
+         let data = {
+            major: majorInput.value,
+            red:red,
+            green: green,
+            blue : blue
+         }
+
+         socket.emit('majoradd', data);
+         // socket.emit('color', data);
       }
 }
 };
@@ -189,11 +204,15 @@ socket.on('colorFromServer',(dataColor)=> {
 })
 
 socket.on('majoradd',(data)=> {
-   majors.push(data);
+   majors.push(data.major);
    console.log(data + 'was just added')
    console.log(majors)
-   currentMajor = data;
+   currentMajor = data.major;
+   currentR = data.red;
+   currentG = data.green;
+   currentB = data.blue;
    console.log(currentMajor);
+   console.log(currentR);
    pushBubble();
 })
 
@@ -208,7 +227,7 @@ let Bubbles = [];
 
 function pushBubble() {
 
-   Bubbles.push(new bubble(currentMajor,width/2,height/2, random(1,2),width/5));
+   Bubbles.push(new bubble(currentMajor,width/2,height/2, random(1,2),width/5, currentR, currentG, currentB));
    console.log(Bubbles);
 }
 
@@ -216,12 +235,8 @@ function pushBubble() {
 let xspeed = 1;
 let yspeed =1;
 
-let r = Math.floor(Math.random() * 256);
-let g = Math.floor(Math.random() * 256);
-let b = Math.floor(Math.random() * 256);
-
 class bubble {
-   constructor(major,x, y,speed,din) {
+   constructor(major,x, y,speed,din, r, g, b) {
         //Create Random Pastel Color
      // let hue = Math.floor(Math.floor(Math.random() * 360));
       //let randomColor;
@@ -239,13 +254,16 @@ class bubble {
       this.xspeed = speed;
       this.yspeed = speed;
       this.diameter = din;
+      this.r = r;
+      this.g = g;
+      this.b = b;
    }
 
     //display bubble
       display() {
       noStroke();
 
-      fill(r, g, b);
+      fill(this.r, this.g, this.b);
       //fill ellipse with random color
       //Create ellipse at the position r
       ellipse(this.x, this.y,this.diameter,this.diameter);
