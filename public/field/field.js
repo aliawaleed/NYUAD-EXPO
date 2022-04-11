@@ -171,3 +171,7 @@ function drawData(pos) {
         container.style.display = "none";
     }
 }
+
+function joinRoom() {
+    window.location = '/map/index.html';
+}

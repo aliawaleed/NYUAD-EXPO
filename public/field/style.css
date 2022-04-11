@@ -23,12 +23,22 @@ html, body{
 }
 
 #title{
-    width:100%;
-    height: 10vh;
+    font-size: 1.5vw;
+    color:white;
+    height:10vh;
+    top:5vh;
+    position:absolute;
+    left:13vw;
+}
+
+#mainHome {
+    cursor: pointer;
+    position:absolute;
     top:5vh;
     left:5vw;
-    position:absolute;
+    z-index:10;
 }
+
 
 /* #moveTitle{
     margin: 3%;
@@ -113,4 +123,15 @@ h1{
 
 #players{
     padding-top: 30%;
+}
+
+#Home {
+    position:absolute;
+    bottom:10vh;
+    left:18vw;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: #471010;
 }

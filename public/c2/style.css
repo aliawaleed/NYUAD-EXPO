@@ -19,6 +19,16 @@ html, body {
     z-index: -3;
 }
 
+#mainHome {
+    cursor: pointer;
+    background-color: #471010;
+    position:absolute;
+    top:5vh;
+    left:5vw;
+    z-index:20;
+}
+
+
 /* Instruction Page */
 .rules ,.finished{
     width: 45vw;
@@ -79,7 +89,7 @@ button{
 #gamePage{
     width:90vw;
     height:90vh;
-    padding: 5vh 5vw;
+    padding: 2vh 5vw;
     position:relative;
 }
 
@@ -88,7 +98,9 @@ button{
 #title{
     font-size: 1.5vw;
     color:white;
+    z-index:10;
     height:10vh;
+    padding: 0vh 6vw;
 }
 
 
@@ -155,7 +167,7 @@ button{
        border-radius:5px;
        font-size: 1.5vw;
        border-radius:5px;
-       background-color: #e28e20;
+       background-color: #471010;
 }
 
 #draw_this{
@@ -166,7 +178,7 @@ button{
 /* customize when getword button is disabled */
 #getword-button:disabled,
 #getword-button[disabled]{
-    background-color:#ac5c26;
+   background-color: #471010;
     opacity:0.1;
 
 }
@@ -235,7 +247,7 @@ input{
       border-radius:5px;
       font-size: 1.5vw;
       border-radius:5px;
-      background-color: #e28e20;
+      background-color: #471010;
 }
 
 .chat-box{
