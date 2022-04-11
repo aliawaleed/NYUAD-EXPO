@@ -29,6 +29,8 @@ let chosenAppetizer = 1;
 let chosenMainCourse = 1;
 let chosenDessert = 1;
 
+let allow_start = false;
+
 //on load, load the data and show the game rules
 window.addEventListener("load", () => {    
     let game = document.getElementById('container');
@@ -74,9 +76,10 @@ window.addEventListener("load", () => {
      })
   
     socket.on('message',()=>{
-        let players = document.getElementById('players');
-        players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
-        twoPlayers();
+        allow_start = true;
+        // let players = document.getElementById('players');
+        // players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
+        // twoPlayers();
      })
 
     socket.on('morePlayers',()=>{
@@ -85,7 +88,7 @@ window.addEventListener("load", () => {
     })
 })
 
-let allow_start = false;
+
 //function to disable game until 2 players are in
 function onePlayer(){
     let submit = document.getElementById("submit-button");
@@ -100,7 +103,9 @@ function onePlayer(){
     let order = document.getElementById("generate-button");
     order.style.opacity = "1";
     submit.style.opacity = "1";
-    allow_start = true;
+    let players = document.getElementById('players');
+    players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
+    // allow_start = true;
  }
 
 //function to start game
@@ -111,7 +116,15 @@ function startGame(){
     completed.style.display = "block";
     let game = document.getElementById('container');
     game.style.display = "block";
+    if (allow_start == true) {
+        socket.emit('canStart', ''); //start game for the rest of the users
+        // twoPlayers();
+    }
 }
+
+socket.on('canStartDataFromServer', ()=>{
+    twoPlayers();
+})
 
 // function to generate order
 function generateOrder(){

@@ -78,7 +78,7 @@ io.sockets.on('connect', (socket) => {
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
         console.log("socket has been disconnected ", socket.id);
-        if( rooms[socket.roomName]>-1) {
+        if(rooms[socket.roomName]>0) {
             rooms[socket.roomName]--;
             }
         delete users[socket.name];
@@ -100,6 +100,10 @@ io.sockets.on('connect', (socket) => {
     socket.on('D2start', () => {
         console.log("D2 started");
         socket.to("D2").emit('startDataFromServer', '');
+    })
+
+    socket.on('canStart', () => {
+        io.in("D2").emit('canStartDataFromServer', '');
     })
 
     socket.on('finish', (completed) => {
