@@ -21,13 +21,13 @@ html, body {
 
 #mainHome {
     cursor: pointer;
-    background-color: #471010;
     position:absolute;
-    top:5vh;
-    left:5vw;
-    z-index:20;
+    top: 4vh;
+    left: 7vw;
+    width: 3%;
+    height: 5%;
+    z-index: 10;
 }
-
 
 /* Instruction Page */
 .rules ,.finished{
