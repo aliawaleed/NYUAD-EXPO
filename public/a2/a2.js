@@ -45,7 +45,7 @@ window.addEventListener("load", () => { // on load
       onePlayer();
    })
 
-   socket.on('message',()=>{
+   socket.on('player2',()=>{
       let players = document.getElementById('players');
       players.innerHTML = 'Type in a major to begin'; //preset before the timer starts
       twoPlayers();

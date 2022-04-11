@@ -46,8 +46,8 @@ io.sockets.on('connect', (socket) => {
             }
             else if (value == 2) {
                 console.log("Client 2: ", socket.name, socket.id);
-                socket.emit('player2', '');
-                io.in(key).emit('message', '');
+                socket.emit('player2', socket.name);
+                //io.in(key).emit('player2', '');
             }
             else if (value > 2){
                 /******************** BLOCK ACCESS ********************/
@@ -56,6 +56,8 @@ io.sockets.on('connect', (socket) => {
             }
         }
     })
+
+    //when the client in the room leaves, all clients in the room needs to be restarted
 
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
@@ -95,6 +97,11 @@ io.sockets.on('connect', (socket) => {
     socket.on('C2start', () => {
         console.log("C2 started");
         socket.to("C2").emit('C2startDataFromServer', '');
+    })
+
+    socket.on('c2_2playersIn', () => {
+        console.log("c2_2playersIn");
+        io.to('C2').emit('c2_2playersInFromServer', '');
     })
 
     socket.on('C2finish', (completed) => {

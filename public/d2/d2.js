@@ -73,7 +73,7 @@ window.addEventListener("load", () => {
         onePlayer();
      })
   
-    socket.on('message',()=>{
+    socket.on('player2',()=>{
         let players = document.getElementById('players');
         players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
         twoPlayers();
