@@ -21,7 +21,7 @@ let getwordButton = document.getElementById('getword-button');
 let msgInput = document.getElementById('msg-input');
 let sendButton = document.getElementById('send-button');
 let drawing;
-let timeLeft =30;
+let timeLeft =5;
 
 //to track number of answers
 let myCompletedOrders =0; 
@@ -307,3 +307,7 @@ background(255);
 
 });
 });
+
+function joinRoom() {
+   window.location = '/map/index.html';
+}
