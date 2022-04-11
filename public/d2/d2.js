@@ -203,7 +203,7 @@ function addAnswer(img) {
     if (canAdd == true) {
 
         if (array[0] == 1 && array[1] == 1 && array[2] == 1) {
-            alert("The tray is full, please remove an item from thr tray first by clicking on it!");
+            alert("The tray is full, please remove an item from the tray first by clicking on it!");
         }
 
         let image = img.src;
@@ -291,6 +291,10 @@ function submitOrder(){
 }
 
 socket.on('finishDataFromServer', (theirCompletedOrders)=>{
+    let mainHome = document.getElementById('mainHome');
+    mainHome.style.display = "none";    
+    let complete = document.getElementById('completed-orders');
+    complete.style.display = "none";
     let end = document.getElementById('end');
     end.style.display = "block";    
     let results = document.getElementById('results');
@@ -298,6 +302,7 @@ socket.on('finishDataFromServer', (theirCompletedOrders)=>{
 })
 
 function joinRoom() {
+    socket.emit('userLeft', '');
     window.location = '/map/index.html';
 }
 //code used for timer https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward

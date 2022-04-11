@@ -85,6 +85,12 @@ io.sockets.on('connect', (socket) => {
         console.log("The users left in: ", socket.roomName, users);
     })
 
+    socket.on('userLeft', () => {
+        rooms[socket.roomName]--;
+        delete users[socket.name];
+        console.log("The users left in: ", socket.roomName, users);
+    })
+
     /******************** FIELD ********************/
     //listen for a message from this client
     socket.on('positionData', (pos) => {

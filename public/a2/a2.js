@@ -299,6 +299,7 @@ class bubble {
 }
 
 function joinRoom() {
+   socket.emit('userLeft', '');
    window.location = '/map/index.html';
 }
 

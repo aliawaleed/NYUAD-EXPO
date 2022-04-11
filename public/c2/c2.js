@@ -317,5 +317,6 @@ background(255);
 });
 
 function joinRoom() {
+   socket.emit('userLeft', '');
    window.location = '/map/index.html';
 }
