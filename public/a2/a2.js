@@ -1,5 +1,18 @@
 let socket = io();
-let majorList = [ "Arab Crossroads Studies","Art and Art History","Bioengineering","Biology","Business Organizations and Society","Chemistry","Civil Engineering","Computer Engineering","Computer Science","Economics","Electrical Engineering","Film and New Media","General Engineering","History","Interactive Media","Legal Studies","Literature and Creative Writing","Mathematics","Mechanical Engineering","Music","Philosophy","Physics","Psychology","Social Research and Public Policy","Theater"];
+
+//listen for confirmation of socket; confirms that the client is connected
+socket.on('connect', () => {
+   console.log("client connected via sockets");
+   // now that client has connected to server, emit name and room information
+   let data = {
+       'name' : sessionStorage.getItem('name'),
+       'room' : sessionStorage.getItem('room'),
+       'color': color,
+   }
+   socket.emit('userData', data);
+})
+
+let majorList = [ "arab crossroads studies","art and art history","bioengineering","biology","business organizations and society","chemistry","civil engineering","computer engineering","computer science","economics","electrical engineering","film and new media","general engineering","history","interactive media","legal studies","literature and creative writing","mathematics","mechanical engineering","music","philosophy","physics","psychology","social research and public policy","theater"];
 
 let game = document.getElementById('gamePage');
 let finished = document.getElementById('finished');
@@ -18,17 +31,8 @@ let myCompletedOrders =0; //to track number of correct completed orders
 let completed = document.getElementById('completed-orders');
 let color;
 
-//listen for confirmation of socket; confirms that the client is connected
-socket.on('connect', () => {
-   console.log("client connected via sockets");
-   // now that client has connected to server, emit name and room information
-   let data = {
-       'name' : sessionStorage.getItem('name'),
-       'room' : sessionStorage.getItem('room'),
-       'color': color,
-   }
-   socket.emit('userData', data);
-})
+let allow_start = false;
+let start = false;
 
 
 //onload start showing rules only
@@ -40,17 +44,36 @@ window.addEventListener("load", () => { // on load
 
    socket.on('player1',()=>{
       console.log('wait for another player to join');
-      let players = document.getElementById('players');
-      players.innerHTML = 'wait for another player to join'; //preset before the timer starts
       onePlayer();
    })
-
-   socket.on('player2',()=>{
-      let players = document.getElementById('players');
-      players.innerHTML = 'Type in a major to begin'; //preset before the timer starts
-      twoPlayers();
+   socket.on('player2Start',()=>{
+      allow_start = true;
+      // players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
+      // twoPlayers();
    })
+   socket.on('morePlayers',()=>{
+      alert("There are 2 players in the game already! Please try again later!");
+      window.location = '/map/index.html';
+  })
 
+})
+
+  //function to disable game until 2 players are in
+  function onePlayer(){
+   majorInput.disabled =true;
+   submitButton.style.opacity = "0.6";
+   console.log('not started yet');
+}
+
+
+ //two players are in
+ function twoPlayers(){
+   majorInput.disabled =false;
+   submitButton.style.opacity = "1";
+}
+
+socket.on('A2canStartDataFromServer', ()=>{
+   twoPlayers();
 })
 
 
@@ -60,27 +83,21 @@ function startGame(){
    rules.style.display = "none";
    let game = document.getElementById('gamePage');
    game.style.display = "block";
+   if (allow_start == true) {
+      socket.emit('A2canStart', ''); //start game for the rest of the users
+   }
 }
-
-//function to disable game until 2 players are in
-function onePlayer(){
-   drawing = false;
-   majorInput.disabled =true;
-   submitButton.style.opacity = "0.6";
-}
-
-//two players are in
-function twoPlayers(){
-   majorInput.disabled =false;
-   submitButton.style.opacity = "1";
-}
-
 
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
-   let timer = document.getElementById('timer');
-   timer.innerHTML = 'Time left: 60'; //preset before the timer starts
-   socket.emit('A2start', ''); //start game for the rest of the users
+   if (allow_start == true) {
+      let timer = document.getElementById('timer');
+      timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+      socket.emit('A2start', ''); //start game for the rest of the users
+  } 
+  else{
+      alert("Please wait for another player to join!");
+  }
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
@@ -101,7 +118,6 @@ socket.on('A2startDataFromServer', ()=>{
                socket.emit('A2finish', myCompletedOrders);
            } else {
                timer.innerHTML = 'Time Left: ' + timeLeft;
-               console.log(timeLeft);
                timeLeft--;
            }
        }
@@ -151,31 +167,34 @@ submitButton.addEventListener('click', function () {
   document.querySelector("#name").value = "";
 });
 
-
 function checkMajor(){
-    if (majorList.includes(majorInput.value)){
+   let majorCheck;
+   majorCheck =  majorInput.value
+    if (majorList.includes(majorCheck.toLowerCase())){
         console.log('includes major');
          // compare the first and last index of an element
-         if (majors.includes(majorInput.value)){
+         if (majors.includes(majorCheck.toLowerCase())){
             console.log('Existing Major')
             alert('Existing Major');
       } else {
          socket.emit('majoradd',majorInput.value);
-
-
+         socket.emit('color',color);
       }
 }
 };
 
-let currentMajor;
+
+socket.on('colorFromServer',(dataColor)=> {
+   console.log('received color'+dataColor);
+})
 
 socket.on('majoradd',(data)=> {
-majors.push(data);
-console.log(data + 'was just added')
-console.log(majors)
-currentMajor = data;
-console.log(currentMajor);
-pushBubble();
+   majors.push(data);
+   console.log(data + 'was just added')
+   console.log(majors)
+   currentMajor = data;
+   console.log(currentMajor);
+   pushBubble();
 })
 
 socket.on('scoreadd',(data)=> {

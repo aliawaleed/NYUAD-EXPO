@@ -113,16 +113,13 @@ io.sockets.on('connect', (socket) => {
     })
 
     /******************** C2 ********************/
-    //listen for a message from a client
-
-    // socket.on('c2_2playersIn', () => {
-    //     console.log("c2_2playersIn");
-    //     io.to('C2').emit('c2_2playersInFromServer', '');
-    // })
-
     socket.on('C2start', () => {
         console.log("C2 started");
         socket.to("C2").emit('C2startDataFromServer', '');
+    })
+
+    socket.on('C2canStart', () => {
+        io.in("C2").emit('C2canStartDataFromServer', '');
     })
 
     socket.on('C2finish', (completed) => {
@@ -180,17 +177,28 @@ io.sockets.on('connect', (socket) => {
 
     /******************** A2 ********************/
     //listen for majoradd from client
-    socket.on('majoradd', (data) => {
-        console.log('this is the major received' + data);
-        io.sockets.emit('majoradd', data);
-        socket.emit('scoreadd',data);
-    });
 
     //A2 start and finish
     socket.on('A2start', () => {
         console.log("A2started");
         socket.to("A2").emit('A2startDataFromServer', '');
     })
+
+    socket.on('A2canStart', () => {
+        io.in("A2").emit('A2canStartDataFromServer', '');
+    })
+
+    socket.on('majoradd', (data) => {
+        console.log('this is the major received' + data);
+        io.in("A2").emit('majoradd', data);
+        socket.emit('scoreadd',data);
+    });
+
+    socket.on('color', (data) => {
+        console.log('this color is received' + data);
+        io.in("A2").emit('colorFromServer', data);
+    })
+
 
     socket.on('A2finish', (completed) => {
         // console.log("Game Over! The other user completed: ", completed);

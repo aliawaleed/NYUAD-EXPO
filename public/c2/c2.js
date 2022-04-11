@@ -47,8 +47,9 @@ window.addEventListener("load", () => { // on load
    })
 
    socket.on('player2Start',()=>{
-      players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
-      twoPlayers();
+      allow_start = true;
+      // players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
+      // twoPlayers();
    })
 
   
@@ -74,8 +75,12 @@ function onePlayer(){
    getwordButton.style.opacity = "1";
    msgInput.disabled =false;
    sendButton.style.opacity = "1";
-   allow_start = true;
+   // allow_start = true;
 }
+
+socket.on('C2canStartDataFromServer', ()=>{
+   twoPlayers();
+})
 
 //function to start game
 function startGame(){
@@ -83,6 +88,9 @@ function startGame(){
    rules.style.display = "none";
    let game = document.getElementById('gamePage');
    game.style.display = "block";
+   if (allow_start == true) {
+      socket.emit('C2canStart', ''); //start game for the rest of the users
+   }
 }
 
 //function to start a 30 second timer and have it initialized on the screen
@@ -186,7 +194,7 @@ socket.on('msg', function (data) {
    msgEl.innerHTML = receivedMsg;
 
    //check if the answer matches the word
-   if(currentword == receivedMsg){
+   if(currentword.toLowerCase() == receivedMsg.toLowerCase()){
    let matchingdata = currentword;
    //Send detection of matchingword to the server
    socket.emit('matchingword', matchingdata);
