@@ -21,7 +21,7 @@ let getwordButton = document.getElementById('getword-button');
 let msgInput = document.getElementById('msg-input');
 let sendButton = document.getElementById('send-button');
 let drawing;
-let timeLeft =10;
+let timeLeft =30;
 
 //to track number of answers
 let myCompletedOrders =0; 
@@ -59,8 +59,6 @@ window.addEventListener("load", () => { // on load
   })
 
   //function to disable game until 2 players are in
-
-  //function to disable game until 2 players are in
 function onePlayer(){
    getwordButton.disabled = true;
    getwordButton.style.opacity = "0.6";
@@ -78,12 +76,6 @@ function onePlayer(){
    sendButton.style.opacity = "1";
    allow_start = true;
 }
-
-// socket.on('c2_2playersInFromServer', ()=>{
-//    console.log('twoplayers really in');
-//    twoPlayers = true;
-//    onePlayer = false;
-// })
 
 //function to start game
 function startGame(){
@@ -130,13 +122,14 @@ socket.on('C2startDataFromServer', ()=>{
    started = 1;
 })
 
-socket.on('C2finishDataFromServer', (Points)=>{
+socket.on('C2finishDataFromServer', (theirCompletedOrders)=>{
    let finalScore = document.getElementById('finalScore');
-   finalScore.innerHTML = 'Your Score:' + Points;  
+   finished.style.display = "block";  
    game.style.display = "none";
-   finished.style.display = "block";
    rules.style.display = "none";
-});
+   let results = document.getElementById('results');
+   finalScore.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;  
+})
 
 //p5.js code
 function setup() {
@@ -202,7 +195,6 @@ socket.on('msg', function (data) {
        console.log('continue guessing');
    }
 
-
    //Add the element with the message to the page
    chatBox.appendChild(msgEl);
    //Add a bit of auto scroll for the chat box
@@ -246,9 +238,6 @@ socket.on('randomwordguess', function (data) {
 //Listen for word named 'matchingword' from the server
 socket.on('matchingword',function(data){
    console.log('its matching');
-   console.log(myCompletedOrders);
-   myCompletedOrders++;
-   completed.textContent = "Points: " + myCompletedOrders;
    //clearcanvas
    clear();
    background(255);
@@ -259,6 +248,12 @@ socket.on('matchingword',function(data){
    drawthis.innerHTML = "";
 })
 
+socket.on('scoreadd',function(myCompletedOrders){
+   let completed = document.getElementById('completed-orders');
+   console.log("addscore");
+   myCompletedOrders++;
+   completed.textContent = "Points: " + myCompletedOrders;
+});
 
 /* --- Code to SEND a socket message to the Server --- */
 
