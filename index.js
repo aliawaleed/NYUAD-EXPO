@@ -90,7 +90,7 @@ io.sockets.on('connect', (socket) => {
 
     socket.on('fieldStart', () => {
         console.log("Field started");
-        socket.to("Field").emit('fieldStartDataFromServer', '');
+        io.in("Field").emit('fieldStartDataFromServer', '');
     })
 
     /******************** D2 ********************/
