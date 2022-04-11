@@ -60,7 +60,7 @@ io.sockets.on('connect', (socket) => {
             else if (value == 2) {
                 console.log("Client 2: ", socket.name, socket.id);
                 socket.emit('player2', socket.name);
-                //io.in(key).emit('player2', '');
+                io.in(key).emit('player2Start', '');
             }
             else if (value > 2){
                 /******************** BLOCK ACCESS ********************/
