@@ -172,5 +172,7 @@ function drawData(pos) {
         end.style.display = "block";    
         let rules = document.getElementById('rules');
         rules.style.display = "none";
+        let container = document.getElementById('container');
+        container.style.display = "none";
     }
 }

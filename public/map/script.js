@@ -12,6 +12,49 @@ socket.on('connect', () => {
     socket.emit('userData', data);
 })
 
+window.addEventListener("load", () => { // on load    
+  //listen to number of players in room A2
+  socket.on('A2PlayerNum',(data)=> {
+    console.log(data);
+    if (data == null) {
+      data = 0;
+    }
+    let A2Num = document.getElementById('A2Num');
+    A2Num.innerHTML = '(' + data + '/2)'; 
+  });
+
+  //listen to number of players in room C2
+  socket.on('C2PlayerNum',(data)=> {
+    console.log(data);
+    if (data == null) {
+      data = 0;
+    }
+    let C2Num = document.getElementById('C2Num');
+    C2Num.innerHTML = '(' + data + '/2)'; 
+  });
+
+  //listen to number of players in room D2
+  socket.on('D2PlayerNum',(data)=> {
+    console.log(data);
+    if (data == null) {
+      data = 0;
+    }
+    let D2Num = document.getElementById('D2Num');
+    D2Num.innerHTML = '(' + data + '/2)'; 
+  });
+
+  //listen to number of players in room Field
+  socket.on('FieldPlayerNum',(data)=> {
+    console.log(data);
+    if (data == null) {
+      data = 0;
+    }
+    let FieldNum = document.getElementById('FieldNum');
+    FieldNum.innerHTML = '(' + data + '/2)'; 
+  });
+})
+
+
 function joinRoom(img) {
     let room = img.id;
     //redirect the user to game.html
@@ -33,43 +76,3 @@ function joinRoom(img) {
     }
     sessionStorage.setItem('room', room); //save to session storage
 }
-
-//listen to number of players in room A2
-socket.on('A2PlayerNum',(data)=> {
-
-  console.log(data);
-  let A2Num = document.getElementById('A2Num');
- 
-  A2Num.innerHTML = '(' +data + '/2)'; 
-
-});
-
-//listen to number of players in room C2
-socket.on('C2PlayerNum',(data)=> {
-
-  console.log(data);
-  let C2Num = document.getElementById('C2Num');
- 
-  C2Num.innerHTML = '(' +data + '/2)'; 
-
-});
-
-//listen to number of players in room D2
-socket.on('D2PlayerNum',(data)=> {
-
-  console.log(data);
-  let D2Num = document.getElementById('D2Num');
- 
-  D2Num.innerHTML = '(' +data + '/2)'; 
-
-});
-
-//listen to number of players in room Field
-socket.on('FieldPlayerNum',(data)=> {
-
-  console.log(data);
-  let FieldNum = document.getElementById('FieldNum');
- 
-  FieldNum.innerHTML = '(' +data + '/2)'; 
-
-});
