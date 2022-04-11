@@ -248,7 +248,7 @@ socket.on('matchingword',function(data){
    drawthis.innerHTML = "";
 })
 
-socket.on('scoreadd',function(myCompletedOrders){
+socket.on('scoreadd',function(data){
    let completed = document.getElementById('completed-orders');
    console.log("addscore");
    myCompletedOrders++;
