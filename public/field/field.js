@@ -39,7 +39,6 @@ window.addEventListener("load", () => { // on load
         let inst = document.getElementById("player-instructions");
         inst.textContent = "You are player 2! Use the RIGHT arrow key to win!";
         allow_start = true; 
-        twoPlayers();
     })
 
     socket.on('morePlayers',()=>{
@@ -47,11 +46,7 @@ window.addEventListener("load", () => { // on load
         window.location = '/map/index.html';
     })
 })
- 
- //two players are in
- function twoPlayers(){
-    console.log("two players are in"); 
-}
+
 
 let start = false;
 //function to start game
