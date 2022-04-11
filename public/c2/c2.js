@@ -1,6 +1,17 @@
 // opens and connect to socket
 let socket = io();
 
+//listen for confirmation of socket; confirms that the client is connected
+socket.on('connect', () => {
+   console.log("client connected via sockets");
+   // now that client has connected to server, emit name and room information
+   let data = {
+       'name' : sessionStorage.getItem('name'),
+       'room' : sessionStorage.getItem('room'),
+   }
+   socket.emit('userData', data);
+})
+
 let game = document.getElementById('gamePage');
 let finished = document.getElementById('finished');
 let rules = document.getElementById('rules');
@@ -22,20 +33,6 @@ let start = false;
 //show player status
 let players = document.getElementById('players');
 
-let onePlayer = false;
-let twoPlayers = false;
-
-//listen for confirmation of socket; confirms that the client is connected
-socket.on('connect', () => {
-   console.log("client connected via sockets");
-   // now that client has connected to server, emit name and room information
-   let data = {
-       'name' : sessionStorage.getItem('name'),
-       'room' : sessionStorage.getItem('room'),
-   }
-   socket.emit('userData', data);
-})
-
 
 //onload start showing rules only
 window.addEventListener("load", () => { // on load  
@@ -45,55 +42,48 @@ window.addEventListener("load", () => { // on load
 
 
    socket.on('player1',()=>{
-      console.log('Player 1: wait for another player to join');
-      players.innerHTML = 'wait for another player to join'; //preset before the timer starts
-      onePlayer = true;
+      console.log('wait for another player to join');
+      onePlayer();
    })
 
-   socket.on('player2',()=>{
-      console.log('second-player');
-      //players.innerHTML = 'You are Player 2'; //preset before the timer starts
-      if(start == true){
-           socket.emit('c2_2playersIn','');
-         } else{
-            console.log('act as still one player')
-            onePlayer= true;
-         }
+   socket.on('player2Start',()=>{
+      players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
+      twoPlayers();
    })
 
+  
    socket.on('morePlayers',()=>{
       alert("There are 2 players in the game already! Please try again later!");
       window.location = '/map/index.html';
   })
+  })
 
   //function to disable game until 2 players are in
-if(onePlayer == true){
+
+  //function to disable game until 2 players are in
+function onePlayer(){
    getwordButton.disabled = true;
    getwordButton.style.opacity = "0.6";
    drawing = false;
    msgInput.disabled =true;
    sendButton.style.opacity = "0.6";
    console.log('not started yet');
-   twoPlayers = false;
 }
 
-//two players are have clicked start button
-if(twoPlayers == true){
+ //two players are in
+ function twoPlayers(){
    getwordButton.disabled = false;
    getwordButton.style.opacity = "1";
    msgInput.disabled =false;
    sendButton.style.opacity = "1";
    allow_start = true;
-   onePlayer = false;
 }
 
-})
-
-socket.on('c2_2playersInFromServer', ()=>{
-   console.log('twoplayers really in');
-   twoPlayers = true;
-   onePlayer = false;
-})
+// socket.on('c2_2playersInFromServer', ()=>{
+//    console.log('twoplayers really in');
+//    twoPlayers = true;
+//    onePlayer = false;
+// })
 
 //function to start game
 function startGame(){
@@ -101,30 +91,27 @@ function startGame(){
    rules.style.display = "none";
    let game = document.getElementById('gamePage');
    game.style.display = "block";
-   start = true;
 }
-
-
 
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer(){
    if (allow_start == true) {
-      socket.emit('C2start', ''); //start game for the rest of the users
-      let timer = document.getElementById('timer');
-      timer.innerHTML = 'Time left: 30'; //preset before the timer starts
-  } 
-  else{
-    console.log('wait');
-  }
+       let timer = document.getElementById('timer');
+       timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+       socket.emit('C2start', ''); //start game for the rest of the users
+   } 
+   else{
+       alert("Please wait for another player to join!");
+   }
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
-
 socket.on('C2startDataFromServer', ()=>{
    if (started == 0){
       players.style.display = "none";
-       console.log("game started"); // shows how many orders the other player completed 
+       console.log("game started"); // shows how many orders the other player completed  
+       startTimer();
        //to decrement timer
        let timerId = setInterval(countdown, 1000);
        
