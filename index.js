@@ -32,7 +32,14 @@ io.sockets.on('connect', (socket) => {
         socket.join(socket.roomName);
 
         if (rooms[socket.roomName]) { //if room exists
-            rooms[socket.roomName]++;
+            // do not increment if there are 2 people in the room 
+            if (rooms[socket.roomName] == 2) {
+                console.log("Client > 2: ", socket.id);
+                socket.emit('morePlayers', '');
+            }
+            else{
+                rooms[socket.roomName]++;
+            }
         } else {
             rooms[socket.roomName] = 1;
         }
@@ -62,11 +69,6 @@ io.sockets.on('connect', (socket) => {
                 socket.emit('player2', socket.name);
                 io.in(key).emit('player2Start', '');
                 io.in(key).emit('message', '');
-            }
-            else if (value > 2){
-                /******************** BLOCK ACCESS ********************/
-                console.log("Client > 2: ", socket.id);
-                socket.emit('morePlayers', '');
             }
         }
     })
