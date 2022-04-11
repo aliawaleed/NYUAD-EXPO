@@ -36,6 +36,19 @@ io.sockets.on('connect', (socket) => {
         } else {
             rooms[socket.roomName] = 1;
         }
+
+        // get the vnumber of players in each room and send to map
+        let A2 = rooms["A2"];
+        let C2 = rooms["C2"];
+        let D2 = rooms["D2"];
+        let Field = rooms["Field"];
+
+        io.in("map").emit("A2PlayerNum", A2);
+        io.in("map").emit("C2PlayerNum", C2);
+        io.in("map").emit("D2PlayerNum", D2);
+        io.in("map").emit("FieldPlayerNum", Field);
+
+
         for (const [key, value] of Object.entries(rooms)) {
             console.log(`${key}: ${value}`);
 
