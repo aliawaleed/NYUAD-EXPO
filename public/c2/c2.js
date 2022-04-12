@@ -101,7 +101,7 @@ function startGame(){
 function startTimer(){
    if (allow_start == true) {
        let timer = document.getElementById('timer');
-       timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+       timer.innerHTML = 'Time left: 100'; //preset before the timer starts
        socket.emit('C2start', ''); //start game for the rest of the users
    } 
    else{
@@ -139,8 +139,12 @@ socket.on('C2finishDataFromServer', (theirCompletedOrders)=>{
    finished.style.display = "block";  
    game.style.display = "none";
    rules.style.display = "none";
+   let timer = document.getElementById('timer');
+   timer.style.display = "none";
+   completed.style.display = "none";
    let results = document.getElementById('results');
-   finalScore.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;  
+   let total = theirCompletedOrders + myCompletedOrders;
+   finalScore.innerHTML = 'Total Points: ' + total;  
 })
 
 //p5.js code
@@ -202,9 +206,7 @@ socket.on('msg', function (data) {
       let matchingdata = currentword;
       //Send detection of matchingword to the server
       socket.emit('matchingword', matchingdata);
-   } else {
-      alert("Try again!");
-   }
+   } 
 
    //Add the element with the message to the page
    chatBox.appendChild(msgEl);

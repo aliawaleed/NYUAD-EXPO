@@ -98,6 +98,12 @@ p{
     font-size: 1.5vw;
 }
 
+#winner{
+    padding-top: 7%;
+    font-size: 3.5vw;
+    font-style: oblique;
+}
+
 .specific-instructions{
     text-align: center;
 }

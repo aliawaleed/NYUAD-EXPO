@@ -96,13 +96,18 @@ html, body{
 }
 
 #order{
-    padding-top: 5%;
+    padding-top: 3%;
     text-align: center;
     color: white;
 }
 
 #generated{
-    font-size: 20px;
+    font-size: 22px;
+    font-style: italic;
+}
+
+.game-over{
+    color: #471010;
 }
 
 #timer{
@@ -111,12 +116,18 @@ html, body{
 
 #menu{
     width: 41%;
-    height: 55%;
+    height: 57%;
     background-color:white;
     position:absolute;
     top:55%;
     left:35%;
     transform:translate(-50%,-50%);
+}
+
+#winner{
+    padding-top: 3%;
+    font-size: 3.5vw;
+    font-style: oblique;
 }
 
 /* to center table data within column */
@@ -188,7 +199,7 @@ button{
 }
 
 #instructions{
-    padding-top: 32%;  /* fix relative positions */
+    padding-top: 34%;  /* fix relative positions */
     text-align: center;
     color: white;
     font-size: 20px;
@@ -198,6 +209,7 @@ button{
     width: 7%;
     padding: 0.5%;
 }
+
 
 #Home {
     padding-left: 3%;

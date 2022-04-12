@@ -49,9 +49,16 @@ html, body {
     z-index: 1;
 }
 
-.rules h1{
+h1{
     color: #471010;
 }
+
+#finalScore{
+    padding-top: 3%;
+    font-size: 3.2vw;
+    font-style: oblique;
+}
+
 
 .specific-instructions{
     text-align: justify;

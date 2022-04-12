@@ -18,7 +18,7 @@ let allMainCourses = {'burger':'https://i.pinimg.com/originals/3a/f9/bf/3af9bf97
 let allDesserts = {'cake': 'https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png', 'acai': 'https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png', 'profiterole': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM'};
 
 let myCompletedOrders = 0; //to track number of correct completed orders
-let timeLeft = 59; //initialized at 29 as the timer takes 1 second to start
+let timeLeft = 3; //initialized at 29 as the timer takes 1 second to start
 
 let orderAppetizer = 0;
 let orderMainCourse = 0;
@@ -306,7 +306,9 @@ socket.on('finishDataFromServer', (theirCompletedOrders)=>{
     let complete = document.getElementById('completed-orders');
     complete.style.display = "none";
     let end = document.getElementById('end');
-    end.style.display = "block";    
+    end.style.display = "block";  
+    let rules = document.getElementById('rules');
+    rules.style.display = "none";  
 
     let winner = document.getElementById('winner');
     if (myCompletedOrders > theirCompletedOrders) {
