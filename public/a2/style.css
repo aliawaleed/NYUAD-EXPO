@@ -9,6 +9,9 @@ html, body {
 /* Background image */
 .background-container {
     width:100vw;
+    height:100vh;
+    position:absolute;
+    display: relative;
 
 }
 
@@ -90,7 +93,7 @@ button{
 #gamePage{
     width:90vw;
     height:90vh;
-    padding: 2vh 8vw;
+    padding: 2vh 5vw;
     position:relative;
 }
 
@@ -101,7 +104,7 @@ button{
     color:white;
     z-index:10;
     height:10vh;
-    padding: 0vh 6vw;
+    padding: 0vh 9vw;
 }
 
 

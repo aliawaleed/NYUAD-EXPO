@@ -30,7 +30,7 @@ io.sockets.on('connect', (socket) => {
         socket.roomName = data.room;
 
         socket.join(socket.roomName);
-
+        //here seems to be the issue where when the 2nd person leave the room, the room is still existing so the numbrer of player in the room is marked 1
         if (rooms[socket.roomName]) { //if room exists
             // do not increment if there are 2 people in the room 
             if (rooms[socket.roomName] == 2) {
@@ -78,7 +78,7 @@ io.sockets.on('connect', (socket) => {
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
         console.log("socket has been disconnected ", socket.id);
-        if(rooms[socket.roomName]>0) {
+        if(rooms[socket.roomName]) {
             rooms[socket.roomName]--;
             }
         delete users[socket.name];
@@ -86,8 +86,8 @@ io.sockets.on('connect', (socket) => {
     })
 
     socket.on('userLeft', () => {
-        rooms[socket.roomName]--;
         delete users[socket.name];
+        rooms[socket.roomName]--;
         console.log("The users left in: ", socket.roomName, users);
     })
 
@@ -129,7 +129,7 @@ io.sockets.on('connect', (socket) => {
     })
 
     socket.on('C2canStart', () => {
-        io.in("C2").emit('C2canStartDataFromServer', '');
+        socket.to("C2").emit('C2canStartDataFromServer', '');
     })
 
     socket.on('C2finish', (completed) => {
@@ -153,7 +153,9 @@ io.sockets.on('connect', (socket) => {
         io.sockets.emit('msg', data);
     });
 
+    //when drawclicked Send a response to all clients, including this one
     socket.on('drawClicked',function(){
+        io.sockets.emit('drawclicked','');
         console.log('drawClicked');
     });
 
@@ -175,7 +177,6 @@ io.sockets.on('connect', (socket) => {
 
         //Send a response to just this client
         socket.emit('displayrandomword', data);
-
     });
 
     //Listen for a message named 'matchingword'
