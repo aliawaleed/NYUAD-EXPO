@@ -53,29 +53,32 @@
       <p id="players"></p>
     </div>
 
-    <!-- View drawing canvas here -->
-    <div id="sketch-container">
-      <div id="sketch-canvas"> </div>
-      <!-- Get-Word Button section -->
-      <div class="getwordbutton">
-        <button id="getword-button" onclick="startTimer()">Draw</button>
-        <text class="drawword-text"><span id="draw_this"></span></text>
-      </div>
-    </div>
-
-    <!-- Chat Container -->
-    <div id="chat-container">
-      <!-- View chat messages here here -->
-      <div class="sub-container chat-feed">
-        <div class="chat-box" id="chat-box-msgs">
+    <div id="main-container">
+      <!-- View drawing canvas here -->
+      <div id="sketch-container">
+        <div id="sketch-canvas"> </div>
+        <!-- Get-Word Button section -->
+        <div class="getwordbutton">
+          <button id="getword-button" onclick="startTimer()">Draw</button>
+          <text class="drawword-text"><span id="draw_this"></span></text>
         </div>
       </div>
-      <!-- Enter chat messages here -->
-      <div id="chat-input" class="sub-container chat-input">
-        <input type="text" class="chat-input-msg" id="msg-input" placeholder="Answer">
-        <button id="send-button">Send</button>
+  
+      <!-- Chat Container -->
+      <div id="chat-container">
+        <!-- View chat messages here here -->
+        <div class="sub-container chat-feed">
+          <div class="chat-box" id="chat-box-msgs">
+          </div>
+        </div>
+        <!-- Enter chat messages here -->
+        <div id="chat-input" class="sub-container chat-input">
+          <input type="text" class="chat-input-msg" id="msg-input" placeholder="Answer">
+          <button id="send-button">Send</button>
+        </div>
       </div>
     </div>
+    
   </div>
 
   <script src="c2.js"></script>

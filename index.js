@@ -112,6 +112,10 @@ io.sockets.on('connect', (socket) => {
         io.in("D2").emit('canStartDataFromServer', '');
     })
 
+    socket.on('submit', (completed) => {
+        socket.to("D2").emit('submitDataFromServer', completed);
+    })
+
     socket.on('finish', (completed) => {
         // console.log("Game Over! The other user completed: ", completed);
         console.log('completed');

@@ -14,7 +14,7 @@ socket.on('connect', () => {
 
 let majorList = [ "arab crossroads studies","art and art history","bioengineering","biology","business organizations and society","chemistry","civil engineering","computer engineering","computer science","economics","electrical engineering","film and new media","general engineering","history","interactive media","legal studies","literature and creative writing","mathematics","mechanical engineering","music","philosophy","physics","psychology","social research and public policy","theater"];
 
-let game = document.getElementById('gamePage');
+let game = document.getElementById('main-container');
 let finished = document.getElementById('finished');
 let rules = document.getElementById('rules');
 
@@ -26,7 +26,7 @@ let players = document.getElementById('players');
 //declare Bubble Array
 let majors = [];
 
-let timeLeft = 30;
+let timeLeft = 60;
 let myCompletedOrders =0; //to track number of correct completed orders
 let completed = document.getElementById('completed-orders');
 let color;
@@ -43,6 +43,9 @@ let blue = Math.floor(Math.random() * 256);
 //onload start showing rules only
 window.addEventListener("load", () => { // on load  
    game.style.display = "none";
+   let timer = document.getElementById('timer');
+   timer.style.display = "none";
+   completed.style.display = "none";
    finished.style.display = "none";
    rules.style.display = "block";
 
@@ -86,8 +89,11 @@ socket.on('A2canStartDataFromServer', ()=>{
 function startGame(){
    let rules = document.getElementById('rules');
    rules.style.display = "none";
-   let game = document.getElementById('gamePage');
+   let game = document.getElementById('main-container');
+   let timer = document.getElementById('timer');
+   timer.style.display = "block";
    game.style.display = "block";
+   completed.style.display = "block";
    if (allow_start == true) {
       socket.emit('A2canStart', ''); //start game for the rest of the users
    }

@@ -12,7 +12,8 @@ socket.on('connect', () => {
    socket.emit('userData', data);
 })
 
-let game = document.getElementById('gamePage');
+let game = document.getElementById('main-container');
+let timer = document.getElementById('timer');
 let finished = document.getElementById('finished');
 let rules = document.getElementById('rules');
 
@@ -21,10 +22,10 @@ let getwordButton = document.getElementById('getword-button');
 let msgInput = document.getElementById('msg-input');
 let sendButton = document.getElementById('send-button');
 let drawing;
-let timeLeft =5;
+let timeLeft = 100;
 
 //to track number of answers
-let myCompletedOrders =0; 
+let myCompletedOrders = 0; 
 let completed = document.getElementById('completed-orders');
 
 let allow_start = false;
@@ -37,6 +38,8 @@ let players = document.getElementById('players');
 //onload start showing rules only
 window.addEventListener("load", () => { // on load  
    game.style.display = "none";
+   completed.style.display = "none";
+   timer.style.display = "none";
    finished.style.display = "none";
    rules.style.display = "block";
 
@@ -48,8 +51,6 @@ window.addEventListener("load", () => { // on load
 
    socket.on('player2Start',()=>{
       allow_start = true;
-      // players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
-      // twoPlayers();
    })
 
   
@@ -86,7 +87,10 @@ socket.on('C2canStartDataFromServer', ()=>{
 function startGame(){
    let rules = document.getElementById('rules');
    rules.style.display = "none";
-   let game = document.getElementById('gamePage');
+   let game = document.getElementById('main-container');
+   let timer = document.getElementById('timer');
+   completed.style.display = "block";
+   timer.style.display = "block";
    game.style.display = "block";
    if (allow_start == true) {
       socket.emit('C2canStart', ''); //start game for the rest of the users

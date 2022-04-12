@@ -46,6 +46,7 @@ html, body {
     padding-bottom: 5%;
     text-align: center;
     font-size: 1.5vw;
+    z-index: 1;
 }
 
 .rules h1{
