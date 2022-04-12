@@ -22,7 +22,7 @@ let getwordButton = document.getElementById('getword-button');
 let msgInput = document.getElementById('msg-input');
 let sendButton = document.getElementById('send-button');
 let drawing;
-let timeLeft = 100;
+let timeLeft = 99;
 
 //to track number of answers
 let myCompletedOrders = 0; 
@@ -199,12 +199,11 @@ socket.on('msg', function (data) {
 
    //check if the answer matches the word
    if(currentword.toLowerCase() == receivedMsg.toLowerCase()){
-   let matchingdata = currentword;
-   //Send detection of matchingword to the server
-   socket.emit('matchingword', matchingdata);
-
+      let matchingdata = currentword;
+      //Send detection of matchingword to the server
+      socket.emit('matchingword', matchingdata);
    } else {
-       console.log('continue guessing');
+      alert("Try again!");
    }
 
    //Add the element with the message to the page
@@ -295,29 +294,27 @@ function disableButton() {
 /* --- Code to SEND a received randomword to the Server --- */
 getwordButton.addEventListener('click', function () {
 //CLEAN Canvas
-resizeCanvas(windowWidth/2, windowHeight*0.6);
-background(255);
-//Load the word.json data file 
- fetch('word.json')
- .then(response => response.json())
- .then(data => {
-   console.log(data);
-   //Do something with 'data'
-   let wordlist = data.words;
-   let randomItem = wordlist[Math.floor(Math.random()*wordlist.length)];
-   console.log(randomItem);
+   resizeCanvas(windowWidth/2, windowHeight*0.6);
+   background(255);
+   //Load the word.json data file 
+   fetch('word.json')
+   .then(response => response.json())
+   .then(data => {
+      console.log(data);
+      //Do something with 'data'
+      let wordlist = data.words;
+      let randomItem = wordlist[Math.floor(Math.random()*wordlist.length)];
+      console.log(randomItem);
 
-   //send the data to update for all
-   socket.emit ('drawClicked','');
+      //send the data to update for all
+      socket.emit ('drawClicked','');
 
-   //Send the randomwordguess to the clients who will be guessing
-   socket.emit('randomwordguess', randomItem);
+      //Send the randomwordguess to the clients who will be guessing
+      socket.emit('randomwordguess', randomItem);
 
-   //Send the randomword to the client who clicked draW
-   socket.emit('displayrandomword', randomItem);
-
-
-});
+      //Send the randomword to the client who clicked draW
+      socket.emit('displayrandomword', randomItem);
+   });
 });
 
 function joinRoom() {

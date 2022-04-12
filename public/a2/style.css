@@ -31,8 +31,8 @@ html, body {
 
 /* Instruction Page */
 .rules ,.finished{
-    width: 45vw;
-    height: 50vh;
+    width: 45%;
+    height: 60%;
     background-color:rgb(192, 161, 161, 0.79);
     position:absolute;
     display:relative;

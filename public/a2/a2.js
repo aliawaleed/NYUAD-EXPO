@@ -26,7 +26,7 @@ let players = document.getElementById('players');
 //declare Bubble Array
 let majors = [];
 
-let timeLeft = 60;
+let timeLeft = 59;
 let myCompletedOrders =0; //to track number of correct completed orders
 let completed = document.getElementById('completed-orders');
 let color;
@@ -181,15 +181,13 @@ submitButton.addEventListener('click', function () {
 function checkMajor(){
    let majorCheck;
    majorCheck =  majorInput.value
-    if (majorList.includes(majorCheck.toLowerCase())){
+   if (majorList.includes(majorCheck.toLowerCase())){
         console.log('includes major');
          // compare the first and last index of an element
          if (majors.includes(majorCheck.toLowerCase())){
             console.log('Existing Major')
             alert('Existing Major');
       } else {
-         // socket.emit('majoradd',majorInput.value);
-
          //send the color
          let data = {
             major: majorInput.value,
@@ -201,12 +199,15 @@ function checkMajor(){
          socket.emit('majoradd', data);
          // socket.emit('color', data);
       }
-}
+   }
+   else{
+      alert("Try again!");
+   }
 };
 
 
 socket.on('colorFromServer',(dataColor)=> {
-   console.log('received color'+dataColor);
+   console.log('received color'+ dataColor);
 })
 
 socket.on('majoradd',(data)=> {
