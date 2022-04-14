@@ -22,6 +22,39 @@ The original map ![The Original Map](allImages/campus-map.png) After Illustrator
 
 The next step was to work on the individual games, where we worked asynchornously, for the most part. I made the games for the Field and D2 while Soojin made the games for A2 and C2. The game used for the Field was [Tug of War](link), which I made for my previous assignment, the documentation for the game could be accessed [here](link). Although a lot of changes had to be made for D2, seeing that the design has changed completely and a lot of error checking had to be made and fixed, I decided to work on the D2 game first as I was excited to work on something new. 
 
+To make sure that I have a functioning game, I started off by making it for one player and making sure that the logic is correct before I start emitting information. I started off by creating the basic and initializing the necessary divs. I wasn't sure how I would like the food menu items to be presented but decided to make it as a table so that it's intuitive and easy to follow when the order is displayed. I then created arrays for each of the food categories and found images of dishes that are sold in D2 with transparent backgrounds. I also made an order button to display an order consisting of an appetizer, main course, and dessert as well as another button to submit an order. The game mechanism is as follows: the user presses on the order button, the order gets displayed, and then, as fast as they can, they click on these 3 items on the menu, have them displayed on the tray, and then they can submit. When they do, I then check if the order is correct. To do this, I initialized 3 variables, 1 for each of the order items, and 3 variables, 1 for each of the user's chosen items. I then randomized the order item from the given arrays and stored them in these values. Later on, when the user clicks on the food item from the menu, the JS then tracks the click, gets the class name of the dish, gets the key, or dish name from the value of the array and stores it in the chosen dish variable. An example of this is as follows, this stores the name of the food item:  
+
+```
+      if(img.className == 'appetizers') {
+          chosenAppetizer = getKeyByValue(allAppetizers,image);
+      }
+
+```
+
+I then wrote the code for the submit button, when clicked to check if the order is correct, I wanted to leave the user with the freedom to pick and choose the items out of order and so the code for this section is as follows:
+
+```
+if (orderAppetizer == chosenAppetizer && orderMainCourse == chosenMainCourse && orderDessert == chosenDessert) {
+            // increase the number of completed orders and reflect it on the screen
+            myCompletedOrders++;
+            complete.textContent = "My orders: " + myCompletedOrders + "   |   Their orders: " + their_orders;
+            socket.emit('submit', myCompletedOrders);
+            //empty the tray
+            removeItem('ans0');
+            removeItem('ans1');
+            removeItem('ans2');
+            //generate new order and display on the screen
+            generateOrder();
+        }
+        else{
+            alert("Wrong!");
+        }
+```
+This is the final code for this section as I later built on it, and will discuss it later in the documentation. But what this code segment does, is that it checks if each of the order items and chosen items are the same, and in that case, increments the number of completed orders to keep track of the score, print it and emit such information to the other user, and remove all items from the tray while generating a new order so that the same cycle would start again. I also worked on the styling to make sure that this is the design that I am set on. 
+
+The next thing I did was go back to the server code to fix the connections of users, to track the number of the users in each room and track which user it is so that specific instructions would later be sent to them. As this part of the code was necessary for all of the games, I decided to work on it first before emitting information so that we won't need to go back to it and fix it later. Part of it was to also limit the number of people per room since all of the games are for only 2 players. 
+
+
 
 ## Challenges 
 
