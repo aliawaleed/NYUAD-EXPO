@@ -9,7 +9,25 @@ let server = http.createServer(app);
 
 //Initialize socket.io
 let io = require('socket.io');
-io = new io.Server(server);
+
+// for admin UI
+const {instrument} = require("@socket.io/admin-ui");
+
+
+io = new io.Server(server, {
+    // also for admin UI
+    cors: {
+        origin: ["https://admin.socket.io"],
+        credentials: true
+    }
+});
+
+// also for admin UI
+instrument(io, {
+    auth: false
+});
+
+// to access https://admin.socket.io/#/ ---- http://localhost:2000/admin
 
 //create a variable to store all messages
 let rooms = {}; //save key value pair of room name and # of people
