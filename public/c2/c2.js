@@ -201,17 +201,17 @@ socket.on('msg', function (data) {
    let msgEl = document.createElement('p');
    msgEl.innerHTML = receivedMsg;
 
+      //Add the element with the message to the page
+      chatBox.appendChild(msgEl);
+      //Add a bit of auto scroll for the chat box
+      chatBox.scrollTop = chatBox.scrollHeight;
+
    //check if the answer matches the word
    if(currentword.toLowerCase() == receivedMsg.toLowerCase()){
       let matchingdata = currentword;
       //Send detection of matchingword to the server
       socket.emit('matchingword', matchingdata);
    } 
-
-   //Add the element with the message to the page
-   chatBox.appendChild(msgEl);
-   //Add a bit of auto scroll for the chat box
-   chatBox.scrollTop = chatBox.scrollHeight;
 });
 
 
@@ -233,6 +233,7 @@ socket.on('displayrandomword', function (data) {
    //A perosn who draws can't guess the word
    sendButton.disabled = true;
    msgInput.disabled =true;
+   sendButton.style.opacity(0.6);
 });
 
 
@@ -243,6 +244,7 @@ socket.on('randomwordguess', function (data) {
    console.log(data);
    //when a client received randomword, then the rest of the client can't access getwordButton
    getwordButton.disabled = true;
+   getwordButton.style.opacity = "0.6";
    msgInput.disabled =false;
    sendButton.disabled = false;
    drawing = false;
@@ -314,7 +316,7 @@ getwordButton.addEventListener('click', function () {
       //Send the randomwordguess to the clients who will be guessing
       socket.emit('randomwordguess', randomItem);
 
-      //Send the randomword to the client who clicked draW
+      //Send the randomword to the client who clicked draw
       socket.emit('displayrandomword', randomItem);
    });
 });
@@ -323,3 +325,7 @@ function joinRoom() {
    socket.emit('userLeft', '');
    window.location = '/map/index.html';
 }
+
+socket.on('drawclicked',function(data){
+   console.log("drawclicked");
+});
