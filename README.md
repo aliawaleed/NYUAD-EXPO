@@ -35,28 +35,49 @@ I then wrote the code for the submit button, when clicked to check if the order 
 
 ```
 if (orderAppetizer == chosenAppetizer && orderMainCourse == chosenMainCourse && orderDessert == chosenDessert) {
-            // increase the number of completed orders and reflect it on the screen
-            myCompletedOrders++;
-            complete.textContent = "My orders: " + myCompletedOrders + "   |   Their orders: " + their_orders;
-            socket.emit('submit', myCompletedOrders);
-            //empty the tray
-            removeItem('ans0');
-            removeItem('ans1');
-            removeItem('ans2');
-            //generate new order and display on the screen
-            generateOrder();
-        }
-        else{
-            alert("Wrong!");
-        }
+      // increase the number of completed orders and reflect it on the screen
+      myCompletedOrders++;
+      complete.textContent = "My orders: " + myCompletedOrders + "   |   Their orders: " + their_orders;
+      socket.emit('submit', myCompletedOrders);
+      //empty the tray
+      removeItem('ans0');
+      removeItem('ans1');
+      removeItem('ans2');
+      //generate new order and display on the screen
+generateOrder();
+}
+else{
+      alert("Wrong!");
+}
 ```
 This is the final code for this section as I later built on it, and will discuss it later in the documentation. But what this code segment does, is that it checks if each of the order items and chosen items are the same, and in that case, increments the number of completed orders to keep track of the score, print it and emit such information to the other user, and remove all items from the tray while generating a new order so that the same cycle would start again. I also worked on the styling to make sure that this is the design that I am set on. 
 
 The next thing I did was go back to the server code to fix the connections of users, to track the number of the users in each room and track which user it is so that specific instructions would later be sent to them. As this part of the code was necessary for all of the games, I decided to work on it first before emitting information so that we won't need to go back to it and fix it later. Part of it was to also limit the number of people per room since all of the games are for only 2 players. 
 
+I then decided to go back to the Tug of War game to change the design to follow the theme that we had agreed upon. The design we decided to implement was similar to the image below:
+
+[Tug of War design](/images/field-design.png).
+
+The main changes I made were regarding the positioning since I had to set the p5 width to be equal to that of the screen, changed the background to be transparent so that the wallpaper we chose would be set as our background. An issue I had with that is that I couldn't reset the background inside the draw function to hide the previous movement of the rope when the arrows are clicked, since the background was part of the html and p5. The solution I reached is in the challenges section below. I had to make a lot of changes in the position of the rope, the triangle at the center, and error checking when the triangle leaves the screen. With the current code, for error checking and ensuring that the game doesn't go on when one user wins, I set the x value of the triangle to be far outside the screen to later fix it.
+
+The initial design for tug of war was:
+[initial design](/images/field-initial-design.png)
+
+which I then changed in the code to look as follows:
+[final design](/images/field-final-design.png)
+
+Another issue that I had with the newer design was the fact that the rope didn't really look like it was moving as it was a plain white line and so it only looked like the triangle was moving and not the whole rope and so I fixed this by making minor changes to the design of the rope, also described below in the challenges section. I then fixed the positioning of the instructions for each players as well as the title to standardize what it looks like between all of the games, the ones I made as well as Soojin's. The html element is as follows:
+
+```
+<p id="moveTitle"> <span style="font-weight:bold"> The Field </span> | Tug of War </p>
+```
+
 
 
 ## Challenges 
+* Tug of War --> resetting transparent background 
+* Tug of War --> rope doesn't look like it's mobing
+
 
 ## Lessons and Next Steps
 
