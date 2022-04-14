@@ -25,6 +25,13 @@ io = new io.Server(server, {
 // also for admin UI
 instrument(io, {
     auth: false
+
+    //for password
+    // auth: {
+        // type: "basic",
+        // username: "admin",
+        // password: "$2b$10$LhUtmkmPS.Vqn38DtCb4cO1o0dwM.39Ghv7d/R.tXEwQdyQ0pAfye" 
+    // }
 });
 
 // to access https://admin.socket.io/#/ ---- http://localhost:2000/admin
