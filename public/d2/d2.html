@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,46 +13,49 @@
     <link rel="stylesheet" href="style.css">
     <title>D2</title>
 </head>
+
 <body>
 
-      <!--Background Container -->
+    <!--Background Container -->
     <div class="background-container">
         <img src="/d2/images/d2.png" alt="D2-img">
-  
-    <!-- Home Button -->
-    <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
-</div>
-      <!-- Title -->
+
+        <!-- Home Button -->
+        <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
+    </div>
+    <!-- Title -->
     <div id="title">
         <p class="title"> <span style="font-weight:bold"> D2 </span> | One Meal Swipe</p>
-        <p class="completed-orders" id="completed-orders">My orders: 0   |   Their orders: 0</p>
+        <p class="completed-orders" id="completed-orders">My orders: 0 | Their orders: 0</p>
     </div>
 
     <div class="rules" id="rules">
         <h1 class="rules-instructions">Instructions</h1>
-        <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> make as many meals as possible under 1 minute </br> </br> <span style="font-weight:bold"> To add dish: </span> click on it in the menu. </br> </br><span style="font-weight:bold">To remove dish: </span> click on it on the tray!</p>
+        <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> make as many meals as possible
+            under 1 minute </br> </br> <span style="font-weight:bold"> To add dish: </span> click on it in the menu.
+            </br> </br><span style="font-weight:bold">To remove dish: </span> click on it on the tray!</p>
         <button id="start-button" onclick="startGame()"> START </button>
     </div>
 
     <div class="container" id="container">
-        <div class="order", id="order">
-            <p class="generated", id="generated"> </p>
+        <div class="order" , id="order">
+            <p class="generated" , id="generated"> </p>
             <button id="generate-button" onclick="startTimer()"> order </button>
             <p id="timer"></p>
         </div>
-    
+
         <div class="game-container" id="game-container">
-            <div class="menu" id="menu"> 
+            <div class="menu" id="menu">
                 <table style="width:100%">
                     <tr id="titles">
-                      <th>Appetizers</th>
-                      <th>Main Course</th>
-                      <th>Dessert</th>
+                        <th>Appetizers</th>
+                        <th>Main Course</th>
+                        <th>Dessert</th>
                     </tr>
                     <tr>
-                      <td><img class="appetizers" id="appetizer1" onclick="addAnswer(this)"></td>
-                      <td><img class="main-courses" id="main-course1" onclick="addAnswer(this)"></td>
-                      <td><img  class="desserts" id="dessert1" onclick="addAnswer(this)"></td>
+                        <td><img class="appetizers" id="appetizer1" onclick="addAnswer(this)"></td>
+                        <td><img class="main-courses" id="main-course1" onclick="addAnswer(this)"></td>
+                        <td><img class="desserts" id="dessert1" onclick="addAnswer(this)"></td>
                     </tr>
                     <tr>
                         <td><img class="appetizers" id="appetizer2" onclick="addAnswer(this)"></td>
@@ -63,7 +67,7 @@
                         <td><img class="main-courses" id="main-course3" onclick="addAnswer(this)"></td>
                         <td><img class="desserts" id="dessert3" onclick="addAnswer(this)"></td>
                     </tr>
-                  </table>
+                </table>
             </div>
             <div class="choices" id="choices">
                 <img src="/d2/images/tray.png" alt="tray to add food items" id="tray">
@@ -73,7 +77,7 @@
                 <button id="submit-button" onclick="submitOrder()"> submit </button>
             </div>
         </div>
-        <div class="instructions" id="instructions"> 
+        <div class="instructions" id="instructions">
             <p id="players"> Please wait for another player to join! </p>
         </div>
     </div>
@@ -86,4 +90,5 @@
     </div>
 
 </body>
+
 </html>

@@ -5,14 +5,16 @@ socket.on('connect', () => {
    console.log("client connected via sockets");
    // now that client has connected to server, emit name and room information
    let data = {
-       'name' : sessionStorage.getItem('name'),
-       'room' : sessionStorage.getItem('room'),
-       'color': color,
+      'name': sessionStorage.getItem('name'),
+      'room': sessionStorage.getItem('room'),
+      'color': color,
    }
    socket.emit('userData', data);
 })
 
-let majorList = [ "arab crossroads studies","art and art history","bioengineering","biology","business organizations and society","chemistry","civil engineering","computer engineering","computer science","economics","electrical engineering","film and new media","general engineering","history","interactive media","legal studies","literature and creative writing","mathematics","mechanical engineering","music","philosophy","physics","psychology","social research and public policy","theater"];
+let majorList = ["arab crossroads studies", "art and art history", "bioengineering", "biology", "business organizations and society", "chemistry", "civil engineering", "computer engineering", "computer science", "economics", "electrical engineering", "film and new media", "general engineering", "history", "interactive media", "legal studies", "literature and creative writing", "mathematics", "mechanical engineering", "music", "philosophy", "physics", "psychology", "social research and public policy", "theater"];
+//declare Bubble Array
+let majors = [];
 
 let game = document.getElementById('main-container');
 let finished = document.getElementById('finished');
@@ -23,11 +25,8 @@ let submitButton = document.getElementById('submit');
 let majorInput = document.getElementById('name');
 let players = document.getElementById('players');
 
-//declare Bubble Array
-let majors = [];
-
 let timeLeft = 59;
-let myCompletedOrders =0; //to track number of correct completed orders
+let myCorrectMajors = 0; //to track number of correct completed orders
 let completed = document.getElementById('completed-orders');
 let color;
 
@@ -50,43 +49,43 @@ window.addEventListener("load", () => { // on load
    rules.style.display = "block";
 
 
-   socket.on('player1',()=>{
+   socket.on('player1', () => {
       console.log('wait for another player to join');
       onePlayer();
    })
-   socket.on('player2Start',()=>{
+   socket.on('player2Start', () => {
       allow_start = true;
       // players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
       // twoPlayers();
    })
-   socket.on('morePlayers',()=>{
+   socket.on('morePlayers', () => {
       alert("There are 2 players in the game already! Please try again later!");
       window.location = '/map/index.html';
-  })
+   })
 
 })
 
-  //function to disable game until 2 players are in
-  function onePlayer(){
-   majorInput.disabled =true;
+//function to disable game until 2 players are in
+function onePlayer() {
+   majorInput.disabled = true;
    submitButton.style.opacity = "0.6";
    console.log('not started yet');
 }
 
 
- //two players are in
- function twoPlayers(){
-   majorInput.disabled =false;
+//two players are in
+function twoPlayers() {
+   majorInput.disabled = false;
    submitButton.style.opacity = "1";
 }
 
-socket.on('A2canStartDataFromServer', ()=>{
+socket.on('A2canStartDataFromServer', () => {
    twoPlayers();
 })
 
 
 //function to start game
-function startGame(){
+function startGame() {
    let rules = document.getElementById('rules');
    rules.style.display = "none";
    let game = document.getElementById('main-container');
@@ -100,45 +99,45 @@ function startGame(){
 }
 
 //function to start a 30 second timer and have it initialized on the screen
-function startTimer(){
+function startTimer() {
    if (allow_start == true) {
       let timer = document.getElementById('timer');
       timer.innerHTML = 'Time left: 30'; //preset before the timer starts
       socket.emit('A2start', ''); //start game for the rest of the users
-  } 
-  else{
+   }
+   else {
       alert("Please wait for another player to join!");
-  }
+   }
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
 
-socket.on('A2startDataFromServer', ()=>{
-   if (started == 0){
+socket.on('A2startDataFromServer', () => {
+   if (started == 0) {
       players.style.display = "none";
-       console.log("game started"); // shows how many orders the other player completed 
-       startTimer();
-       //to decrement timer
-       let timerId = setInterval(countdown, 1000);
-       
-       function countdown() {
-           if (timeLeft == -1) {
-               clearTimeout(timerId);
-               // alert("Time is up!");
-               socket.emit('A2finish', myCompletedOrders);
-           } else {
-               timer.innerHTML = 'Time Left: ' + timeLeft;
-               timeLeft--;
-           }
-       }
+      console.log("game started"); // shows how many orders the other player completed 
+      startTimer();
+      //to decrement timer
+      let timerId = setInterval(countdown, 1000);
+
+      function countdown() {
+         if (timeLeft == -1) {
+            clearTimeout(timerId);
+            // alert("Time is up!");
+            socket.emit('A2finish', myCorrectMajors);
+         } else {
+            timer.innerHTML = 'Time Left: ' + timeLeft;
+            timeLeft--;
+         }
+      }
    }
    started = 1;
 })
 
-socket.on('A2finishDataFromServer', (theirCompletedOrders)=>{
+socket.on('A2finishDataFromServer', (theirCompletedColors) => {
    let finalScore = document.getElementById('finalScore');
-   finalScore.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;  
+   finalScore.innerHTML = 'Them: ' + theirCompletedColors + ' You: ' + myCorrectMajors;
    game.style.display = "none";
    finished.style.display = "block";
    rules.style.display = "none";
@@ -146,71 +145,71 @@ socket.on('A2finishDataFromServer', (theirCompletedOrders)=>{
 
 //p5.js code
 function setup() {
-    let canvas = createCanvas(windowWidth/2, windowHeight*0.6);
-    canvas.parent('sketch-canvas');
-    noStroke();
-    color= floor(random(0,1));
- }
- 
- //emit information of Canvas position everytime mouse moves
- function windowResized() {
-    resizeCanvas(windowWidth/2, windowHeight*0.6);
-  }
+   let canvas = createCanvas(windowWidth / 2, windowHeight * 0.6);
+   canvas.parent('sketch-canvas');
+   noStroke();
+   color = floor(random(0, 1));
+}
 
-  //allow press ENTER to add words
-majorInput.addEventListener("keyup", function(event) {
+//emit information of Canvas position everytime mouse moves
+function windowResized() {
+   resizeCanvas(windowWidth / 2, windowHeight * 0.6);
+}
+
+//allow press ENTER to add words
+majorInput.addEventListener("keyup", function (event) {
    if (event.keyCode === 13) {
-       submitButton.click();
-      }
+      submitButton.click();
+   }
 });
 
 submitButton.addEventListener('click', function () {
 
-  //Effor alert: If there is no entry for name show alert
-  if (majorInput.value.length == 0) {
-    alert('Type in the major');
+   //Effor alert: If there is no entry for name show alert
+   if (majorInput.value.length == 0) {
+      alert('Type in the major');
    } else {
       checkMajor();
       console.log(majorInput.value);
    }
 
-  //empty input section after submission 
-  document.querySelector("#name").value = "";
+   //empty input section after submission 
+   document.querySelector("#name").value = "";
 });
 
-function checkMajor(){
+function checkMajor() {
    let majorCheck;
-   majorCheck =  majorInput.value
-   if (majorList.includes(majorCheck.toLowerCase())){
-        console.log('includes major');
-         // compare the first and last index of an element
-         if (majors.includes(majorCheck.toLowerCase())){
-            console.log('Existing Major')
-            alert('Existing Major');
+   majorCheck = majorInput.value
+   if (majorList.includes(majorCheck.toLowerCase())) {
+      console.log('includes major');
+      // compare the first and last index of an element
+      if (majors.includes(majorCheck.toLowerCase())) {
+         console.log('Existing Major')
+         alert('Existing Major');
       } else {
          //send the color
          let data = {
             major: majorInput.value,
-            red:red,
+            red: red,
             green: green,
-            blue : blue
+            blue: blue
          }
 
          socket.emit('majoradd', data);
          // socket.emit('color', data);
       }
    }
-   else{
+   else {
       alert("Try again!");
    }
 };
 
 
-socket.on('colorFromServer',(dataColor)=> {
-   console.log('received color'+ dataColor);
+socket.on('colorFromServer', (dataColor) => {
+   console.log('received color' + dataColor);
 })
 
-socket.on('majoradd',(data)=> {
+socket.on('majoradd', (data) => {
    majors.push(data.major);
    console.log(data + 'was just added')
    console.log(majors)
@@ -223,10 +222,10 @@ socket.on('majoradd',(data)=> {
    pushBubble();
 })
 
-socket.on('scoreadd',(data)=> {
-   console.log(myCompletedOrders);
-   myCompletedOrders++;
-   completed.textContent = "Points: " + myCompletedOrders;
+socket.on('scoreadd', (data) => {
+   console.log(myCorrectMajors);
+   myCorrectMajors++;
+   completed.textContent = "Points: " + myCorrectMajors;
 })
 
 //declare Bubble Array
@@ -234,26 +233,20 @@ let Bubbles = [];
 
 function pushBubble() {
 
-   Bubbles.push(new bubble(currentMajor,width/2,height/2, random(1,2),width/5, currentR, currentG, currentB));
+   Bubbles.push(new bubble(currentMajor, width / 2, height / 2, random(1, 2), width / 5, currentR, currentG, currentB));
    console.log(Bubbles);
 }
 
 
 let xspeed = 1;
-let yspeed =1;
+let yspeed = 1;
 
 class bubble {
-   constructor(major,x, y,speed,din, r, g, b) {
-        //Create Random Pastel Color
-     // let hue = Math.floor(Math.floor(Math.random() * 360));
-      //let randomColor;
-   //Create Random Pastel Color
-      //color is randomly selected from the pastel color range
-     // this.randomcolor = randomColor;
+   constructor(major, x, y, speed, din, r, g, b) {
       //x-position 
       this.x = x;
       //y-position 
-      this.y =y;
+      this.y = y;
 
       //
       this.m = major;
@@ -266,43 +259,42 @@ class bubble {
       this.b = b;
    }
 
-    //display bubble
-      display() {
+   //display bubble
+   display() {
       noStroke();
 
       fill(this.r, this.g, this.b);
-      //fill ellipse with random color
       //Create ellipse at the position r
-      ellipse(this.x, this.y,this.diameter,this.diameter);
+      ellipse(this.x, this.y, this.diameter, this.diameter);
       fill(0);
-      //write age
-      textSize(this.diameter/7);
+      //write major
+      textSize(this.diameter / 8);
       textAlign(CENTER);
       //write name
-      text(this.m,this.x,this.y);
-       //radius of ellipse change according to the value of age
-    }
-        //Animate Bubbles
-        move() {
-         //When bump into wall, change direction
-        if(this.x > (width-this.diameter/2)) {
-          this.xspeed = this.xspeed * -1;
-        }
-        else if(this.x < this.diameter/2) {
-          this.xspeed = this.xspeed * -1;
-        }
-        
-        if(this.y > (height-this.diameter/2)) {
-          this.yspeed = this.yspeed * -1;
-        }
-        else if(this.y < this.diameter/2) {
-          this.yspeed = this.yspeed * -1;
-        }
-        
-        this.x = this.x + this.xspeed;
-        this.y = this.y + this.yspeed;
-    
-    }
+      text(this.m, this.x, this.y);
+      //radius of ellipse change according to the value of age
+   }
+   //Animate Bubbles
+   move() {
+      //When bump into wall, change direction
+      if (this.x > (width - this.diameter / 2)) {
+         this.xspeed = this.xspeed * -1;
+      }
+      else if (this.x < this.diameter / 2) {
+         this.xspeed = this.xspeed * -1;
+      }
+
+      if (this.y > (height - this.diameter / 2)) {
+         this.yspeed = this.yspeed * -1;
+      }
+      else if (this.y < this.diameter / 2) {
+         this.yspeed = this.yspeed * -1;
+      }
+
+      this.x = this.x + this.xspeed;
+      this.y = this.y + this.yspeed;
+
+   }
 }
 
 function joinRoom() {
@@ -312,14 +304,14 @@ function joinRoom() {
 
 function draw() {
    fill(255);
-   rect(0,0,width,height);
+   rect(0, 0, width, height);
    noStroke();
-     //display bubbles
+   //display bubbles
    for (let i = 0; i < Bubbles.length; i++) {
       let p = Bubbles[i];
       p.display();
       p.move();
    }
 }
- 
+
 

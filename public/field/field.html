@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,21 +10,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
     <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <script src="field.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Tug of War</title>
 </head>
+
 <body>
 
-        <!--Background Container -->
+    <!--Background Container -->
     <div class="background-container">
         <img src="/field/tugOfWarImages/tugOfWarBG.png" alt="field-img">
-          
-    <!-- Home Button -->
-    <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
-</div>
+
+        <!-- Home Button -->
+        <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
+    </div>
 
     <!-- Title -->
     <div id="title">
@@ -32,7 +34,8 @@
 
     <div class="rules" id="rules">
         <h1 class="rules-instructions">Instructions</h1>
-        <p class="specific-instructions"> Welcome to Tug of War!  </br> </br> <span style="font-weight:bold"> Goal: </span> Get the center of your rope to your side to win! </p>
+        <p class="specific-instructions"> Welcome to Tug of War! </br> </br> <span style="font-weight:bold"> Goal:
+            </span> Get the center of your rope to your side to win! </p>
         <p id="player-instructions"> </p>
         <button id="start-button" onclick="startGame()"> START </button>
     </div>
@@ -47,6 +50,9 @@
         <div class="p5" id="p5"></div>
         <p id="instructions"> </p>
     </div>
-    <center><p id="players"> Please wait for another player to join! </p></center>
+    <center>
+        <p id="players"> Please wait for another player to join! </p>
+    </center>
 </body>
+
 </html>

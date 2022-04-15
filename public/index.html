@@ -1,6 +1,7 @@
 <!-- The landing page -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,22 +10,24 @@
   <link rel="stylesheet" href="style.css">
   <title>NYUAD Expo</title>
 </head>
+
 <body>
   <!--Background Container -->
   <div class="background-container">
     <img src="images/main.png" alt="C2-img">
   </div>
 
-    <!-- Enter name to join the game -->
-    <div class="rules" id="rules">
-      <form class="sub-container " id="join-form">
-        <!-- to get the name of the user joining -->
-        <p> Welcome to <span style="font-weight:bold"> NYUAD EXPO! </span> <br> Enter your name to join! </p>
-        <input type="text" class="name-input" id="name-input" placeholder="Name" required/>
-        <button id="join-button" onclick="joinRoom()"> Enter </button>
+  <!-- Enter name to join the game -->
+  <div class="rules" id="rules">
+    <form class="sub-container " id="join-form">
+      <!-- to get the name of the user joining -->
+      <p> Welcome to <span style="font-weight:bold"> NYUAD EXPO! </span> <br> Enter your name to join! </p>
+      <input type="text" class="name-input" id="name-input" placeholder="Name" required />
+      <button id="join-button" onclick="joinRoom()"> Enter </button>
     </form>
-    </div>
+  </div>
 
   <script src="landingPage.js"></script>
 </body>
+
 </html>

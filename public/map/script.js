@@ -3,55 +3,55 @@ let socket = io(); //opens and connects to the socket
 
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
-    console.log("client connected via sockets to map");
-    // now that client has connected to server, emit name and room information
-    let data = {
-        'name' : sessionStorage.getItem('name'),
-        'room' : sessionStorage.getItem('room'),
-    }
-    socket.emit('userData', data);
+  console.log("client connected via sockets to map");
+  // now that client has connected to server, emit name and room information
+  let data = {
+    'name': sessionStorage.getItem('name'),
+    'room': sessionStorage.getItem('room'),
+  }
+  socket.emit('userData', data);
 })
 
 //to print the number of players in each room on the map 
 window.addEventListener("load", () => { // on load    
   //listen to number of players in room A2
-  socket.on('A2PlayerNum',(data)=> {
+  socket.on('A2PlayerNum', (data) => {
     console.log(data);
     if (data == null) {
       data = 0;
     }
     let A2Num = document.getElementById('A2Num');
-    A2Num.innerHTML = '(' + data + '/2)'; 
+    A2Num.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room C2
-  socket.on('C2PlayerNum',(data)=> {
+  socket.on('C2PlayerNum', (data) => {
     console.log(data);
     if (data == null) {
       data = 0;
     }
     let C2Num = document.getElementById('C2Num');
-    C2Num.innerHTML = '(' + data + '/2)'; 
+    C2Num.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room D2
-  socket.on('D2PlayerNum',(data)=> {
+  socket.on('D2PlayerNum', (data) => {
     console.log(data);
     if (data == null) {
       data = 0;
     }
     let D2Num = document.getElementById('D2Num');
-    D2Num.innerHTML = '(' + data + '/2)'; 
+    D2Num.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room Field
-  socket.on('FieldPlayerNum',(data)=> {
+  socket.on('FieldPlayerNum', (data) => {
     console.log(data);
     if (data == null) {
       data = 0;
     }
     let FieldNum = document.getElementById('FieldNum');
-    FieldNum.innerHTML = '(' + data + '/2)'; 
+    FieldNum.innerHTML = '(' + data + '/2)';
   });
 })
 
@@ -63,13 +63,13 @@ function joinRoom(img) {
   if (room == 'Field') {
     window.location = '/field/field.html';
   }
-  else if (room == 'A2'){
+  else if (room == 'A2') {
     window.location = '/a2/a2.html';
   }
-  else if (room == 'C2'){
+  else if (room == 'C2') {
     window.location = '/c2/c2.html';
   }
-  else if (room == 'D2'){
+  else if (room == 'D2') {
     window.location = '/d2/d2.html';
   }
   sessionStorage.setItem('room', room); //save to session storage

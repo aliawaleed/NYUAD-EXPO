@@ -6,16 +6,16 @@ socket.on('connect', () => {
     console.log("client connected via sockets");
     // now that client has connected to server, emit name and room information
     let data = {
-        'name' : sessionStorage.getItem('name'),
-        'room' : sessionStorage.getItem('room'),
+        'name': sessionStorage.getItem('name'),
+        'room': sessionStorage.getItem('room'),
     }
     socket.emit('userData', data);
 })
 
 // assigning key-value pairs for the image sources of the different food categories
-let allAppetizers = {'salad': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png', 'soup': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png', 'fries': 'https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png'};
-let allMainCourses = {'burger':'https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png', 'salmon': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761', 'pasta': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901'};
-let allDesserts = {'cake': 'https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png', 'acai': 'https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png', 'profiterole': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM'};
+let allAppetizers = { 'salad': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png', 'soup': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png', 'fries': 'https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png' };
+let allMainCourses = { 'burger': 'https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png', 'salmon': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761', 'pasta': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901' };
+let allDesserts = { 'cake': 'https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png', 'acai': 'https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png', 'profiterole': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM' };
 
 let myCompletedOrders = 0; //to track number of correct completed orders
 let timeLeft = 59; //initialized at 29 as the timer takes 1 second to start
@@ -31,13 +31,13 @@ let chosenDessert = 1;
 let allow_start = false;
 
 //on load, load the data and show the game rules
-window.addEventListener("load", () => {    
+window.addEventListener("load", () => {
     let game = document.getElementById('container');
     game.style.display = "none";
     let completed = document.getElementById('completed-orders');
     completed.style.display = "none";
     let end = document.getElementById('end');
-    end.style.display = "none";    
+    end.style.display = "none";
 
     let rules = document.getElementById('rules');
     rules.style.display = "block";
@@ -69,16 +69,16 @@ window.addEventListener("load", () => {
     let dessert3 = document.getElementById('dessert3');
     dessert3.src = allDesserts['profiterole'];
 
-    socket.on('player1',()=>{
+    socket.on('player1', () => {
         console.log('wait for another player to join');
         onePlayer();
-     })
-  
-    socket.on('message',()=>{
-        allow_start = true;
-     })
+    })
 
-    socket.on('morePlayers',()=>{
+    socket.on('message', () => {
+        allow_start = true;
+    })
+
+    socket.on('morePlayers', () => {
         alert("There are 2 players in the game already! Please try again later!");
         window.location = '/map/index.html';
     })
@@ -86,15 +86,15 @@ window.addEventListener("load", () => {
 
 
 //function to disable game until 2 players are in
-function onePlayer(){
+function onePlayer() {
     let submit = document.getElementById("submit-button");
     submit.style.opacity = "0.6";
     let order = document.getElementById("generate-button");
     order.style.opacity = "0.6";
- }
- 
- //two players are in
-function twoPlayers(){
+}
+
+//two players are in
+function twoPlayers() {
     let submit = document.getElementById("submit-button");
     let order = document.getElementById("generate-button");
     order.style.opacity = "1";
@@ -104,7 +104,7 @@ function twoPlayers(){
 }
 
 //function to start game
-function startGame(){
+function startGame() {
     let rules = document.getElementById('rules');
     rules.style.display = "none";
     let completed = document.getElementById('completed-orders');
@@ -116,13 +116,13 @@ function startGame(){
     }
 }
 
-socket.on('canStartDataFromServer', ()=>{
+socket.on('canStartDataFromServer', () => {
     twoPlayers();
 })
 
 
 let their_orders = 0;
-socket.on('submitDataFromServer', (completed)=>{
+socket.on('submitDataFromServer', (completed) => {
     their_orders = completed;
     console.log("their order", their_orders);
     let complete = document.getElementById('completed-orders');
@@ -131,7 +131,7 @@ socket.on('submitDataFromServer', (completed)=>{
 
 let canAdd = false;
 // function to generate order
-function generateOrder(){
+function generateOrder() {
     canAdd = true;
     let order = document.getElementById('generated');
     let button = document.getElementById('generate-button');
@@ -154,31 +154,31 @@ function generateOrder(){
 }
 
 //function to start a 30 second timer and have it initialized on the screen
-function startTimer(){
+function startTimer() {
     socket.emit('D2start', ''); //start game for the rest of the users
     if (allow_start == true) {
         let timer = document.getElementById('timer');
         timer.innerHTML = 'Time left: 60'; //preset before the timer starts
         generateOrder();
-    } 
-    else{
+    }
+    else {
         alert("Please wait for another player to join!");
     }
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
-socket.on('startDataFromServer', ()=>{
-    if (started == 0){
+socket.on('startDataFromServer', () => {
+    if (started == 0) {
         console.log("game started"); // shows how many orders the other player completed 
         startTimer();
         //to decrement timer
         let timerId = setInterval(countdown, 1000);
-        
+
         function countdown() {
             if (timeLeft == -1) {
                 clearTimeout(timerId);
-                
+
                 //remove elements on the screen when time is up
                 let menu = document.getElementById('game-container');
                 let tray = document.getElementById('container');
@@ -201,7 +201,7 @@ function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
-let array = [0,0,0];
+let array = [0, 0, 0];
 let num = 0;
 let free = -1;
 
@@ -213,25 +213,25 @@ function addAnswer(img) {
             alert("The tray is full, please remove an item from the tray first by clicking on it!");
         }
 
-        else{
+        else {
             let image = img.src;
 
             // get the name of the item that the user has pressed within each category and store in respective variable;
-            if(img.className == 'appetizers') {
-                console.log(getKeyByValue(allAppetizers,image));
-                chosenAppetizer = getKeyByValue(allAppetizers,image);
+            if (img.className == 'appetizers') {
+                console.log(getKeyByValue(allAppetizers, image));
+                chosenAppetizer = getKeyByValue(allAppetizers, image);
             }
-            
-            else if(img.className == 'main-courses'){
-                console.log(getKeyByValue(allMainCourses,image));
-                chosenMainCourse = getKeyByValue(allMainCourses,image);
+
+            else if (img.className == 'main-courses') {
+                console.log(getKeyByValue(allMainCourses, image));
+                chosenMainCourse = getKeyByValue(allMainCourses, image);
             }
-            else if(img.className == 'desserts'){
-                console.log(getKeyByValue(allDesserts,image));
-                chosenDessert = getKeyByValue(allDesserts,image);
+            else if (img.className == 'desserts') {
+                console.log(getKeyByValue(allDesserts, image));
+                chosenDessert = getKeyByValue(allDesserts, image);
             }
-    
-            if (num == 3){
+
+            if (num == 3) {
                 for (let i = 0; i < array.length; i++) {
                     if (array[i] == 0) {
                         free = i;
@@ -242,24 +242,24 @@ function addAnswer(img) {
                 answerBox.src = img.src;
                 array[free] = 1;
             }
-            else{
+            else {
                 let answerBox = document.getElementById('ans' + num);
                 console.log(answerBox, num);
                 answerBox.src = img.src;
                 array[num] = 1;
-                num ++;
+                num++;
             }
             console.log(array);
-            console.log(num);   
+            console.log(num);
         }
     }
-    else{
+    else {
         alert("The game needs to start first!");
     }
 }
 
 // to remove item from the tray and decrement the answer number
-function removeItem(clickedItem){
+function removeItem(clickedItem) {
     let item = document.getElementById(clickedItem);
     console.log(item.id);
     item.src = "";
@@ -276,7 +276,7 @@ function removeItem(clickedItem){
 }
 
 // submit order to check the answer
-function submitOrder(){
+function submitOrder() {
     if (allow_start == true) {
         let complete = document.getElementById('completed-orders');
         if (orderAppetizer == chosenAppetizer && orderMainCourse == chosenMainCourse && orderDessert == chosenDessert) {
@@ -291,38 +291,38 @@ function submitOrder(){
             //generate new order and display on the screen
             generateOrder();
         }
-        else{
+        else {
             alert("Wrong!");
         }
     }
-    else{
+    else {
         alert("Please wait for another player to join!");
     }
 }
 
-socket.on('finishDataFromServer', (theirCompletedOrders)=>{
+socket.on('finishDataFromServer', (theirCompletedOrders) => {
     let mainHome = document.getElementById('mainHome');
-    mainHome.style.display = "none";    
+    mainHome.style.display = "none";
     let complete = document.getElementById('completed-orders');
     complete.style.display = "none";
     let end = document.getElementById('end');
-    end.style.display = "block";  
+    end.style.display = "block";
     let rules = document.getElementById('rules');
-    rules.style.display = "none";  
+    rules.style.display = "none";
 
     let winner = document.getElementById('winner');
     if (myCompletedOrders > theirCompletedOrders) {
         winner.innerHTML = "You won!";
-    }  
+    }
     else if (myCompletedOrders < theirCompletedOrders) {
         winner.innerHTML = "They won!";
     }
-    else{
+    else {
         winner.innerHTML = "It's a draw!";
     }
 
     let results = document.getElementById('results');
-    results.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;  
+    results.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;
 })
 
 function joinRoom() {

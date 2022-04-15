@@ -24,31 +24,33 @@
   <!--Background Container -->
   <div class="background-container">
     <img src="images/pictionarybg.png" alt="C2-img">
-        <!-- Home Button -->
-        <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
+    <!-- Home Button -->
+    <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
   </div>
 
   <!--Instructions -->
   <div class="rules" id="rules">
     <h1 class="rules-instructions"> Instructions </h1>
-    <p class="specific-instructions"> Welcome to Pictionary!  </br> </br> <span style="font-weight:bold"> Goal: </span> Collaborate to guess the most number of NYUAD related words! <br> <br> One person will draw and the other will guess!</p>
+    <p class="specific-instructions"> Welcome to Pictionary! </br> </br> <span style="font-weight:bold"> Goal: </span>
+      Collaborate to guess the most number of NYUAD related words! <br> <br> One person will draw and the other will
+      guess!</p>
 
     <button id="start-button" onclick="startGame()"> START </button>
   </div>
 
-    <!--finished note -->
-    <div class="finished" id="finished">
-      <h1 class="rules-instructions">Congratulations</h1>
-      <p id="finalScore"></p>
-      <button id="Home" onclick="joinRoom(this)"> Home</button>
-    </div>
+  <!--finished note -->
+  <div class="finished" id="finished">
+    <h1 class="rules-instructions">Congratulations</h1>
+    <p id="finalScore"></p>
+    <button id="Home" onclick="joinRoom(this)"> Home</button>
+  </div>
 
   <!--GamePage -->
   <div id="gamePage">
 
     <div id="title">
       <p class="title"> <span style="font-weight:bold"> C2 </span> | PICTIONARY </p>
-      <p class="completed-orders" id="completed-orders">Points: 0</p>
+      <p class="completed-words" id="completed-words">Points: 0</p>
       <p id="timer">Time left: 100</p>
       <p id="players"></p>
     </div>
@@ -63,7 +65,7 @@
           <text class="drawword-text"><span id="draw_this"></span></text>
         </div>
       </div>
-  
+
       <!-- Chat Container -->
       <div id="chat-container">
         <!-- View chat messages here here -->
@@ -78,7 +80,7 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 
   <script src="c2.js"></script>
