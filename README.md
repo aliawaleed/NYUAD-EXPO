@@ -22,7 +22,6 @@ The original map ![The Original Map](allImages/campus-map.png) After Illustrator
 
 The next step was to work on the individual games, where we worked asynchornously, for the most part. I made the games for the Field and D2 while Soojin made the games for A2 and C2. The game used for the Field was [Tug of War](link), which I made for my previous assignment, the documentation for the game could be accessed [here](link). Although a lot of changes had to be made for D2, seeing that the design has changed completely and a lot of error checking had to be made and fixed, I decided to work on the D2 game first as I was excited to work on something new. 
 
-<<<<<<< Updated upstream
 To make sure that I have a functioning game, I started off by making it for one player and making sure that the logic is correct before I start emitting information. I started off by creating the basic and initializing the necessary divs. I wasn't sure how I would like the food menu items to be presented but decided to make it as a table so that it's intuitive and easy to follow when the order is displayed. I then created arrays for each of the food categories and found images of dishes that are sold in D2 with transparent backgrounds. I also made an order button to display an order consisting of an appetizer, main course, and dessert as well as another button to submit an order. The game mechanism is as follows: the user presses on the order button, the order gets displayed, and then, as fast as they can, they click on these 3 items on the menu, have them displayed on the div that represents the tray, and then they can submit. When they do, I then check if the order is correct. To do this, I initialized 3 variables, 1 for each of the order items, and 3 variables, 1 for each of the user's chosen items. I then randomized the order item from the given arrays and stored them in these values. Later on, when the user clicks on the food item from the menu, the JS then tracks the click, gets the class name of the dish, gets the key, or dish name from the value of the array and stores it in the chosen dish variable. An example of this is as follows, this stores the name of the food item:  
 
 ```
@@ -138,20 +137,118 @@ Also, to make the competition better, I also emitted the final order number of e
       gameOn = false;    
   }  
 ```
+Next, was working on user experience so that the user understand what they are doing and the game runs smooth for them. Accordingly, it was necessary to print the instructions for each game before the game starts, so that they user knows how the game goes. This was also important as we observed how people were interacting with the games during user testing and wanted to ensure that there is no confusion. I added instructions for each of the games as separate divs that would be displayed as soon as the user enters the specific games, with a start button that then leads to the game itself. I did the same thing for the end condition, using the same format of the div to standardize the start and end of the game, displaying the final scores or results at the end, ensuring that each of the divs is shown in only when it's supposed to and everything else is hidden. An example of the instructions page and ending page could be seen below:
 
+![instructions for game](/images/instructions.jpg) ![end of game](/images/end.jpg)
 
+I then did the same thing for the landing page where the user would enter their name first then be redirected to the map, but later changed it to two different html files and made the map a room so that we could use it to emit user data, showing how many users are in each room and anything else that we would later want to add. Hence, I created a new html file with it's own CSS and JS that is specific to the map and emitting information to the server and receiving information from it. 
+
+Since the number of users in the room could now be seen when either of the users are on the instuctions page, I needed to add conditions to not allow the user to start the game if one of them can see the screen of the game and the other can see the instructions, as the game mechanics would not make sense and it would be unfair to the user on the instructions page. I needed to set several different boolean variable to allow the game to start and to make the game actually start. This issue took me a long time to fix as I had to make many changes to the code to make sure that what each user is seeing makes sense. I also standardized the buttons to be the same as Soojin's where they would be dimmed and not allow the user to start the game when they are the only ones inside, and later change it when they join to make the opacity 1.0 and clear for the user to press on them. I also worked on assigning each of the players in the field an arrow to use to win and made sure that each player is only assigned one direction and wins when the triangle leaves the screen on their side, irrespective of which player pressed on the button as the instructions had specified their assigned arrow. 
+
+Next, to block the users from entering a room that has already started, or has two people inside, I set a function to emit to the 3rd user to enter a room that there are 2 people in the room already and to send them back to the map, asking them to try joining later, I also had to ensure that this user is not counted to be inside the room to not disrupt the games. 
+
+This code segment send the users back the map, on the client side:
+```
+    socket.on('morePlayers',() => {
+        alert("There are 2 players in the game already! Please try again later!");
+        window.location = '/map/index.html';
+    })
+```
+
+This code segment ensures that the number of users in the room does not change when they are kicked out, on the server side:
+```
+  if (rooms[socket.roomName]) { //if room exists
+      // do not increment if there are 2 people in the room 
+      if (rooms[socket.roomName] == 2) {
+          console.log("Client > 2: ", socket.id);
+          socket.emit('morePlayers', '');
+      }
+      else{
+          rooms[socket.roomName]++;
+      }
+  } else {
+      rooms[socket.roomName] = 1;
+  }
+```
+
+With almost everything working properly and functioning, I worked on the code to emit the number of players in each room to the map for all users while Soojin worked on receiving it and displaying it. The code segment below was used to emit:
+
+```
+  // get the number of players in each room and send to map
+  let A2 = rooms["A2"];
+  let C2 = rooms["C2"];
+  let D2 = rooms["D2"];
+  let Field = rooms["Field"];
+
+  io.in("map").emit("A2PlayerNum", A2);
+  io.in("map").emit("C2PlayerNum", C2);
+  io.in("map").emit("D2PlayerNum", D2);
+  io.in("map").emit("FieldPlayerNum", Field);
+```
+I then went back to fixing the issue with allowing the game to start, which is discussed in the challenges below, as this was one of the most difficult issues that I spent the longest time on. This was followed by working on the D2 code once again, with two main issues that I needed to fix, the first one was that the users could still add items on the tray even if the game hasn't started, so I made sure to block it, and another issue that also took me some time solve. This was the issue of removing items from the tray and choosing the correct place to add the items on the try again after they were removed, this is also discussed in the challenges section below. 
+
+I then added a home icon on all of the games to be accessed at any point in case any user wants to go back to the home page at any point. We meant to make it small since our goal is for users to start the game and complete it. It was difficult to find an image that looks good and so I also got an imahe online and edited it to remove the background. I then did some styling changes and added the score of both users to always be sent whenever the submit button is clicked based on the feedback we get from user testing. I also compared the score at the end to display to the users which user won along with the score at the end of the game.
+
+```
+let winner = document.getElementById('winner');
+if (myCompletedOrders > theirCompletedOrders) {
+  winner.innerHTML = "You won!";
+}  
+else if (myCompletedOrders < theirCompletedOrders) {
+  winner.innerHTML = "They won!";
+}
+else{
+  winner.innerHTML = "It's a draw!";
+}
+
+let results = document.getElementById('results');
+results.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders; 
+```
+I also helped Soojin fix a few aspects in her code, such as what elements to display and when, especially when the instructions are shown, and also emitted the color data to make sure that each user is only assigned one random color that is constant and reflected on the screen for the other user, sending it alongside the major and circle when the user submits. 
+
+Lastly, I standardized the format of the instructions for all games, fixed the code, and added comments. 
 
 ## Challenges 
 * Tug of War --> resetting transparent background 
 * Tug of War --> rope doesn't look like it's mobing
 * D2 --> tray and css
 * D2 --> removing items from the tray
+
+Add
+```
+if (num == 3){
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] == 0) {
+            free = i;
+            break;
+        }
+    }
+    let answerBox = document.getElementById('ans' + free);
+    answerBox.src = img.src;
+    array[free] = 1;
+}
+else{
+    let answerBox = document.getElementById('ans' + num);
+    console.log(answerBox, num);
+    answerBox.src = img.src;
+    array[num] = 1;
+    num ++;
+}
+```
+Remove
+```
+    if (item.id == "ans0") {
+        array[0] = 0;
+    }
+    else if (item.id == "ans1") {
+        array[1] = 0;
+    }
+    else if (item.id == "ans2") {
+        array[2] = 0;
+```
 * D2 --> timer
+* D2 --> allow start 
 
-=======
-
-## Challenges 
->>>>>>> Stashed changes
 
 ## Lessons and Next Steps
 
