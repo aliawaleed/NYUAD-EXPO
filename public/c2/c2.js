@@ -323,6 +323,7 @@ getwordButton.addEventListener('click', function () {
 
 function joinRoom() {
    socket.emit('userLeft', '');
+   console.log('left room okay');
    window.location = '/map/index.html';
 }
 
