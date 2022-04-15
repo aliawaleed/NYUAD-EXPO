@@ -18,9 +18,9 @@ The first thing I did was set up all of the folders and files that we would be n
 
 At the same time, Soojin worked on establishing a common basic design that we would later use for all of the games in order for them to be standardized and cohesive. She also designed the map page based on a 3D model of campus, but after discussing it, we felt that a 2D map would be more user-friendly and easier to navigate. However, we couldn't find an official map that shows all of the locations we want to use, so I got one that already exists and used Illustrator to add the Field to it, using the same colors and designs as the actual map.
 
-The original map ![The Original Map](allImages/campus-map.png) After Illustrator ![After Illustrator](allImages/edited-map.png)
+The original map ![The Original Map](images/campus-map.png) After Illustrator ![After Illustrator](images/edited-map.png)
 
-The next step was to work on the individual games, where we worked asynchronously, for the most part. I made the games for the Field and D2 while Soojin made the games for A2 and C2. The game used for the Field was [Tug of War](link), which I made for my previous assignment, the documentation for the game could be accessed [here](link). Although a lot of changes had to be made for D2, seeing that the design has changed completely and a lot of error checking had to be made and fixed, I decided to work on the D2 game first as I was excited to work on something new. 
+The next step was to work on the individual games, where we worked asynchronously, for the most part. I made the games for the Field and D2 while Soojin made the games for A2 and C2. The game used for the Field was [Tug of War](https://tug-of-war-alia.glitch.me/), which I made for my previous assignment, the documentation for the game could be accessed [here](https://github.com/aliawaleed/tugOfWar#readme). Although a lot of changes had to be made for D2, seeing that the design has changed completely and a lot of error checking had to be made and fixed, I decided to work on the D2 game first as I was excited to work on something new. 
 
 To make sure that I have a functioning game, I started off by making it for one player and making sure that the logic is correct before I start emitting information. I started off by creating the basic and initializing the necessary divs. I wasn't sure how I would like the food menu items to be presented but decided to make it a table so that it's intuitive and easy to follow when the order is displayed. I then created arrays for each of the food categories and found images of dishes that are sold in D2 with transparent backgrounds. I also made an order button to display an order consisting of an appetizer, main course, and dessert as well as another button to submit an order. The game mechanism is as follows: the user presses the order button, the order gets displayed, and then, as fast as they can, they click on these 3 items on the menu and have them displayed on the div that represents the tray, and then they can submit. When they do, I then check if the order is correct. To do this, I initialized 3 variables, 1 for each of the order items, and 3 variables, 1 for each of the user's chosen items. I then randomized the ordered item from the given arrays and stored them in these values. Later on, when the user clicks on the food item from the menu, the JS then tracks the click, gets the class name of the dish, gets the key, or dish name from the value of the array, and stores it in the chosen dish variable. An example of this is as follows, this stores the name of the food item:  
 
@@ -28,7 +28,6 @@ To make sure that I have a functioning game, I started off by making it for one 
       if(img.className == 'appetizers') {
           chosenAppetizer = getKeyByValue(allAppetizers,image);
       }
-
 ```
 
 I then wrote the code for the submit button, when clicked to check if the order is correct, I wanted to leave the user with the freedom to pick and choose the items out of order and so the code for this section is as follows:
@@ -111,7 +110,7 @@ Also, to make the competition better, I also emitted the final order number of e
 ```
 Next, was working on user experience so that the user understands what they are doing and the game runs smoothly for them. Accordingly, it was necessary to print the instructions for each game before the game starts, so that the user knows how the game goes. This was also important as we observed how people were interacting with the games during user testing and wanted to ensure that there is no confusion. I added instructions for each of the games as separate divs that would be displayed as soon as the user enters the specific games, with a start button that then leads to the game itself. I did the same thing for the end condition, using the same format of the div to standardize the start and end of the game, displaying the final scores or results at the end, ensuring that each of the divs is shown only when it's supposed to and everything else is hidden. An example of the instructions page and ending page could be seen below:
 
-![instructions for game](/images/instructions.jpg) ![end of game](/images/end.jpg)
+![instructions for game](/images/instructions.png) ![end of game](/images/end.png)
 
 I then did the same thing for the landing page where the user would enter their name first then be redirected to the map, but later changed it to two different HTML files and made the map a room so that we could use it to emit user data, showing how many users are in each room and anything else that we would later want to add. Hence, I created a new HTML file with its own CSS and JS that is specific to the map and emits information to the server and receives information from it. 
 
@@ -352,27 +351,18 @@ C2
 
 ## References 
 Appetizers links: 
-
-'salad': https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png
-
-'soup': https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png
-
-'fries': https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png
+[salad](https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png)
+[soup](https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png)
+[fries](https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png)
 
 Main Courses links: 
-
-'burger': https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png
-
-'salmon': https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761
-
-'pasta': https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901
+[burger](https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png)
+[salmon](https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761)
+[pasta](https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901)
 
 Desserts links: 
-
-'cake': https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png
-
-'acai': https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png
-
-'profiterole: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM' 
+[cake](https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png)
+[acai](https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png)
+[profiterole](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM) 
 
 Link for timer code: https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward
