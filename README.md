@@ -295,7 +295,75 @@ socket.on('canStartDataFromServer', () => {
 })
 ```
 
-## Lessons and Next Steps
+## User Testing
+### Goals
+* Do the users understand the games?
+* Do they seem like they’re enjoying them? 
+* What do they think could be changed or fixed for a smoother experience?
+* Is there a game that they prefer playing and why?
+* Are the bigger games more clickable?
+* Would they rather collaborate or compete?
 
+### Observations and Feedback
+D2
+* Some users would try to drag and drop -> I added instructions that make it clear throughout the game that they should click as it's faster
+* Unable to remove/delete items from tray -> Also added instructions and alert if more than 3 items have been added
+* Time was not enough -> increased the time to 1 minute 
+* Players prefer seeing the score of the other person during the game -> I added the score and would later want to add the name 
+
+Field 
+* Game took a long time as the triangle wasn't moving quickly -> moved it in larger increments
+
+Overall
+* Show how many players are in each room  -> changed the map into a room and emitted the information from the other rooms
+* People are tempted to go to d2 -> This was an unexpected observation as we felt that D2 was small relative to other locations on the screen yet people chose it more than we had expected
+* Make clearer timers -> made the font bigger for clarity
+* Move to home when game is up/add home button -> we added a home button at the end screen as well as next to all of the game titles
+* Instructions for all -> added instructions before the start of every game
+
+```
+Soojin's games and my contributions:
+
+A2 
+* Timer increments faster than 1 sec/sec
+* Change colors and assign specific colors -> helped Soojin solve this issue
+* Enter instead of submit only 
+* Notify users if word exists 
+* Change input box to major not name -> changed it because some people would write their name instead of a major
+
+C2
+* Change brush color to make it clearer 
+* Delete or erase option 
+* Clear screen 
+```
+
+## Lessons and Next Steps
+### Lessons
+* Many of the lessons learned have been through the challenges that I have encountered and the solutions that I reached 
+* That using boolean variables and boolean arrays is very useful and have many implications -
+* User testing allows you to see problems from other people's eyes and is very useful, to always prioritize the user experience as at the end of the day the product should be catered towards them
+* Working with a partner was very helpful as we would think of everything together and I learned a lot helping with their code since I would try to understand some parts from scratch and help them accordingly
+
+### The Next Steps:
+* Maintain highscores for all of the users that played the game
+* Fix issue of number of people not showing on map when the users that have been on the game press on the home button
+* Fix the tray position for larger screens
+* Add the names of the users to be identifiable
 
 ## References 
+Appetizers links: 
+'salad': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png'
+'soup': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png'
+'fries': 'https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png' 
+
+Main Courses links: 
+'burger': 'https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png' 
+'salmon': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761' 
+'pasta': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901'
+
+Desserts links: 
+'cake': 'https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png'
+'acai': 'https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png'
+'profiterole': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM' 
+
+Link for timer code: https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward
