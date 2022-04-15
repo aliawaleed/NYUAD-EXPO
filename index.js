@@ -9,6 +9,47 @@ let server = http.createServer(app);
 
 //Initialize socket.io
 let io = require('socket.io');
+<<<<<<< Updated upstream
+=======
+
+let { instrument } = require("@socket.io/admin-ui");
+io = new io.Server(server,{
+    cors: {
+        origin: ["https://admin.socket.io"],
+        credentials: true
+      }
+});
+
+instrument(io, {
+    auth: false
+  });
+
+
+// for admin UI
+const {instrument} = require("@socket.io/admin-ui");
+
+
+io = new io.Server(server, {
+    // also for admin UI
+    cors: {
+        origin: ["https://admin.socket.io"],
+        credentials: true
+    }
+});
+
+// also for admin UI
+instrument(io, {
+    auth: false
+
+    //for password
+    // auth: {
+        // type: "basic",
+        // username: "admin",
+        // password: "$2b$10$LhUtmkmPS.Vqn38DtCb4cO1o0dwM.39Ghv7d/R.tXEwQdyQ0pAfye" 
+    // }
+});
+
+>>>>>>> Stashed changes
 
 // for admin UI
 const {instrument} = require("@socket.io/admin-ui");
@@ -98,6 +139,7 @@ io.sockets.on('connect', (socket) => {
     socket.on('disconnect', () => {
         console.log("socket has been disconnected ", socket.id);
         if(rooms[socket.roomName]) {
+            socket.leave(socket.roomName);
             rooms[socket.roomName]--;
             }
         delete users[socket.name];
@@ -106,9 +148,9 @@ io.sockets.on('connect', (socket) => {
 
     //delete the user if they leave by clicking the home button
     socket.on('userLeft', () => {
-        delete users[socket.name];
+        socket.leave(socket.roomName);
         rooms[socket.roomName]--;
-        console.log("The users left in: ", socket.roomName, users);
+        console.log("very specific: ", socket.roomName, users);
     })
 
     /******************** FIELD ********************/
