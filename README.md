@@ -13,6 +13,10 @@ This is a multiplayer game that is inspired by Expo 2020. Similar to the idea of
 
 On the landing page, users join by adding in their name and get redirected to another page that displays a map of campus showing 4 clickable locations and the number of players inside each. The players can then click on the pavilion of their choice and get redirected to a specific game page. At the D2 pavilion, players are given orders that are specific to what D2, and the goal is to complete as many orders as possible within 1 minute. At C2 palm trees, players get to play Pictionary with relevant NYU Abu Dhabi words. In the A2 classroom, players play a game where they need to collectively write down all majors on campus and get to see the final score. Finally, on the Field, players get to play a digital version of tug of war against each other.
 
+Landing Page        |  Home/Map Page with user count    
+:-------------------------:|:-------------------------:
+![Landing Page](/images/landing.png)  |  ![Map](/images/connected-players.png)
+
 ## Process
 The first thing I did was set up all of the folders and files that we would be needing for the full application. I created separate folders for each of the games with the files needed, as well as the server, establishing connections between the clients and servers as well creating the basic HTML for each to ensure that the users would be redirected to the requested page. Initially, I just had it as a form where the users add their names and choose the location from a drop-down menu and save that date in session storage, adding such data in 2 separate dictionaries. One of them consists of key-value pairs of the name of the room and the number of players and the other one stores the username and their ID, to later be used and accessed. 
 
@@ -55,14 +59,14 @@ The next thing I did was go back to the server code to fix the connections of us
 
 I then decided to go back to the Tug of War game to change the design to follow the theme that we had agreed upon. The design we decided to implement was similar to the image below:
 
-![Tug of War design](/images/field-design.png).
+Design to Implement        |  My Old Design       
+:-------------------------:|:-------------------------:
+![Tug of War design](/images/field-design.png)  |  ![initial design](/images/field-initial-design.png)
+
 
 The main changes I made were regarding the positioning since I had to set the P5 width to be equal to that of the screen and changed the background to be transparent so that the wallpaper we chose would be set as our background. An issue I had with that is that I couldn't reset the background inside the draw function to hide the previous movement of the rope when the arrows are clicked, since the background was part of the HTML and P5. The solution I reached is in the challenges section below. I had to make a lot of changes in the position of the rope, the triangle at the center, and error-checking when the triangle leaves the screen. With the current code, for error checking and ensuring that the game doesn't go on when one user wins, I set the x value of the triangle to be far outside the screen to later fix it.
 
-The initial design for tug of war was:
-![initial design](/images/field-initial-design.png)
-
-which I then changed in the code to look as follows:
+The Final Design:
 ![final design](/images/field-final-design.png)
 
 Another issue that I had with the newer design was the fact that the rope didn't really look like it was moving as it was a plain white line and so it only looked like the triangle was moving and not the whole rope and so I fixed this by making minor changes to the design of the rope, also described below in the challenges section. I then fixed the positioning of the instructions for each player as well as the title to standardize what it looks like between all of the games, the ones I made as well as Soojin's. The HTML element is as follows:
@@ -109,8 +113,9 @@ Also, to make the competition better, I also emitted the final order number of e
   }  
 ```
 Next, was working on user experience so that the user understands what they are doing and the game runs smoothly for them. Accordingly, it was necessary to print the instructions for each game before the game starts, so that the user knows how the game goes. This was also important as we observed how people were interacting with the games during user testing and wanted to ensure that there is no confusion. I added instructions for each of the games as separate divs that would be displayed as soon as the user enters the specific games, with a start button that then leads to the game itself. I did the same thing for the end condition, using the same format of the div to standardize the start and end of the game, displaying the final scores or results at the end, ensuring that each of the divs is shown only when it's supposed to and everything else is hidden. An example of the instructions page and ending page could be seen below:
-
-![instructions for game](/images/instructions.png) ![end of game](/images/end.png)
+Instructions for D2        |  End Screen for D2        
+:-------------------------:|:-------------------------:
+![instructions for game](/images/instructions.png)  |  ![end of game](/images/end.png)
 
 I then did the same thing for the landing page where the user would enter their name first then be redirected to the map, but later changed it to two different HTML files and made the map a room so that we could use it to emit user data, showing how many users are in each room and anything else that we would later want to add. Hence, I created a new HTML file with its own CSS and JS that is specific to the map and emits information to the server and receives information from it. 
 
@@ -351,18 +356,18 @@ C2
 
 ## References 
 Appetizers links: 
-[salad](https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png)
-[soup](https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png)
-[fries](https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png)
+[Salad](https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png),
+[Soup](https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png),
+[Fries](https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png)
 
 Main Courses links: 
-[burger](https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png)
-[salmon](https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761)
-[pasta](https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901)
+[Burger](https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png),
+[Salmon](https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761),
+[Pasta](https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901)
 
 Desserts links: 
-[cake](https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png)
-[acai](https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png)
-[profiterole](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM) 
+[Cake](https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png),
+[Acai](https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png),
+[Profiterole](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM) 
 
 Link for timer code: https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward
