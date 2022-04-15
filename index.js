@@ -13,16 +13,13 @@ let io = require('socket.io');
 // for admin UI
 const {instrument} = require("@socket.io/admin-ui");
 
-
 io = new io.Server(server, {
-    // also for admin UI
     cors: {
         origin: ["https://admin.socket.io"],
         credentials: true
     }
 });
 
-// also for admin UI
 instrument(io, {
     auth: false
 
@@ -34,9 +31,7 @@ instrument(io, {
     // }
 });
 
-// to access https://admin.socket.io/#/ ---- http://localhost:2000/admin
-
-//create a variable to store all messages
+//create a variable to store all of the rooms and users
 let rooms = {}; //save key value pair of room name and # of people
 let users = {}; //save key value pair with username and user ID
 
@@ -69,7 +64,7 @@ io.sockets.on('connect', (socket) => {
             rooms[socket.roomName] = 1;
         }
 
-        // get the vnumber of players in each room and send to map
+        // get the number of players in each room and send to map page
         let A2 = rooms["A2"];
         let C2 = rooms["C2"];
         let D2 = rooms["D2"];
@@ -80,15 +75,16 @@ io.sockets.on('connect', (socket) => {
         io.in("map").emit("D2PlayerNum", D2);
         io.in("map").emit("FieldPlayerNum", Field);
 
-
+        // to get the number of users in each room and emit information based on if the player is player 1 or 2
         for (const [key, value] of Object.entries(rooms)) {
             console.log(`${key}: ${value}`);
 
-            // console.log("The number of players in the room is: ", rooms[key]);
+            // if there is one player/if it's the first player
             if (value == 1) {
                 console.log("Client 1: ", socket.name, socket.id);
                 socket.emit('player1', socket.name);
             }
+            // if 2 players are in the room 
             else if (value == 2) {
                 console.log("Client 2: ", socket.name, socket.id);
                 socket.emit('player2', socket.name);
@@ -97,8 +93,6 @@ io.sockets.on('connect', (socket) => {
             }
         }
     })
-
-    //when the client in the room leaves, all clients in the room needs to be restarted
 
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
@@ -110,6 +104,7 @@ io.sockets.on('connect', (socket) => {
         console.log("The users left in: ", socket.roomName, users);
     })
 
+    //delete the user if they leave by clicking the home button
     socket.on('userLeft', () => {
         delete users[socket.name];
         rooms[socket.roomName]--;
@@ -117,32 +112,36 @@ io.sockets.on('connect', (socket) => {
     })
 
     /******************** FIELD ********************/
-    //listen for a message from this client
+    // send the location of the triangle and rope to both players
     socket.on('positionData', (pos) => {
         io.sockets.emit('positionDataFromServer', pos); //send the same data back to all clients
     })
 
+    // to start the game
     socket.on('fieldStart', () => {
         console.log("Field started");
         io.in("Field").emit('fieldStartDataFromServer', '');
     })
 
     /******************** D2 ********************/
+    // to actually start the game
     socket.on('D2start', () => {
         console.log("D2 started");
         socket.to("D2").emit('startDataFromServer', '');
     })
 
+    // allows users to start the game based on the number
     socket.on('canStart', () => {
         io.in("D2").emit('canStartDataFromServer', '');
     })
 
+    //when a player submits a correct meal, send the data to both users 
     socket.on('submit', (completed) => {
         socket.to("D2").emit('submitDataFromServer', completed);
     })
 
+    // when the timer is up send to each user how many meals the other user made
     socket.on('finish', (completed) => {
-        // console.log("Game Over! The other user completed: ", completed);
         console.log('completed');
         socket.to("D2").emit('finishDataFromServer', completed);
     })
@@ -235,9 +234,7 @@ io.sockets.on('connect', (socket) => {
         io.in("A2").emit('colorFromServer', data);
     })
 
-
     socket.on('A2finish', (completed) => {
-        // console.log("Game Over! The other user completed: ", completed);
         console.log('A2completed');
         io.sockets.to("A2").emit('A2finishDataFromServer', completed);
     })

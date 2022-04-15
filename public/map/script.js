@@ -71,8 +71,5 @@ function joinRoom(img) {
     else if (room == 'D2'){
       window.location = '/d2/d2.html';
     }
-    else{ //to be changed
-      alert("not available")
-    }
     sessionStorage.setItem('room', room); //save to session storage
 }

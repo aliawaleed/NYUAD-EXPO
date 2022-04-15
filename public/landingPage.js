@@ -1,3 +1,4 @@
+// to get the name of the user and store it in session storage
 window.addEventListener('load', () => {
     let joinForm = document.getElementById('join-form');
     
@@ -9,6 +10,7 @@ window.addEventListener('load', () => {
     })
 })
 
+//move user from landing page to the map of campus
 function joinRoom() {
     window.location = '/map/index.html';
     sessionStorage.setItem('room', "map"); //save to session storage
