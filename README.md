@@ -22,11 +22,11 @@ The first thing I did was set up all of the folders and files that we would be n
 
 At the same time, Soojin worked on establishing a common basic design that we would later use for all of the games in order for them to be standardized and cohesive. She also designed the map page based on a 3D model of campus, but after discussing it, we felt that a 2D map would be more user-friendly and easier to navigate. However, we couldn't find an official map that shows all of the locations we want to use, so I got one that already exists and used Illustrator to add the Field to it, using the same colors and designs as the actual map.
 
-The original map:
+**The original map:**
 
 ![The Original Map](images/campus-map.png) 
 
-After Illustrator:
+**After Illustrator:**
 
 ![After Illustrator](images/edited-map.png)
 
@@ -67,12 +67,12 @@ I then decided to go back to the Tug of War game to change the design to follow 
 
 Design to Implement        |  My Old Design       
 :-------------------------:|:-------------------------:
-![Tug of War design](/images/field-design.png)  |  ![initial design](/images/field-initial-design.png)
+![Tug of War design](/images/field-design.png) | ![initial design](/images/field-initial-design.png)
 
 
 The main changes I made were regarding the positioning since I had to set the P5 width to be equal to that of the screen and changed the background to be transparent so that the wallpaper we chose would be set as our background. An issue I had with that is that I couldn't reset the background inside the draw function to hide the previous movement of the rope when the arrows are clicked, since the background was part of the HTML and P5. The solution I reached is in the challenges section below. I had to make a lot of changes in the position of the rope, the triangle at the center, and error-checking when the triangle leaves the screen. With the current code, for error checking and ensuring that the game doesn't go on when one user wins, I set the x value of the triangle to be far outside the screen to later fix it.
 
-The Final Design:
+**The Final Design:**
 ![final design](/images/field-final-design.png)
 
 Another issue that I had with the newer design was the fact that the rope didn't really look like it was moving as it was a plain white line and so it only looked like the triangle was moving and not the whole rope and so I fixed this by making minor changes to the design of the rope, also described below in the challenges section. I then fixed the positioning of the instructions for each player as well as the title to standardize what it looks like between all of the games, the ones I made as well as Soojin's. The HTML element is as follows:
@@ -119,7 +119,7 @@ Also, to make the competition better, I also emitted the final order number of e
   }  
 ```
 Next, was working on user experience so that the user understands what they are doing and the game runs smoothly for them. Accordingly, it was necessary to print the instructions for each game before the game starts, so that the user knows how the game goes. This was also important as we observed how people were interacting with the games during user testing and wanted to ensure that there is no confusion. I added instructions for each of the games as separate divs that would be displayed as soon as the user enters the specific games, with a start button that then leads to the game itself. I did the same thing for the end condition, using the same format of the div to standardize the start and end of the game, displaying the final scores or results at the end, ensuring that each of the divs is shown only when it's supposed to and everything else is hidden. An example of the instructions page and ending page could be seen below:
-Instructions for D2        |  End Screen for D2        
+**Instructions for D2        |  End Screen for D2**        
 :-------------------------:|:-------------------------:
 ![instructions for game](/images/instructions.png)  |  ![end of game](/images/end.png)
 
