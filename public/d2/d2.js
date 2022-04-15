@@ -74,10 +74,12 @@ window.addEventListener("load", () => {
         onePlayer();
     })
 
+    // when 2 players have joined
     socket.on('message', () => {
         allow_start = true;
     })
 
+    // when there are more than 2 players in the room, send the player back to the map
     socket.on('morePlayers', () => {
         alert("There are 2 players in the game already! Please try again later!");
         window.location = '/map/index.html';
@@ -111,17 +113,20 @@ function startGame() {
     completed.style.display = "block";
     let game = document.getElementById('container');
     game.style.display = "block";
+    // when the second player presses on the start button
     if (allow_start == true) {
         socket.emit('canStart', ''); //start game for the rest of the users
     }
 }
 
+// allow the game to start
 socket.on('canStartDataFromServer', () => {
     twoPlayers();
 })
 
 
 let their_orders = 0;
+// receiving the data from the server for the number of completed orders of the other user 
 socket.on('submitDataFromServer', (completed) => {
     their_orders = completed;
     console.log("their order", their_orders);
@@ -132,7 +137,7 @@ socket.on('submitDataFromServer', (completed) => {
 let canAdd = false;
 // function to generate order
 function generateOrder() {
-    canAdd = true;
+    canAdd = true; // to allow items to be added only after the game has started
     let order = document.getElementById('generated');
     let button = document.getElementById('generate-button');
     button.style.display = 'none';
@@ -173,12 +178,12 @@ socket.on('startDataFromServer', () => {
         console.log("game started"); // shows how many orders the other player completed 
         startTimer();
         //to decrement timer
-        let timerId = setInterval(countdown, 1000);
+        let timerId = setInterval(decrementTimer, 1000);
 
-        function countdown() {
+        function decrementTimer() {
+            //if timer is up
             if (timeLeft == -1) {
                 clearTimeout(timerId);
-
                 //remove elements on the screen when time is up
                 let menu = document.getElementById('game-container');
                 let tray = document.getElementById('container');
@@ -189,11 +194,11 @@ socket.on('startDataFromServer', () => {
                 socket.emit('finish', myCompletedOrders);
             } else {
                 timer.innerHTML = 'Time left: ' + timeLeft;
-                timeLeft--;
+                timeLeft--; //decrement the time
             }
         }
     }
-    started = 1;
+    started = 1; // so that the timer does not start again 
 })
 
 //to get the key given the value of it
@@ -201,14 +206,14 @@ function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
-let array = [0, 0, 0];
-let num = 0;
-let free = -1;
+let array = [0, 0, 0]; // boolean array for the 3 locations to add items on the tray 
+let num = 0; // count for number of items that have been added 
+let free = -1; // to find a free spot on the tray
 
 // function to add clicked images to tray
 function addAnswer(img) {
     if (canAdd == true) {
-
+        // if there are 3 items on the tray
         if (array[0] == 1 && array[1] == 1 && array[2] == 1) {
             alert("The tray is full, please remove an item from the tray first by clicking on it!");
         }
@@ -231,7 +236,9 @@ function addAnswer(img) {
                 chosenDessert = getKeyByValue(allDesserts, image);
             }
 
+            // if more than 3 dishes have been added 
             if (num == 3) {
+                // find the first free slot on the tray to place the newly added item
                 for (let i = 0; i < array.length; i++) {
                     if (array[i] == 0) {
                         free = i;
@@ -242,6 +249,7 @@ function addAnswer(img) {
                 answerBox.src = img.src;
                 array[free] = 1;
             }
+            // if we're in the first 3 items, add them, increment the count, and change boolean to 1
             else {
                 let answerBox = document.getElementById('ans' + num);
                 console.log(answerBox, num);
@@ -249,8 +257,6 @@ function addAnswer(img) {
                 array[num] = 1;
                 num++;
             }
-            console.log(array);
-            console.log(num);
         }
     }
     else {
@@ -261,8 +267,8 @@ function addAnswer(img) {
 // to remove item from the tray and decrement the answer number
 function removeItem(clickedItem) {
     let item = document.getElementById(clickedItem);
-    console.log(item.id);
-    item.src = "";
+    item.src = ""; //remove the source/image
+    // change boolean in array from 1 to 0 when item is removed
     if (item.id == "ans0") {
         array[0] = 0;
     }
@@ -272,7 +278,6 @@ function removeItem(clickedItem) {
     else if (item.id == "ans2") {
         array[2] = 0;
     }
-    console.log(array);
 }
 
 // submit order to check the answer
@@ -300,6 +305,7 @@ function submitOrder() {
     }
 }
 
+// when the game ends and the server the other user
 socket.on('finishDataFromServer', (theirCompletedOrders) => {
     let mainHome = document.getElementById('mainHome');
     mainHome.style.display = "none";
@@ -311,6 +317,8 @@ socket.on('finishDataFromServer', (theirCompletedOrders) => {
     rules.style.display = "none";
 
     let winner = document.getElementById('winner');
+
+    //compare the order numbers to print the winner
     if (myCompletedOrders > theirCompletedOrders) {
         winner.innerHTML = "You won!";
     }
@@ -325,8 +333,8 @@ socket.on('finishDataFromServer', (theirCompletedOrders) => {
     results.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrders;
 })
 
-function joinRoom() {
+//to go back to home page
+function goHome() {
     socket.emit('userLeft', '');
     window.location = '/map/index.html';
 }
-//code used for timer https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward

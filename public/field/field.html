@@ -24,7 +24,7 @@
         <img src="/field/tugOfWarImages/tugOfWarBG.png" alt="field-img">
 
         <!-- Home Button -->
-        <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
+        <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="home(this)"></div>
     </div>
 
     <!-- Title -->
@@ -32,6 +32,7 @@
         <p id="moveTitle"> <span style="font-weight:bold"> The Field </span> | Tug of War </p>
     </div>
 
+    <!-- To show instructions and rules at the beginning of the game -->
     <div class="rules" id="rules">
         <h1 class="rules-instructions">Instructions</h1>
         <p class="specific-instructions"> Welcome to Tug of War! </br> </br> <span style="font-weight:bold"> Goal:
@@ -40,13 +41,16 @@
         <button id="start-button" onclick="startGame()"> START </button>
     </div>
 
+    <!-- To show winner and end results -->
     <div class="end" id="end">
         <h1 class="game-over"> Game Over! </h1>
         <p class="winner" id="winner"></p>
         <button id="Home" onclick="home(this)"> Home </button>
     </div>
 
+    <!-- instructions -->
     <div id="container">
+        <!-- P5 container for the game -->
         <div class="p5" id="p5"></div>
         <p id="instructions"> </p>
     </div>

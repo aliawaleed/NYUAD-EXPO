@@ -1,5 +1,3 @@
-console.log('Client is connected.');
-
 //client connects to the server
 let socket = io(); //opens and connects to the socket
 
@@ -29,18 +27,21 @@ window.addEventListener("load", () => { // on load
     let end = document.getElementById('end');
     end.style.display = "none";
 
+    // Assign player with their respective arrows
     socket.on('player1', () => {
         console.log('wait for another player to join');
         let inst = document.getElementById("player-instructions");
         inst.textContent = "You are player 1! Use the LEFT arrow key to win!";
     })
 
+    // To allow starting the game when two players are in
     socket.on('player2', () => {
         let inst = document.getElementById("player-instructions");
         inst.textContent = "You are player 2! Use the RIGHT arrow key to win!";
         allow_start = true;
     })
 
+    // Kick users out when there are more than 2 players in the game
     socket.on('morePlayers', () => {
         alert("There are 2 players in the game already! Please try again later!");
         window.location = '/map/index.html';
@@ -57,12 +58,14 @@ function startGame() {
     game.style.display = "block";
     let players = document.getElementById('players');
     players.style.display = "block";
+    // to allow the game to start when the second player presses on the start button
     if (allow_start == true) {
         console.log("two players are in");
         socket.emit('fieldStart', ''); //start game for the rest of the users
     }
 }
 
+// permission to start the game
 socket.on('fieldStartDataFromServer', () => {
     console.log("you can start now");
     let players = document.getElementById('players');
@@ -70,6 +73,7 @@ socket.on('fieldStartDataFromServer', () => {
     start = true;
 })
 
+// to go back to the home page
 function home() {
     socket.emit('userLeft', '');
     window.location = '/map/index.html';
@@ -77,17 +81,18 @@ function home() {
 
 //////////////////p5 code//////////////////
 //global variables
+// starting positions of the x and y values
 let x = 0;
 let y = 20;
 
-let gameOn = true;
+let gameOn = true; //to check if the game is on
 
+// set up the game design and position
 function setup() {
     var canvas = createCanvas(windowWidth, 80);
-    canvas.parent('p5');
+    canvas.parent('p5'); //add to div to position it correctly on the screen
     x = windowWidth / 2; //to center the triangle for winning on the screen 
-    console.log(x);
-    background(255, 0);
+    background(255, 0); // transparent background
     //have the rope initialized on the screen
     stroke(230);
     fill(255)
@@ -97,17 +102,19 @@ function setup() {
     strokeWeight(10);
     line(x - windowWidth, y, windowWidth * 2, y);
     rect(x, y, 0.4, 0.4);
-    // for rope motion effect
+    // for rope motion effect/ add grey lines
     stroke(200);
     for (let i = 1; i < 12; i++) {
         line(x - 100 * i, y, (x - 100 * i) - 30, y);
         line(x + 100 * i, y, (x + 100 * i) + 30, y);
     }
+    // to change the position for all players
     socket.on('positionDataFromServer', (data) => { //send to all clients
         drawData(data);
     })
 }
 
+// check if right or left arrow keys are pressed
 function keyPressed() {
     if (start == true) {
         if (keyIsDown(RIGHT_ARROW)) { //if right arrow key is pressed, move to the right
@@ -148,6 +155,7 @@ function drawData(pos) {
             gameOn = false;
         }
     }
+    // if the game is over
     else {
         clear();
         textSize(24);
@@ -171,8 +179,4 @@ function drawData(pos) {
         let container = document.getElementById('container');
         container.style.display = "none";
     }
-}
-
-function joinRoom() {
-    window.location = '/map/index.html';
 }
