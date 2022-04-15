@@ -88,12 +88,7 @@ button{
     margin-top: 5%;
 }
 
-#players {
-    position:absolute;
-    top:10vh;
-    text-align: center;
-  }
-  
+
 /* GamePage */
 #gamePage{
     width:90vw;
@@ -278,3 +273,15 @@ input{
     padding-bottom: 2%;
     background-color: #471010;
 }
+
+#players{
+    margin-left:6vw;
+    padding:0;
+    position:absolute;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 1.5vw;
+    bottom:1%;
+}
+

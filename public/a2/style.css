@@ -52,6 +52,20 @@ html, body {
     z-index: 1;
 }
 
+#players{
+    margin-left:13vw;
+    padding:0;
+    position:absolute;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 1.5vw;
+    bottom:1%;
+}
+
+
+
+
 .rules h1{
     color: #471010;
 }
@@ -83,12 +97,7 @@ button{
     font-size: 1.5vw;
 }
 
-#players {
-    position:absolute;
-    top:10vh;
-    text-align: center;
-  }
-  
+
 /* GamePage */
 #gamePage{
     width:90vw;

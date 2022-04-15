@@ -153,7 +153,7 @@ io.sockets.on('connect', (socket) => {
     })
 
     socket.on('C2canStart', () => {
-        socket.to("C2").emit('C2canStartDataFromServer', '');
+        io.in("C2").emit('C2canStartDataFromServer', '');
     })
 
     socket.on('C2finish', (completed) => {

@@ -39,6 +39,7 @@ let players = document.getElementById('players');
 window.addEventListener("load", () => { // on load  
    game.style.display = "none";
    completed.style.display = "none";
+   players.style.display = "none";
    timer.style.display = "none";
    finished.style.display = "none";
    rules.style.display = "block";
@@ -46,6 +47,8 @@ window.addEventListener("load", () => { // on load
 
    socket.on('player1', () => {
       console.log('wait for another player to join');
+      let players = document.getElementById("players");
+      players.textContent = "You are player 1! Wait for Player 2 to Join!";
       onePlayer();
    })
 
@@ -76,10 +79,14 @@ function twoPlayers() {
    getwordButton.style.opacity = "1";
    msgInput.disabled = false;
    sendButton.style.opacity = "1";
+   players.style.display = "block";
+   players.innerHTML = 'Start Playing! '; //preset before the timer starts
 }
 
 socket.on('C2canStartDataFromServer', () => {
    twoPlayers();
+   players.style.display = "block";
+   players.innerHTML = 'Start Playing! '; //preset before the timer starts
 })
 
 //function to start game
@@ -90,6 +97,7 @@ function startGame() {
    let timer = document.getElementById('timer');
    completed.style.display = "block";
    timer.style.display = "block";
+   players.style.display = "block";
    game.style.display = "block";
    if (allow_start == true) {
       socket.emit('C2canStart', ''); //start game for the rest of the users

@@ -47,15 +47,17 @@ window.addEventListener("load", () => { // on load
    completed.style.display = "none";
    finished.style.display = "none";
    rules.style.display = "block";
+   players.style.display = "none";
 
 
    socket.on('player1', () => {
+      let players = document.getElementById("players");
+      players.textContent = "You are player 1! Wait for Player 2 to Join!";
       console.log('wait for another player to join');
       onePlayer();
    })
    socket.on('player2Start', () => {
       allow_start = true;
-      // players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
       // twoPlayers();
    })
    socket.on('morePlayers', () => {
@@ -77,6 +79,7 @@ function onePlayer() {
 function twoPlayers() {
    majorInput.disabled = false;
    submitButton.style.opacity = "1";
+   players.innerHTML = 'Start Playing! '; //preset before the timer starts
 }
 
 socket.on('A2canStartDataFromServer', () => {
@@ -93,16 +96,17 @@ function startGame() {
    timer.style.display = "block";
    game.style.display = "block";
    completed.style.display = "block";
+   players.style.display = "block";
    if (allow_start == true) {
       socket.emit('A2canStart', ''); //start game for the rest of the users
    }
 }
 
-//function to start a 30 second timer and have it initialized on the screen
+//function to start a 60 second timer and have it initialized on the screen
 function startTimer() {
    if (allow_start == true) {
       let timer = document.getElementById('timer');
-      timer.innerHTML = 'Time left: 30'; //preset before the timer starts
+      timer.innerHTML = 'Time left: 60'; //preset before the timer starts
       socket.emit('A2start', ''); //start game for the rest of the users
    }
    else {
