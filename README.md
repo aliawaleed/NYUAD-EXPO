@@ -78,13 +78,74 @@ To add purpose to the game and make it competitive, having a timer was necessary
 ```
 timer segment 
 ```
-I used this timer sothen decided to change the emission sent when a user submits as it would desrupt the game for the other player, instead, I chose to send the data only once the user finishes. 
+I used this timer sothen decided to change the emission sent when a user submits as it would desrupt the game for the other player, instead, I chose to send the data only once the game ends; the timer is up. I issue I had with that was starting the timer for both sides at the same time, that when one user presses on the order button, the game starts for the other user in the room. I set boolean variables to track the number of people in the room to allow starting and emitting accurate information. I had several problems with that, as well as the counter decrementing twice as fast for one of the players and I later fixed it.  
+
+I then went back to the main screen/home page and made changes to how the rooms are accessed so that it's not a drop down menu, I added place holder divs that would redirect to the specific rooms, sending the necessary information of the room name to the server. The redirecting code, which changes the location as well as storing it is as follows:
+
+```
+function joinRoom(img) {
+    let room = img.id;
+    //redirect the user to game.html
+    console.log(room);
+    if (room == 'Field') {
+      window.location = '/field/field.html';
+    }
+    else if (room == 'A2'){
+      window.location = '/a2/a2.html';
+    }
+    else if (room == 'C2'){
+      window.location = '/c2/c2.html';
+    }
+    else if (room == 'D2'){
+      window.location = '/d2/d2.html';
+    }
+    sessionStorage.setItem('room', room); //save to session storage
+}
+```
+
+This segment of code gets the id of the image that was clicked on, and I set the IDs to be the names of the rooms for a better flow and understanding of the code. I then went back to the code of the individual games to work on the end conditions. I had some issues with the timer that I fixed with professor Mathura's help to ensure that the timer is decrementing correctly, and so the fixed code for the timer that I reached was as follows, where I had to separate the function into two different parts to ensure that the timer is accurate and only decrements once:
+
+```
+      startTimer();
+      //to decrement timer
+      let timerId = setInterval(countdown, 1000);
+
+      function countdown() {
+            if (timeLeft == -1) {
+                clearTimeout(timerId);
+
+                //remove elements on the screen when time is up
+                let menu = document.getElementById('menu');
+                let tray = document.getElementById('choices');
+                menu.style.display = "none";
+                tray.style.display = "none";
+
+                // alert("Time is up!");
+                socket.emit('finish', myCompletedOrders);
+            } else {
+                timer.innerHTML = 'Time left: ' + timeLeft;
+                console.log(timeLeft);
+                timeLeft--;
+            }
+      }
+```
+
+Also, to make the competition better, I also emitted the final order number of each player to the other player and had it printed on the screen so that each player knows how many meals they got and how many the other player got. For Tug of War end conditions, instead of setting the triangle to be far outside the screen, I made a condition that checks if the game is not on, and if not, then there won't be a rope on the screen at all, and I printed it outside of the P5 sketch. This is the condition that I set, which checks if the center point of the triangle has left the screen on either of the sides:
+
+```
+  if (pos.x < 0 || pos.x > windowWidth){
+      gameOn = false;    
+  }  
+```
+
+
 
 ## Challenges 
 * Tug of War --> resetting transparent background 
 * Tug of War --> rope doesn't look like it's mobing
 * D2 --> tray and css
 * D2 --> removing items from the tray
+* D2 --> timer
 
 
 ## Lessons and Next Steps
