@@ -12,6 +12,7 @@ socket.on('connect', () => {
     socket.emit('userData', data);
 })
 
+//to print the number of players in each room on the map 
 window.addEventListener("load", () => { // on load    
   //listen to number of players in room A2
   socket.on('A2PlayerNum',(data)=> {
@@ -56,20 +57,20 @@ window.addEventListener("load", () => { // on load
 
 
 function joinRoom(img) {
-    let room = img.id;
-    //redirect the user to game.html
-    console.log(room);
-    if (room == 'Field') {
-      window.location = '/field/field.html';
-    }
-    else if (room == 'A2'){
-      window.location = '/a2/a2.html';
-    }
-    else if (room == 'C2'){
-      window.location = '/c2/c2.html';
-    }
-    else if (room == 'D2'){
-      window.location = '/d2/d2.html';
-    }
-    sessionStorage.setItem('room', room); //save to session storage
+  let room = img.id;
+  //redirect the user to game.html
+  console.log(room);
+  if (room == 'Field') {
+    window.location = '/field/field.html';
+  }
+  else if (room == 'A2'){
+    window.location = '/a2/a2.html';
+  }
+  else if (room == 'C2'){
+    window.location = '/c2/c2.html';
+  }
+  else if (room == 'D2'){
+    window.location = '/d2/d2.html';
+  }
+  sessionStorage.setItem('room', room); //save to session storage
 }
