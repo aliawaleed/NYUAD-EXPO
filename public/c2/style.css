@@ -22,7 +22,7 @@ html, body {
 #mainHome {
     cursor: pointer;
     position:absolute;
-    top: 4vh;
+    top: 4vw;
     left: 7vw;
     width: 3%;
     height: 5%;
@@ -278,10 +278,9 @@ input{
     margin-left:6vw;
     padding:0;
     position:absolute;
-    justify-content: center;
     text-align: center;
-    color: white;
+    color: yellow;
     font-size: 1.5vw;
-    bottom:1%;
+    bottom:-5vh;
 }
 

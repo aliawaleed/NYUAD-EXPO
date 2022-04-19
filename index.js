@@ -122,7 +122,12 @@ io.sockets.on('connect', (socket) => {
         socket.join(socket.roomName);
         // delete users[socket.name];
         console.log("$$$$$$$$$$", socket.roomName, users);
-        
+        if(rooms[socket.roomName]) {
+            rooms[socket.roomName]--;
+            }
+        delete users[socket.name];
+        console.log("The users left in: ", socket.roomName, users);
+
     })
 
     /******************** FIELD ********************/
