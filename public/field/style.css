@@ -137,7 +137,10 @@ h1{
 }
 
 #players{
-    padding-top: 30%;
+    top: 70%;
+    text-align: center;
+    position: absolute;
+    width: 100%;
 }
 
 #Home {
