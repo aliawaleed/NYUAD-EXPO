@@ -70,11 +70,6 @@ io.sockets.on('connect', (socket) => {
         let D2 = rooms["D2"];
         let Field = rooms["Field"];
 
-        // io.in("map").emit("A2PlayerNum", A2);
-        // io.in("map").emit("C2PlayerNum", C2);
-        // io.in("map").emit("D2PlayerNum", D2);
-        // io.in("map").emit("FieldPlayerNum", Field);
-
         io.emit("A2PlayerNum", A2);
         io.emit("C2PlayerNum", C2);
         io.emit("D2PlayerNum", D2);
