@@ -111,21 +111,28 @@ io.sockets.on('connect', (socket) => {
 
     //delete the user if they leave by clicking the home button
     socket.on('userLeft', () => {
-        console.log(rooms["Field"]);
-        console.log("***************************", socket.roomName, users);
-        rooms[socket.roomName]--;
-        console.log(rooms["Field"]);
-        delete users[socket.name];
-        socket.leave(socket.roomName);
-        socket.roomName = "map";
-        rooms["map"]++;
-        socket.join(socket.roomName);
+
+        // console.log(rooms["Field"]);
+        // console.log("***************************", socket.roomName, users);
+        // rooms[socket.roomName]--;
+        // console.log(rooms["Field"]);
         // delete users[socket.name];
+
         console.log("$$$$$$$$$$", socket.roomName, users);
         if(rooms[socket.roomName]) {
             rooms[socket.roomName]--;
             }
         delete users[socket.name];
+        console.log("The users left in: ", socket.roomName, users);
+
+
+        // socket.leave(socket.roomName);
+        // socket.roomName = "map";
+        // rooms["map"]++;
+        // console.log("$$$$$$$$$$", socket.roomName, users);
+
+        delete users[socket.name];
+        rooms[socket.roomName]--;
         console.log("The users left in: ", socket.roomName, users);
 
     })
