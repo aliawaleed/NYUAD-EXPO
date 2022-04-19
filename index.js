@@ -112,6 +112,15 @@ io.sockets.on('connect', (socket) => {
         // rooms[socket.roomName]--;
         // console.log(rooms["Field"]);
         // delete users[socket.name];
+
+        console.log("$$$$$$$$$$", socket.roomName, users);
+        if(rooms[socket.roomName]) {
+            rooms[socket.roomName]--;
+            }
+        delete users[socket.name];
+        console.log("The users left in: ", socket.roomName, users);
+
+
         // socket.leave(socket.roomName);
         // socket.roomName = "map";
         // rooms["map"]++;
@@ -120,6 +129,7 @@ io.sockets.on('connect', (socket) => {
         delete users[socket.name];
         rooms[socket.roomName]--;
         console.log("The users left in: ", socket.roomName, users);
+
     })
 
     /******************** FIELD ********************/
