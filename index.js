@@ -70,10 +70,15 @@ io.sockets.on('connect', (socket) => {
         let D2 = rooms["D2"];
         let Field = rooms["Field"];
 
-        io.in("map").emit("A2PlayerNum", A2);
-        io.in("map").emit("C2PlayerNum", C2);
-        io.in("map").emit("D2PlayerNum", D2);
-        io.in("map").emit("FieldPlayerNum", Field);
+        // io.in("map").emit("A2PlayerNum", A2);
+        // io.in("map").emit("C2PlayerNum", C2);
+        // io.in("map").emit("D2PlayerNum", D2);
+        // io.in("map").emit("FieldPlayerNum", Field);
+
+        io.emit("A2PlayerNum", A2);
+        io.emit("C2PlayerNum", C2);
+        io.emit("D2PlayerNum", D2);
+        io.emit("FieldPlayerNum", Field);
 
         // to get the number of users in each room and emit information based on if the player is player 1 or 2
         for (const [key, value] of Object.entries(rooms)) {
@@ -106,9 +111,18 @@ io.sockets.on('connect', (socket) => {
 
     //delete the user if they leave by clicking the home button
     socket.on('userLeft', () => {
-        delete users[socket.name];
+        console.log(rooms["Field"]);
+        console.log("***************************", socket.roomName, users);
         rooms[socket.roomName]--;
-        console.log("The users left in: ", socket.roomName, users);
+        console.log(rooms["Field"]);
+        delete users[socket.name];
+        socket.leave(socket.roomName);
+        socket.roomName = "map";
+        rooms["map"]++;
+        socket.join(socket.roomName);
+        // delete users[socket.name];
+        console.log("$$$$$$$$$$", socket.roomName, users);
+        
     })
 
     /******************** FIELD ********************/
