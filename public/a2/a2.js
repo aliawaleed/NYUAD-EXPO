@@ -16,17 +16,20 @@ let majorList = ["arab crossroads studies", "art and art history", "bioengineeri
 //declare Bubble Array
 let majors = [];
 
+
 let game = document.getElementById('main-container');
 let finished = document.getElementById('finished');
 let rules = document.getElementById('rules');
+let timer = document.getElementById('timer');
+let players = document.getElementById("players");
 
 //When user submit, check if the written word matches any major from the list
 let submitButton = document.getElementById('submit');
 let majorInput = document.getElementById('name');
 let players = document.getElementById('players');
-
 let timeLeft = 59;
-let myCorrectMajors = 0; //to track number of correct completed orders
+
+let myCorrectMajors = 0; //to track number of correct majors guessed
 let completed = document.getElementById('completed-orders');
 let color;
 
@@ -42,7 +45,6 @@ let blue = Math.floor(Math.random() * 256);
 //onload start showing rules only
 window.addEventListener("load", () => { // on load  
    game.style.display = "none";
-   let timer = document.getElementById('timer');
    timer.style.display = "none";
    completed.style.display = "none";
    finished.style.display = "none";
@@ -51,7 +53,6 @@ window.addEventListener("load", () => { // on load
 
 
    socket.on('player1', () => {
-      let players = document.getElementById("players");
       players.textContent = "You are player 1! Wait for Player 2 to Join!";
       console.log('wait for another player to join');
       onePlayer();
