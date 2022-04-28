@@ -1,4 +1,5 @@
 let socket = io();
+console.log("helper is conected");
 
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
@@ -23,6 +24,7 @@ socket.on('connect', () => {
 //     timer = document.getElementById('timer');
 
 //     game.style.display = "none";
+//     // console.log("helper style", game.style);
 //     timer.style.display = "none";
 //     finished.style.display = "none";
 //     rules.style.display = "block";
