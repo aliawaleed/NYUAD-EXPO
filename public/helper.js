@@ -1,16 +1,15 @@
-// let socket = io();
+let socket = io();
 
-// //listen for confirmation of socket; confirms that the client is connected
-// socket.on('connect', () => {
-//    console.log("client connected via sockets");
-//    // now that client has connected to server, emit name and room information
-//    let data = {
-//       'name': sessionStorage.getItem('name'),
-//       'room': sessionStorage.getItem('room'),
-//       'color': color
-//    }
-//    socket.emit('userData', data);
-// })
+//listen for confirmation of socket; confirms that the client is connected
+socket.on('connect', () => {
+   console.log("client connected via sockets");
+   // now that client has connected to server, emit name and room information
+   let data = {
+      'name': sessionStorage.getItem('name'),
+      'room': sessionStorage.getItem('room'),
+   }
+   socket.emit('userData', data);
+})
 
 // let game;
 // let finished;
@@ -24,7 +23,6 @@
 //     timer = document.getElementById('timer');
 
 //     game.style.display = "none";
-//     // console.log("helper style", game.style);
 //     timer.style.display = "none";
 //     finished.style.display = "none";
 //     rules.style.display = "block";
