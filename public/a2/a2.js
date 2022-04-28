@@ -21,7 +21,6 @@ let game = document.getElementById('main-container');
 let finished = document.getElementById('finished');
 let rules = document.getElementById('rules');
 let timer = document.getElementById('timer');
-let players = document.getElementById("players");
 
 //When user submit, check if the written word matches any major from the list
 let submitButton = document.getElementById('submit');
@@ -318,5 +317,3 @@ function draw() {
       p.move();
    }
 }
-
-
