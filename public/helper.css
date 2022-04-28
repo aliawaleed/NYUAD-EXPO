@@ -1,0 +1,94 @@
+/* fix relative positions */
+html, body{
+    margin:0;
+    padding:0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5vw;
+    color:white;
+}
+
+/* background-img*/
+.background-container {
+    width:100vw;
+    display:relative;
+}
+
+.background-container img {
+    width:100%;
+    height:100%;
+    position:absolute;
+    z-index: -3;
+}
+
+#mainHome {
+    cursor: pointer;
+    position:absolute;
+    top: 4vh;
+    left: 9vw;
+    width: 3%;
+    height: 5%;
+    z-index: 10;
+}
+
+/* Instruction Page */
+.rules ,.end{
+    width: 45%;
+    height: 60%;
+    background-color:rgb(193, 153, 153, 0.79);
+    position:absolute;
+    display:relative; 
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    box-sizing: border-box;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-top: 3%;
+    padding-bottom: 5%;
+    text-align: center;
+    font-size: 1.5vw;
+}
+
+.specific-instructions{
+    text-align: justify;
+    color:white;
+}
+
+.rules h1{
+    color: #471010;
+}
+
+#titles{
+    color: black;
+}
+
+
+button{
+    /* remove default behavior */
+    appearance:none;
+    -webkit-appearance:none;
+
+    /* add styling */
+    cursor: pointer;
+    border:none;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    font-size: 1.5vw;
+    border-radius:5px;
+    background-color: #471010;
+}
+
+#generate-button{
+    width: 7%;
+    padding: 0.5%;
+}
+
+
+#Home {
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: #471010;
+}

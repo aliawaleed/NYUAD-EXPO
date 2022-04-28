@@ -1,6 +1,17 @@
 //client connects to the server
 let socket = io(); //opens and connects to the socket
 
+let allow_start;
+let game;
+let rules;
+let players;
+let end;
+let inst;
+
+//boolean
+let start = false;
+let gameOn = true; //to check if the game is on
+
 //listen for confirmation of socket; confirms that the client is connected
 socket.on('connect', () => {
     console.log("client connected via sockets");
@@ -12,31 +23,28 @@ socket.on('connect', () => {
     socket.emit('userData', data);
 })
 
-let allow_start = false;
 
-window.addEventListener("load", () => { // on load    
-    let game = document.getElementById('container');
+window.addEventListener("load", () => { // on load  
+    allow_start = false;
+    game = document.getElementById('container');
+    rules = document.getElementById('rules');
+    players = document.getElementById('players');
+    end = document.getElementById('end');
+    inst = document.getElementById("player-instructions");
+
     game.style.display = "none";
-
-    let rules = document.getElementById('rules');
     rules.style.display = "block";
-
-    let players = document.getElementById('players');
     players.style.display = "none";
-
-    let end = document.getElementById('end');
     end.style.display = "none";
 
     // Assign player with their respective arrows
     socket.on('player1', () => {
         console.log('wait for another player to join');
-        let inst = document.getElementById("player-instructions");
         inst.textContent = "You are player 1! Use the LEFT arrow key to win!";
     })
 
     // To allow starting the game when two players are in
     socket.on('player2', () => {
-        let inst = document.getElementById("player-instructions");
         inst.textContent = "You are player 2! Use the RIGHT arrow key to win!";
         allow_start = true;
     })
@@ -48,15 +56,10 @@ window.addEventListener("load", () => { // on load
     })
 })
 
-
-let start = false;
 //function to start game
 function startGame() {
-    let rules = document.getElementById('rules');
     rules.style.display = "none";
-    let game = document.getElementById('container');
     game.style.display = "block";
-    let players = document.getElementById('players');
     players.style.display = "block";
     // to allow the game to start when the second player presses on the start button
     if (allow_start == true) {
@@ -68,7 +71,6 @@ function startGame() {
 // permission to start the game
 socket.on('fieldStartDataFromServer', () => {
     console.log("you can start now");
-    let players = document.getElementById('players');
     players.innerHTML = 'START!';
     start = true;
 })
@@ -85,7 +87,6 @@ function home() {
 let x = 0;
 let y = 20;
 
-let gameOn = true; //to check if the game is on
 
 // set up the game design and position
 function setup() {
@@ -161,7 +162,6 @@ function drawData(pos) {
         textSize(24);
         fill(255);
         noStroke();
-        let players = document.getElementById('players');
         players.style.display = "none";
         let winner;
         if (pos.x <= 20) { //if player 1 won and passed the triangle on the left side
@@ -172,11 +172,8 @@ function drawData(pos) {
         }
         let displayWinner = document.getElementById('winner');
         displayWinner.textContent = winner;
-        let end = document.getElementById('end');
         end.style.display = "block";
-        let rules = document.getElementById('rules');
         rules.style.display = "none";
-        let container = document.getElementById('container');
-        container.style.display = "none";
+        game.style.display = "none";
     }
 }

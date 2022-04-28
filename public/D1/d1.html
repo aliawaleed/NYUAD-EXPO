@@ -15,18 +15,54 @@
   rel="stylesheet">
 <link rel="stylesheet" href="style.css">
     <script src="../helper.js"></script>
-    <script src="D1.js"></script>
+    <script src="d1.js"></script>
+    <link rel="stylesheet" href="../helper.css">
     <link rel="stylesheet" href="style.css">
     <title>D1 Charades</title>
 </head>
 
-  <!--Background Container -->
-  <div class="background-container">
-    <img src="images/D1.png" alt="D1-img">
-    <!-- Home Button -->
-    <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="joinRoom(this)"></div>
+
+    <!--Background Container -->
+    <div class="background-container">
+      <img src="/d1/images/d1.png" alt="D1-img">
+
+      <!-- Home Button -->
+      <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="home(this)"></div>
   </div>
 
+    <!-- Instructions for the game to be displayed at the beginning -->
+    <div class="rules" id="rules">
+      <h1 class="rules-instructions">Instructions</h1>
+      <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> 
+        <p id="player-instructions"> </p>
+      <button id="start-button" onclick="startGame()"> START </button>
+  </div>
+
+   
+    <!-- Top part of the game, showing the order and timer -->
+    <div class="container" id="container">
+      <div class="order" , id="order">
+          <p class="generated" , id="generated"> </p>
+          <button id="generate-button" onclick="startTimer()"> order </button>
+          <p id="timer"></p>
+      </div>
+
+      <!-- game container, for the menu and tray -->
+      <div class="game-container" id="game-container">
+      </div>
+      <!-- Game instructions -->
+      <div class="instructions" id="instructions">
+          <p id="players"> Please wait for another player to join! </p>
+      </div>
+  </div>
+
+  <!-- Printing results and end of game -->
+  <div class="end" id="end">
+      <h1 class="game-over"> Game Over! </h1>
+      <p class="winner" id="winner"></p>
+      <p class="results" id="results"></p>
+      <button id="Home" onclick="goHome(this)"> Home </button>
+  </div>
 
 
 </html>
