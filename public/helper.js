@@ -42,17 +42,17 @@ window.addEventListener("load", () => { // on load
        inst.textContent = Player1Instruction;
    })
 
-   // To allow starting the game when two players are in
-   socket.on('player2', () => {
-      inst.textContent = Player2Instruction;
-       allow_start = true;
-   })
+   // // To allow starting the game when two players are in
+   // socket.on('player2', () => {
+   //    inst.textContent = Player2Instruction;
+   //     allow_start = true;
+   // })
 
-   // Kick users out when there are more than 2 players in the game
-   socket.on('morePlayers', () => {
-       alert("There are 2 players in the game already! Please try again later!");
-       window.location = '/map/index.html';
-   })
+   // // Kick users out when there are more than 2 players in the game
+   // socket.on('morePlayers', () => {
+   //     alert("There are 2 players in the game already! Please try again later!");
+   //     window.location = '/map/index.html';
+   // })
 })
 
 
@@ -68,8 +68,6 @@ function startGame() {
        console.log(roomStart);
    }
 }
-
-
 
 // permission to start the game
 socket.on('startDataFromServer', () => {

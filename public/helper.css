@@ -62,7 +62,21 @@ html, body{
     color: black;
 }
 
+#title p{
+    margin:0;
+    margin-top:5vh;
+}
 
+#title{
+    font-size: 1.5vw;
+    color:white;
+    margin-left: 13vw;
+    margin-right: 13vw;
+}
+
+.title{
+    float: left;
+}
 button{
     /* remove default behavior */
     appearance:none;
@@ -79,6 +93,32 @@ button{
     background-color: #471010;
 }
 
+.container{
+    width:90vw;
+    height:90vh;
+    padding: 5vh 5vw;
+    position:relative;
+}
+
+#item{
+    padding-top: 3%;
+    text-align: center;
+    color: white;
+}
+
+#generated{
+    font-size: 22px;
+    font-style: italic;
+}
+
+.game-over{
+    color: #471010;
+}
+
+#timer{
+    padding: 0;
+}
+
 #generate-button{
     width: 7%;
     padding: 0.5%;
@@ -92,7 +132,6 @@ button{
     padding-bottom: 2%;
     background-color: #471010;
 }
-
 
 #player-instructions{
     color: #471010;

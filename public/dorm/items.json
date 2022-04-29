@@ -1,0 +1,67 @@
+{
+    "items": [
+        {
+            "item": "laptop"
+        },
+        {
+            "item": "toilet"
+        },
+        {
+            "item": "bottle"
+        },
+        {
+            "item": "toothbrush"
+        },
+        {
+            "item": "keyboard"
+        },
+        {
+            "item": "cell phone"
+        },
+        {
+            "item": "microwave"
+        },
+        {
+            "item": "hair dryer"
+        },
+        {
+            "item": "sink"
+        },
+        {
+            "item": "refrigerator"
+        },
+        {
+            "item": "book"
+        },
+        {
+            "item": "clock"
+        },
+        {
+            "item": "scissor"
+        },
+        {
+            "item": "cup"
+        },
+        {
+            "item": "fork"
+        },
+        {
+            "item": "knife"
+        },
+        {
+            "item": "spoon"
+        },
+        {
+            "item": "bowl"
+        },
+        {
+            "item": "chair"
+        },
+        {
+            "item": "couch"
+        },
+        {
+            "item": "bed"
+        }
+    ]
+}
