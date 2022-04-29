@@ -9,6 +9,8 @@
   <!-- Two below for p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+  <script type="text/javascript" src="https://p5livemedia.itp.io/simplepeer.min.js"></script>
+  <script type="text/javascript" src="https://p5livemedia.itp.io/p5livemedia.js"></script>   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -33,7 +35,7 @@
 <!-- Instructions for the game to be displayed at the beginning -->
 <div class="rules" id="rules">
   <h1 class="rules-instructions">Instructions</h1>
-  <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span>
+  <p class="specific-instructions"> Welcome to D1 Charades! <br> <br><span style="font-weight:bold"> Goal: </span> Act out the world or guess! Your goal is to guess the phrase as quick as possible!  </span>
   <p id="player-instructions"> </p>
   <button id="start-button" onclick="startGame()"> START </button>
 </div>
@@ -49,6 +51,7 @@
 
   <!-- game container, for the menu and tray -->
   <div class="game-container" id="game-container">
+    <div id="sketch-canvas"></div>
   </div>
   <!-- Game instructions -->
   <div class="instructions" id="instructions">

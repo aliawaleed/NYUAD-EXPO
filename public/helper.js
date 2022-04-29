@@ -39,12 +39,12 @@ window.addEventListener("load", () => { // on load
    // Assign player with their respective arrows
    socket.on('player1', () => {
        console.log('wait for another player to join');
-       inst.textContent = "You are player 1! Use the LEFT arrow key to win!";
+       inst.textContent = Player1Instruction;
    })
 
    // To allow starting the game when two players are in
    socket.on('player2', () => {
-       inst.textContent = "You are player 2! Use the RIGHT arrow key to win!";
+      inst.textContent = Player2Instruction;
        allow_start = true;
    })
 
@@ -64,9 +64,20 @@ function startGame() {
    // to allow the game to start when the second player presses on the start button
    if (allow_start == true) {
        console.log("two players are in");
-       socket.emit('fieldStart', ''); //start game for the rest of the users
+       socket.emit('roomStart', roomStart);
+       console.log(roomStart);
    }
 }
+
+
+
+// permission to start the game
+socket.on('startDataFromServer', () => {
+   console.log("you can start now");
+   players.innerHTML = 'START!';
+   start = true;
+})
+
 
 //to go back to home page
 function goHome() {

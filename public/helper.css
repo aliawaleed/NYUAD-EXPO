@@ -92,3 +92,19 @@ button{
     padding-bottom: 2%;
     background-color: #471010;
 }
+
+
+#player-instructions{
+    color: #471010;
+    font-weight:bold;
+    position:absolute;
+    margin-top: 3%;
+}
+
+
+#start-button{
+    width: 25%;
+    height: 15%;
+    font-size: 1.5vw;
+    margin-top: 15%;
+}

@@ -222,7 +222,6 @@ io.sockets.on('connect', (socket) => {
     });
 
     /******************** A2 ********************/
-    //listen for majoradd from client
 
     //A2 start and finish
     socket.on('A2start', () => {
@@ -249,7 +248,23 @@ io.sockets.on('connect', (socket) => {
         console.log('A2completed');
         io.sockets.to("A2").emit('A2finishDataFromServer', completed);
     })
+
+ /******************** all the room start ********************/
+
+    // to start the game
+    socket.on('roomStart', (data) => {
+        
+       console.log(data);
+       io.in(data).emit('startDataFromServer', '');
+
 })
+
+
+
+
+})
+
+  
 
 // run the server on port 2000
 let port = process.env.PORT || 2000;
