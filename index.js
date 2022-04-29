@@ -69,11 +69,15 @@ io.sockets.on('connect', (socket) => {
         let C2 = rooms["C2"];
         let D2 = rooms["D2"];
         let Field = rooms["Field"];
+        let D1 = rooms["D1"];
+        let dorm = rooms["dorm"];
 
         io.emit("A2PlayerNum", A2);
         io.emit("C2PlayerNum", C2);
         io.emit("D2PlayerNum", D2);
         io.emit("FieldPlayerNum", Field);
+        io.emit("D1PlayerNum", D1);
+        io.emit("dormPlayerNum", dorm);
 
         // to get the number of users in each room and emit information based on if the player is player 1 or 2
         for (const [key, value] of Object.entries(rooms)) {

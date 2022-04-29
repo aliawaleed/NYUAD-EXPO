@@ -68,11 +68,8 @@ function startGame() {
    }
 }
 
-
-
-// to go back to the home page
-function home() {
+//to go back to home page
+function goHome() {
    socket.emit('userLeft', '');
-   console.log('bring me to map');
    window.location = '/map/index.html';
 }

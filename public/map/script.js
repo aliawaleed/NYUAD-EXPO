@@ -53,6 +53,26 @@ window.addEventListener("load", () => { // on load
     let FieldNum = document.getElementById('FieldNum');
     FieldNum.innerHTML = '(' + data + '/2)';
   });
+
+  //listen to number of players in room A2
+  socket.on('D1PlayerNum', (data) => {
+    console.log(data);
+    if (data == null) {
+      data = 0;
+    }
+    let D1Num = document.getElementById('D1Num');
+    D1Num.innerHTML = '(' + data + '/2)';
+  });
+
+  //listen to number of players in room A2
+  socket.on('dormPlayerNum', (data) => {
+    console.log(data);
+    if (data == null) {
+      data = 0;
+    }
+    let dormNum = document.getElementById('dormNum');
+    dormNum.innerHTML = '(' + data + '/2)';
+  });
 })
 
 
@@ -71,6 +91,12 @@ function joinRoom(img) {
   }
   else if (room == 'D2') {
     window.location = '/d2/d2.html';
+  }
+  else if (room == 'D1') {
+    window.location = '/d1/d1.html';
+  }
+  else if (room == 'dorm') {
+    window.location = '/dorm/dorm.html';
   }
   sessionStorage.setItem('room', room); //save to session storage
 }

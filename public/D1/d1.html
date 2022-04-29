@@ -1,68 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="/socket.io/socket.io.js"></script> <!-- add sockets library -->
-      <!-- Two below for p5.js -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script> <!-- add sockets library -->
+  <!-- Two below for p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-  href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-  rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-    <script src="../helper.js"></script>
-    <script src="d1.js"></script>
-    <link rel="stylesheet" href="../helper.css">
-    <link rel="stylesheet" href="style.css">
-    <title>D1 Charades</title>
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <script src="../helper.js"></script>
+  <script src="d1.js"></script>
+  <link rel="stylesheet" href="../helper.css">
+  <link rel="stylesheet" href="style.css">
+  <title>D1 Charades</title>
 </head>
 
 
-    <!--Background Container -->
-    <div class="background-container">
-      <img src="/d1/images/d1.png" alt="D1-img">
+<!--Background Container -->
+<div class="background-container">
+  <img src="/d1/images/d1.png" alt="D1-img">
 
-      <!-- Home Button -->
-      <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="home(this)"></div>
+  <!-- Home Button -->
+  <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="goHome(this)"></div>
+</div>
+
+<!-- Instructions for the game to be displayed at the beginning -->
+<div class="rules" id="rules">
+  <h1 class="rules-instructions">Instructions</h1>
+  <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span>
+  <p id="player-instructions"> </p>
+  <button id="start-button" onclick="startGame()"> START </button>
+</div>
+
+
+<!-- Top part of the game, showing the order and timer -->
+<div class="container" id="container">
+  <div class="order" , id="order">
+    <p class="generated" , id="generated"> </p>
+    <button id="generate-button" onclick="startTimer()"> order </button>
+    <p id="timer"></p>
   </div>
 
-    <!-- Instructions for the game to be displayed at the beginning -->
-    <div class="rules" id="rules">
-      <h1 class="rules-instructions">Instructions</h1>
-      <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> 
-        <p id="player-instructions"> </p>
-      <button id="start-button" onclick="startGame()"> START </button>
+  <!-- game container, for the menu and tray -->
+  <div class="game-container" id="game-container">
   </div>
-
-   
-    <!-- Top part of the game, showing the order and timer -->
-    <div class="container" id="container">
-      <div class="order" , id="order">
-          <p class="generated" , id="generated"> </p>
-          <button id="generate-button" onclick="startTimer()"> order </button>
-          <p id="timer"></p>
-      </div>
-
-      <!-- game container, for the menu and tray -->
-      <div class="game-container" id="game-container">
-      </div>
-      <!-- Game instructions -->
-      <div class="instructions" id="instructions">
-          <p id="players"> Please wait for another player to join! </p>
-      </div>
+  <!-- Game instructions -->
+  <div class="instructions" id="instructions">
+    <p id="players"> Please wait for another player to join! </p>
   </div>
+</div>
 
-  <!-- Printing results and end of game -->
-  <div class="end" id="end">
-      <h1 class="game-over"> Game Over! </h1>
-      <p class="winner" id="winner"></p>
-      <p class="results" id="results"></p>
-      <button id="Home" onclick="goHome(this)"> Home </button>
-  </div>
-
+<!-- Printing results and end of game -->
+<div class="end" id="end">
+  <h1 class="game-over"> Game Over! </h1>
+  <p class="winner" id="winner"></p>
+  <p class="results" id="results"></p>
+  <button id="Home" onclick="goHome(this)"> Home </button>
+</div>
 
 </html>

@@ -1,20 +1,21 @@
-html, body {
-    margin:0;
-    padding:0;
+html,
+body {
+    margin: 0;
+    padding: 0;
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5vw;
-    color:white;
+    color: white;
 }
 
 /* background-img*/
 .background-container {
-    width:100vw;
+    width: 100vw;
 }
 
 .background-container img {
-    width:100%;
-    height:100%;
-    position:absolute;
+    width: 100%;
+    height: 100%;
+    position: absolute;
     z-index: -3;
 }
 
@@ -23,48 +24,50 @@ html, body {
 }
 
 /*Field overlay*/
-#Field { 
-    width:32vw;
-    height:22vh;
-    position:absolute;
+#Field {
+    width: 32vw;
+    height: 22vh;
+    position: absolute;
     left: 34%;
-    top:2%;
+    top: 2%;
 }
+
 #FieldName {
-    position:absolute;
+    position: absolute;
     left: 49%;
-    top:26%;
+    top: 26%;
 
 }
+
 /*A2 overlay*/
-#A2 { 
-    width:17vw;
-    height:18.2vh;
-    position:absolute;
+#A2 {
+    width: 17vw;
+    height: 18.2vh;
+    position: absolute;
     left: 22%;
-    bottom:2.8%;
+    bottom: 2.8%;
 }
 
 #A2Name {
-    position:absolute;
+    position: absolute;
     left: 23%;
-    bottom:22%;
+    bottom: 22%;
 
 }
 
 /*C2 overlay*/
-#C2 { 
-    width:14vw;
-    height:14vh;
-    position:absolute;
+#C2 {
+    width: 14vw;
+    height: 14vh;
+    position: absolute;
     left: 38.3%;
-    bottom:32.7%;
+    bottom: 32.7%;
 }
 
 #C2Name {
-    position:absolute;
+    position: absolute;
     left: 38.3%;
-    bottom:47.7%;
+    bottom: 47.7%;
 }
 
 
@@ -78,7 +81,19 @@ html, body {
 }
 
 #D2Name {
-    position:absolute;
+    position: absolute;
     right: 17.3%;
     top: 63%;
+}
+
+#D1 {
+    height: 50px;
+    width: 50px;
+    background-color: red;
+}
+
+#dorm {
+    height: 50px;
+    width: 50px;
+    background-color: orange;
 }
