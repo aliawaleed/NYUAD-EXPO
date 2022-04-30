@@ -217,22 +217,18 @@ function addAnswer(img) {
         if (array[0] == 1 && array[1] == 1 && array[2] == 1) {
             alert("The tray is full, please remove an item from the tray first by clicking on it!");
         }
-
         else {
             let image = img.src;
 
             // get the name of the item that the user has pressed within each category and store in respective variable;
             if (img.className == 'appetizers') {
-                console.log(getKeyByValue(allAppetizers, image));
                 chosenAppetizer = getKeyByValue(allAppetizers, image);
             }
 
             else if (img.className == 'main-courses') {
-                console.log(getKeyByValue(allMainCourses, image));
                 chosenMainCourse = getKeyByValue(allMainCourses, image);
             }
             else if (img.className == 'desserts') {
-                console.log(getKeyByValue(allDesserts, image));
                 chosenDessert = getKeyByValue(allDesserts, image);
             }
 
@@ -337,4 +333,5 @@ socket.on('finishDataFromServer', (theirCompletedOrders) => {
 function goHome() {
     socket.emit('userLeft', '');
     window.location = '/map/index.html';
+    sessionStorage.setItem('room', "map"); //save to session storage
 }

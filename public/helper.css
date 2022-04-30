@@ -96,7 +96,6 @@ button{
 .container{
     width:90vw;
     height:90vh;
-    padding: 5vh 5vw;
     position:relative;
 }
 
@@ -140,6 +139,12 @@ button{
     margin-top: 3%;
 }
 
+#players{
+    top: 70%;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+}
 
 #start-button{
     width: 25%;

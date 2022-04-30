@@ -79,6 +79,7 @@ socket.on('fieldStartDataFromServer', () => {
 function home() {
     socket.emit('userLeft', '');
     window.location = '/map/index.html';
+    sessionStorage.setItem('room', "map"); //save to session storage
 }
 
 //////////////////p5 code//////////////////

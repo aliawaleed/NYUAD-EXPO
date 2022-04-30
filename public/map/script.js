@@ -16,60 +16,60 @@ socket.on('connect', () => {
 window.addEventListener("load", () => { // on load    
   //listen to number of players in room A2
   socket.on('A2PlayerNum', (data) => {
-    console.log(data);
     if (data == null) {
       data = 0;
     }
+    console.log("a2: ", data);
     let A2Num = document.getElementById('A2Num');
     A2Num.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room C2
   socket.on('C2PlayerNum', (data) => {
-    console.log(data);
     if (data == null) {
       data = 0;
     }
+    console.log("c2: ", data);
     let C2Num = document.getElementById('C2Num');
     C2Num.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room D2
   socket.on('D2PlayerNum', (data) => {
-    console.log(data);
     if (data == null) {
       data = 0;
     }
+    console.log("d2: ", data);
     let D2Num = document.getElementById('D2Num');
     D2Num.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room Field
   socket.on('FieldPlayerNum', (data) => {
-    console.log(data);
     if (data == null) {
       data = 0;
     }
+    console.log("field: ", data);
     let FieldNum = document.getElementById('FieldNum');
     FieldNum.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room A2
   socket.on('D1PlayerNum', (data) => {
-    console.log(data);
     if (data == null) {
       data = 0;
     }
+    console.log("d1: ", data);
     let D1Num = document.getElementById('D1Num');
     D1Num.innerHTML = '(' + data + '/2)';
   });
 
   //listen to number of players in room A2
   socket.on('dormPlayerNum', (data) => {
-    console.log(data);
     if (data == null) {
       data = 0;
     }
+    console.log("dorm: ", data);
     let dormNum = document.getElementById('dormNum');
     dormNum.innerHTML = '(' + data + '/2)';
   });

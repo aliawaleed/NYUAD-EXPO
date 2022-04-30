@@ -304,6 +304,7 @@ class bubble {
 function joinRoom() {
    socket.emit('userLeft', '');
    window.location = '/map/index.html';
+   sessionStorage.setItem('room', "map"); //save to session storage
 }
 
 function draw() {

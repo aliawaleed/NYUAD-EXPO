@@ -8,15 +8,38 @@ let items_array = [];
 // loading JSON data into array 
 window.addEventListener("load", () => { // on load
     fetch("./items.json") //fetch the information from the json file
-    .then(response => response.json()) //returning promise object 
-    .then((data) => {
-        allItems = data.items;
-        // adding everyone in the array
-        for(let i = 0; i < allItems.length; i++){
-            items_array.push(allItems[i]);
-        }
-    })
+        .then(response => response.json()) //returning promise object 
+        .then((data) => {
+            allItems = data.items;
+            // adding everyone in the array
+            for (let i = 0; i < allItems.length; i++) {
+                items_array.push(allItems[i].item);
+            }
+        })
 })
+
+//function to start a 30 second timer and have it initialized on the screen
+function startTimer() {
+    // socket.emit('dormstart', ''); //start game for the rest of the users
+    // if (allow_start == true) {
+    let timer = document.getElementById('timer');
+    timer.innerHTML = 'Time left: 60'; //preset before the timer starts
+    specifyItem();
+    // }
+    // else {
+    // alert("Please wait for another player to join!");
+    // }
+}
+
+function specifyItem() {
+    let item = document.getElementById('generated');
+    let button = document.getElementById('generate-button');
+    button.style.display = 'none';
+
+    // choose a random item from the array
+    itemName = items_array[Math.floor(Math.random() * items_array.length)];
+    item.innerHTML = 'Find: ' + itemName;
+}
 
 //loading the Coco ssd dataset
 function preload() {
@@ -24,60 +47,27 @@ function preload() {
 }
 
 // when object detection has been made
-function gotDetections(error, results) {    
+function gotDetections(error, results) {
     //in case there is an error
     if (error) {
         console.error(error);
-    }
-
-
-    /*************check if result exists in dataset for uni***********/
-
-
-    let labels = Object.keys(detections);
-    for (let label of labels) {
-        let items = detections[label];
-        for (let item of items) {
-            item.taken = false;
-        }
     }
 
     // loop through all objects found 
     for (let i = 0; i < results.length; i++) {
         let item = results[i];
         let label = item.label;
+        console.log("label", results[i].label, results[i].confidence);
         
-        if (detections[label]) {
-            let existing = detections[label];
-            if (existing.length == 0) {
-                item.timer = 100;
-            } else {
-                // Find the object closest?
-                let recordDist = Infinity;
-                let closest = null;
-                for (let candidate of existing) {
-                    let d = dist(candidate.x, candidate.y, item.x, item.y);
-                    if (d < recordDist && !candidate.taken) {
-                        recordDist = d;
-                        closest = candidate;
-                    }
-                }
-                if (closest) {
-                    let amt = 0.75; //0.75;
-                    // lerp is to find a value between the item and the closest one
-                    closest.x = lerp(item.x, closest.x, amt);
-                    closest.y = lerp(item.y, closest.y, amt);
-                    closest.width = lerp(item.width, closest.width, amt);
-                    closest.height = lerp(item.height, closest.height, amt);
-                    closest.taken = true;
-                    closest.timer = 100;
-                } else {
-                    item.timer = 100;
-                }
+        // console.log("1:   ",items_array);
+        // check if item is included in our array
+        if (items_array.includes(label)) {
+            // to yield more accurate results
+            if (item.confidence > 0.7) {
+                detections[label] = [item];
+                // items_array.splice(i, 1);
+                // console.log("2:   ",items_array);
             }
-        } else {
-            detections[label] = [item];
-            item.timer = 100;
         }
     }
     // detect objects within video
@@ -104,20 +94,14 @@ function draw() {
         let items = detections[label];
         for (let i = items.length - 1; i >= 0; i--) {
             let item = items[i];
-            if (item.label !== "person") {
-                stroke(0, 255, 0);
-                strokeWeight(4);
-                fill(0, 255, 0, item.timer);
-                rect(item.x, item.y, item.width, item.height);
-                noStroke();
-                fill(0);
-                textSize(32);
-                text(item.label, item.x + 10, item.y + 24);
-            }
-            item.timer -= 2;
-            if (item.timer < 0) {
-                item.splice(i, 1);
-            }
+            stroke(0, 255, 0);
+            strokeWeight(4);
+            fill(0, 255, 0, 0);
+            rect(item.x, item.y, item.width, item.height);
+            noStroke();
+            fill(0);
+            textSize(32);
+            text(item.label, item.x + 10, item.y + 24);
         }
     }
 }

@@ -37,10 +37,10 @@ window.addEventListener("load", () => { // on load
    end.style.display = "none";
 
    // Assign player with their respective arrows
-   socket.on('player1', () => {
-       console.log('wait for another player to join');
-       inst.textContent = Player1Instruction;
-   })
+   // socket.on('player1', () => {
+   //     console.log('wait for another player to join');
+   //     inst.textContent = Player1Instruction;
+   // })
 
    // // To allow starting the game when two players are in
    // socket.on('player2', () => {
@@ -81,4 +81,5 @@ socket.on('startDataFromServer', () => {
 function goHome() {
    socket.emit('userLeft', '');
    window.location = '/map/index.html';
+   sessionStorage.setItem('room', "map"); //save to session storage
 }
