@@ -99,6 +99,26 @@ button{
     position:relative;
 }
 
+#order{
+    padding-top: 3%;
+    text-align: center;
+    color: white;
+}
+
+#generated{
+    font-size: 22px;
+    font-style: italic;
+}
+
+#timer{
+    padding: 0;
+}
+
+#generate-button{
+    width: 7%;
+    padding: 0.5%;
+}
+
 #item{
     padding-top: 3%;
     text-align: center;
