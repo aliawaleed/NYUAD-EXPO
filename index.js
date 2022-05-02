@@ -249,6 +249,11 @@ io.sockets.on('connect', (socket) => {
         io.sockets.to("A2").emit('A2finishDataFromServer', completed);
     })
 
+
+    /******************** D1 ********************/
+
+ 
+
  /******************** all the room start ********************/
 
     // to start the game
