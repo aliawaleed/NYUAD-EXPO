@@ -129,8 +129,10 @@ function keyPressed() {
         //emit this information to the server
         socket.emit('positionData', pos);//send to all the connected clients
     }
-    else {
-        alert("Please wait for another player to join!");
+    else { // alert players if arrow keys are pressed before the game starts
+        if (keyCode == 37 || keyCode == 39) {
+            alert("Please wait for another player to join!");
+        }
     }
 }
 

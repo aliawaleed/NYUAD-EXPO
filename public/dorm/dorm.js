@@ -1,9 +1,18 @@
+let Player1Instruction = "instructions 1";
+let Player2Instruction = "instructions 2";
+let playersInstructions = "Press on the item button to start!";
+let timeLeft = 59; //initialized at 59 as the timer takes 1 second to start
+
 let video;
 let detector;
 let detections = {}; //the latest detections
 // to load the data from the JSON file
 let allItems;
 let items_array = [];
+
+//columns for words
+let left;
+let right;
 
 // loading JSON data into array 
 window.addEventListener("load", () => { // on load
@@ -15,23 +24,100 @@ window.addEventListener("load", () => { // on load
             for (let i = 0; i < allItems.length; i++) {
                 items_array.push(allItems[i].item);
             }
+
+            let length = items_array.length;
+            left = document.getElementsByClassName("left-column")[0]; //////////// solved with: https://bobbyhadz.com/blog/javascript-typeerror-appendchild-is-not-a-function - console.log(left);
+            right = document.getElementsByClassName("right-column")[0];
+            left.style.display = "none";
+            right.style.display = "none";
+            // console.log(left)
+            for (let i = 0; i < length; i++) {
+                let obj = document.createElement('li'); //create an li for the ingredients
+                obj.classList.add(items_array[i]);
+                obj.textContent = items_array[i].charAt(0).toUpperCase() + items_array[i].slice(1); // to capitalize the first letter
+                if (i < length / 2) {
+                    left.appendChild(obj); 
+                }
+                else {
+                    right.appendChild(obj);
+                }
+            }
         })
+
+    allow_start = false;
+    let item = document.getElementById("generate-button");
+    item.style.opacity = "0.6";
+    item.disabled = true;
 })
+
+//two players are in
+function twoPlayers() {
+    let item = document.getElementById("generate-button");
+    item.style.opacity = "1";
+    item.disabled = false;
+    players.innerHTML = playersInstructions;
+}
+
+function emitCanStart() {
+    socket.emit('dormCanStart', ''); //start game for the rest of the users
+}
+
+// permission to start the game
+socket.on('dormCanStartDataFromServer', () => {
+    console.log("two players are in");
+    twoPlayers();
+})
+
+//to ensure starting the game only once for the other users (that didn't press on the order button)
+let started = 0;
+socket.on('dormStartTimerFromServer', () => {
+    if (started == 0) {
+        decrementTimerForAll();
+        left.style.display = "block";
+        right.style.display = "block";
+    }
+    started = 1; // so that the timer does not start again 
+})
+
+function decrementTimerForAll() {
+    console.log("game started"); // shows how many orders the other player completed 
+    startTimer();
+    //to decrement timer
+    let timerId = setInterval(decrementTimer, 1000);
+
+    function decrementTimer() {
+        //if timer is up
+        if (timeLeft == -1) {
+            clearTimeout(timerId);
+            //remove elements on the screen when time is up
+            let sketch = document.getElementById('game-container');
+            sketch.style.display = "none";
+            left.style.display = "none";
+            right.style.display = "none";
+
+            alert("Time is up!");
+            // socket.emit('finish', myCompletedOrders);
+        } else {
+            timer.innerHTML = 'Time left: ' + timeLeft;
+            timeLeft--; //decrement the time
+        }
+    }
+}
 
 //function to start a 30 second timer and have it initialized on the screen
 function startTimer() {
-    // socket.emit('dormstart', ''); //start game for the rest of the users
-    // if (allow_start == true) {
-    let timer = document.getElementById('timer');
-    timer.innerHTML = 'Time left: 60'; //preset before the timer starts
-    specifyItem();
-    // }
-    // else {
-    // alert("Please wait for another player to join!");
-    // }
+    if (allow_start == true) {
+        socket.emit('dormStart', ''); //start game for the rest of the users
+        let timer = document.getElementById('timer');
+        timer.innerHTML = 'Time left: 60'; //preset before the timer starts
+        printItems();
+    }
+    else {
+        alert("Please wait for another player to join!");
+    }
 }
 
-function specifyItem() {
+function printItems() {
     let item = document.getElementById('generated');
     let button = document.getElementById('generate-button');
     button.style.display = 'none';
@@ -53,23 +139,43 @@ function gotDetections(error, results) {
         console.error(error);
     }
 
-    // loop through all objects found 
+    //loop through all of the results seen 
     for (let i = 0; i < results.length; i++) {
-        let item = results[i];
-        let label = item.label;
-        console.log("label", results[i].label, results[i].confidence);
-        
-        // console.log("1:   ",items_array);
-        // check if item is included in our array
-        if (items_array.includes(label)) {
+        // console.log(results);
+        // if the element exists in our JSON file
+        if (items_array.includes(results[i].label)) {
+            let item = results[i];
+            let label = item.label;
+
             // to yield more accurate results
-            if (item.confidence > 0.7) {
+            if (item.confidence > 0.85) {
+                console.log("label: ", item.label, item.confidence);
                 detections[label] = [item];
-                // items_array.splice(i, 1);
-                // console.log("2:   ",items_array);
+                for (let i = 0; i < items_array.length; i++) {
+                    if (items_array[i] == label) {
+                        console.log("item: ", items_array[i]);
+                        items_array.splice(i, 1);
+
+
+
+                        ////////////////////////////////change color based on player
+                        let strike = document.getElementsByClassName(label)[0];
+                        console.log(strike);
+                        strike.style.textDecoration = "line-through";
+
+
+
+
+                        console.log(items_array);
+                    }
+                }
             }
         }
     }
+
+
+
+    // }
     // detect objects within video
     detector.detect(video, gotDetections);
 }

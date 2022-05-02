@@ -43,7 +43,9 @@
 
 <!-- Top part of the game, showing the order and timer -->
 <div class="container" id="container">
-    <div class="item" , id="item">
+    <div class="left-column" id="column"></div>
+
+        <div class="item" , id="item">
         <p class="generated" , id="generated"> </p>
         <button id="generate-button" onclick="startTimer()"> item </button>
         <p id="timer"></p>
@@ -52,6 +54,9 @@
     <div class="game-container" id="game-container">
         <div class="p5" id="p5"></div>
     </div>
+
+    <div class="right-column" id="column"></div>
+
     <!-- Game instructions -->
     <div class="instructions" id="instructions">
         <p id="players"> Please wait for another player to join! </p>

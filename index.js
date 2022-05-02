@@ -11,7 +11,7 @@ let server = http.createServer(app);
 let io = require('socket.io');
 
 // for admin UI
-const {instrument} = require("@socket.io/admin-ui");
+const { instrument } = require("@socket.io/admin-ui");
 
 io = new io.Server(server, {
     cors: {
@@ -25,9 +25,9 @@ instrument(io, {
 
     //for password
     // auth: {
-        // type: "basic",
-        // username: "admin",
-        // password: "$2b$10$LhUtmkmPS.Vqn38DtCb4cO1o0dwM.39Ghv7d/R.tXEwQdyQ0pAfye" 
+    // type: "basic",
+    // username: "admin",
+    // password: "$2b$10$LhUtmkmPS.Vqn38DtCb4cO1o0dwM.39Ghv7d/R.tXEwQdyQ0pAfye" 
     // }
 });
 
@@ -57,7 +57,7 @@ io.sockets.on('connect', (socket) => {
                 console.log("Client > 2: ", socket.id);
                 socket.emit('morePlayers', '');
             }
-            else{
+            else {
                 rooms[socket.roomName]++;
             }
         } else {
@@ -91,9 +91,9 @@ io.sockets.on('connect', (socket) => {
             // if 2 players are in the room 
             else if (value == 2) {
                 console.log("Client 2: ", socket.name, socket.id);
-                socket.emit('player2', socket.name);
+                socket.emit('player2', socket.name); //emit info to this specific socket
                 io.in(key).emit('player2Start', '');
-                io.in(key).emit('message', '');
+                io.in(key).emit('message', ''); //send to all sockets in the room
             }
         }
     })
@@ -101,9 +101,9 @@ io.sockets.on('connect', (socket) => {
     //if this particular socket disconnects remove from room number of people in the and delete from users
     socket.on('disconnect', () => {
         console.log("socket has been disconnected ", socket.id);
-        if(rooms[socket.roomName]) {
+        if (rooms[socket.roomName]) {
             rooms[socket.roomName]--;
-            }
+        }
         delete users[socket.name];
         console.log("The users left in: ", socket.roomName, users);
     })
@@ -111,9 +111,9 @@ io.sockets.on('connect', (socket) => {
     //delete the user if they leave by clicking the home button
     socket.on('userLeft', () => {
         console.log("socket has been disconnected ", socket.id);
-        if(rooms[socket.roomName]) {
+        if (rooms[socket.roomName]) {
             rooms[socket.roomName]--;
-            }
+        }
         delete users[socket.name];
         console.log("The users left in: ", socket.roomName, users);
 
@@ -132,6 +132,19 @@ io.sockets.on('connect', (socket) => {
     socket.on('fieldStart', () => {
         console.log("Field started");
         io.in("Field").emit('fieldStartDataFromServer', '');
+    })
+
+    /******************** DORM ********************/
+    // // to start the game
+    socket.on('dormStart', () => {
+        console.log("Dorm started");
+        socket.to("dorm").emit('dormStartTimerFromServer', '');
+        // io.in("dorm").emit('dormStartDataFromServer', '');
+    })
+
+    // allows users to start the game based on the number
+    socket.on('dormCanStart', () => {
+        io.in("dorm").emit('dormCanStartDataFromServer', '');
     })
 
     /******************** D2 ********************/
@@ -189,8 +202,8 @@ io.sockets.on('connect', (socket) => {
     });
 
     //when drawclicked Send a response to all clients, including this one
-    socket.on('drawClicked',function(){
-        io.sockets.emit('drawclicked','');
+    socket.on('drawClicked', function () {
+        io.sockets.emit('drawclicked', '');
         console.log('drawClicked');
     });
 
@@ -236,7 +249,7 @@ io.sockets.on('connect', (socket) => {
     socket.on('majoradd', (data) => {
         console.log('this is the major received' + data);
         io.in("A2").emit('majoradd', data);
-        socket.emit('scoreadd',data);
+        socket.emit('scoreadd', data);
     });
 
     socket.on('color', (data) => {
@@ -252,24 +265,21 @@ io.sockets.on('connect', (socket) => {
 
     /******************** D1 ********************/
 
- 
 
- /******************** all the room start ********************/
 
+    /******************** all the room start ********************/
     // to start the game
     socket.on('roomStart', (data) => {
-        
-       console.log(data);
-       io.in(data).emit('startDataFromServer', '');
-
-})
+        console.log(data);
+        io.in(data).emit('startDataFromServer', '');
+    })
 
 
 
 
 })
 
-  
+
 
 // run the server on port 2000
 let port = process.env.PORT || 2000;
