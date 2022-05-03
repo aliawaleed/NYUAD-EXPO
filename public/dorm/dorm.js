@@ -3,6 +3,9 @@ let Player2Instruction = "instructions 2";
 let playersInstructions = "Press on the item button to start!";
 let timeLeft = 59; //initialized at 59 as the timer takes 1 second to start
 
+let myScore = 0; //to track number of correct completed orders
+let theirScore = 0;
+
 let video;
 let detector;
 let detections = {}; //the latest detections
@@ -73,8 +76,6 @@ let started = 0;
 socket.on('dormStartTimerFromServer', () => {
     if (started == 0) {
         decrementTimerForAll();
-        left.style.display = "block";
-        right.style.display = "block";
     }
     started = 1; // so that the timer does not start again 
 })
@@ -94,9 +95,7 @@ function decrementTimerForAll() {
             sketch.style.display = "none";
             left.style.display = "none";
             right.style.display = "none";
-
-            alert("Time is up!");
-            // socket.emit('finish', myCompletedOrders);
+            socket.emit('dormEnd', "");
         } else {
             timer.innerHTML = 'Time left: ' + timeLeft;
             timeLeft--; //decrement the time
@@ -118,14 +117,18 @@ function startTimer() {
 }
 
 function printItems() {
-    let item = document.getElementById('generated');
+    let startInstructions = document.getElementById('players');
     let button = document.getElementById('generate-button');
     button.style.display = 'none';
-
-    // choose a random item from the array
-    itemName = items_array[Math.floor(Math.random() * items_array.length)];
-    item.innerHTML = 'Find: ' + itemName;
+    startInstructions.innerHTML = "Start searching! ";
+    left.style.display = "block";
+    right.style.display = "block";
 }
+
+// when the game ends and the server the other user
+socket.on('dormEndFromServer', () => {
+    displayResults();
+})
 
 //loading the Coco ssd dataset
 function preload() {
@@ -148,37 +151,39 @@ function gotDetections(error, results) {
             let label = item.label;
 
             // to yield more accurate results
-            if (item.confidence > 0.85) {
+            if (item.confidence > 0.9) {
                 console.log("label: ", item.label, item.confidence);
                 detections[label] = [item];
                 for (let i = 0; i < items_array.length; i++) {
                     if (items_array[i] == label) {
+                        myScore++;
+                        let scores = document.getElementById('score');
+                        scores.textContent = "My score: " + myScore + "   |   Their score: " + theirScore;
+                        socket.emit('gotItem', label, i, myScore);
                         console.log("item: ", items_array[i]);
-                        items_array.splice(i, 1);
-
-
-
-                        ////////////////////////////////change color based on player
                         let strike = document.getElementsByClassName(label)[0];
-                        console.log(strike);
                         strike.style.textDecoration = "line-through";
-
-
-
-
-                        console.log(items_array);
+                        items_array.splice(i, 1);
                     }
                 }
             }
         }
     }
-
-
-
-    // }
     // detect objects within video
     detector.detect(video, gotDetections);
 }
+
+// receiving the data from the server for the number of completed orders of the other user 
+socket.on('gotItemFromServer', (label, i, score) => {
+    console.log(label, i)
+    let strike = document.getElementsByClassName(label)[0];
+    strike.style.textDecoration = "line-through";
+    items_array.splice(i, 1);
+    theirScore = score;
+    // console.log("their order", their_orders);
+    let scores = document.getElementById('score');
+    scores.textContent = "My score: " + myScore + "   |   Their score: " + score;
+})
 
 function setup() {
     var canvas = createCanvas(640, 480);

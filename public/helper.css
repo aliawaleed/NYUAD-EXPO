@@ -94,7 +94,7 @@ button{
 }
 
 .container{
-    width:90vw;
+    width:100vw;
     height:90vh;
     position:relative;
 }
@@ -172,3 +172,6 @@ button{
     margin-top: 15%;
 }
 
+.score{
+    float: right;
+}

@@ -1,8 +1,10 @@
-html,
-body {
+@import url('https://fonts.googleapis.com/css?family=Acme&display=swap');
+
+html, body {
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
+    /* font-family: "Acme"; */
     font-size: 1.5vw;
     color: white;
 }
@@ -52,7 +54,21 @@ body {
     position: absolute;
     left: 23%;
     bottom: 22%;
+}
 
+/*dorm overlay*/
+#dorm{
+    width: 20.4vw;
+    height: 23.3vh;
+    position: absolute;
+    left: 50%;
+    bottom: 2.8%;
+}
+
+#dormName {
+    position: absolute;
+    left: 52%;
+    bottom: 27%;
 }
 
 /*C2 overlay*/
@@ -70,7 +86,6 @@ body {
     bottom: 47.7%;
 }
 
-
 /*D2 overlay*/
 #D2 {
     width: 2.9vw;
@@ -87,13 +102,23 @@ body {
 }
 
 #D1 {
-    height: 50px;
-    width: 50px;
-    background-color: red;
+    width: 5.7vw;
+    height: 14vh;
+    position: absolute;
+    left: 12.1%;
+    top: 72%;
 }
 
-#dorm {
-    height: 50px;
-    width: 50px;
-    background-color: orange;
+#D1Name {
+    position: absolute;
+    left: 6%;
+    top: 68%;
+}
+
+#title{
+    font-size: 70px;
+    font-family: "Acme";
+    position: absolute;
+    left: 6%;
+    top: 22%;
 }

@@ -13,7 +13,7 @@ socket.on('connect', () => {
 })
 
 
-let allow_start; 
+let allow_start;
 let game;
 let rules;
 let players;
@@ -43,12 +43,12 @@ window.addEventListener("load", () => { // on load
       inst.textContent = Player1Instruction;
    })
 
-   //To allow starting the game when two players are in
+   // set instructions for the second player
    socket.on('player2', () => {
       inst.textContent = Player2Instruction;
    })
 
-   // when 2 players have joined
+   //To allow starting the game when two players are in
    socket.on('message', () => {
       allow_start = true;
    })
@@ -71,13 +71,31 @@ function startGame() {
    }
 }
 
-// permission to start the game
-// socket.on('startDataFromServer', () => {
-//    console.log("you can start now");
-//    players.innerHTML = playersInstructions;
-// players.innerHTML = 'START!';
-//    start = true;
-// })
+function displayResults() {
+   let finalScore = document.getElementById('score');
+   finalScore.style.display = "none";
+   let end = document.getElementById('end');
+   end.style.display = "block";
+   let timer = document.getElementById('timer');
+   timer.style.display = "none";
+   let players = document.getElementById('players');
+   players.style.display = "none";
+
+   let winner = document.getElementById('winner');
+
+   //compare the order numbers to print the winner
+   if (myScore > theirScore) {
+      winner.innerHTML = "You won!";
+   }
+   else if (myScore < theirScore) {
+      winner.innerHTML = "They won!";
+   }
+   else {
+      winner.innerHTML = "It's a draw!";
+   }
+   let results = document.getElementById('results');
+   results.innerHTML = 'Them: ' + theirScore + ' You: ' + myScore;
+}
 
 //to go back to home page
 function goHome() {

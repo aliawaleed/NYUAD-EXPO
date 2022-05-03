@@ -147,6 +147,15 @@ io.sockets.on('connect', (socket) => {
         io.in("dorm").emit('dormCanStartDataFromServer', '');
     })
 
+    socket.on('gotItem', (label, i, score) => {
+        socket.to("dorm").emit("gotItemFromServer", label, i, score);
+    })
+
+    // when the timer is up send to each user how many meals the other user made
+    socket.on('dormEnd', () => {
+        console.log('completed');
+        socket.to("dorm").emit('dormEndFromServer', "");
+    })
     /******************** D2 ********************/
     // to actually start the game
     socket.on('D2start', () => {
