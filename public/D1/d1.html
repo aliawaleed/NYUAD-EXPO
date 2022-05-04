@@ -7,9 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript" src="/socket.io/socket.io.js"></script> <!-- add sockets library -->
   <!-- Two below for ML5 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.min.js"></script>	
-	<script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script src="/libs/p5js/p5-0.9.0/addons/p5.dom.min.js"></script>
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,16 +34,19 @@
   <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="goHome(this)"></div>
 </div>
 
+
     <!-- Title -->
     <div id="title">
-      <p class="title"> <span style="font-weight:bold"> D1 </span> | Game Name</p>
-      <!-- <p class="completed-orders" id="completed-orders">My orders: 0 | Their orders: 0</p> -->
+      <p class="title"> <span style="font-weight:bold"> D1 </span> | Snatch!</p>
+      <p class="score" id="score"> My score: 0 | Their score: 0</p>
   </div>
 
 <!-- Instructions for the game to be displayed at the beginning -->
 <div class="rules" id="rules">
   <h1 class="rules-instructions">Instructions</h1>
-  <p class="specific-instructions"> Welcome to D1 Charades! <br> <br><span style="font-weight:bold"> Goal: </span> Act out the world or guess! Your goal is to guess the phrase as quick as possible!  </span>
+  <p class="specific-instructions"> Welcome to NYUAD Blitz <br> <br><span style="font-weight:bold"> Goal: </span> Find the card and show it to the camera!</span> <br>
+    <br><span style="font-weight:bold"> Instruction: </span> <Br> 
+      1. On Screen, find the most recurring item <br> 2. Check the color of the item from your physical card deck<br> 3. Find the item of that color from digital, and find the item with that color
   <p id="player-instructions"> </p>
   <button id="start-button" onclick="startGame()"> START </button>
 </div>
@@ -51,14 +55,14 @@
 <!-- Top part of the game, showing the order and timer -->
 <div class="container" id="container">
    <div class="order" , id="order">
-            <p class="generated" , id="generated"> This word </p>
-            <button id="getword-button" onclick="startTimer()">Draw</button>
             <p id="timer"></p>
   </div>
 
   <!-- game container, for the menu and tray -->
   <div class="game-container" id="game-container">
-    <div id="sketch-canvas"> <div class="resultDisplay"><span id="result"></span></div></div>
+    <div id="sketch-canvas">
+      <button id="getword-button" onclick="startTimer()">Draw</button>
+    </div>
 
   </div>
   <!-- Game instructions -->

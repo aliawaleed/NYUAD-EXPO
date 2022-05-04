@@ -1,8 +1,8 @@
 let roomStart = 'D1'
 
-//Instruciton Page
-let Player1Instruction = "You will start with Acting"
-let Player2Instruction = "You will start with Guessing"
+// //Instruciton Page
+// let Player1Instruction = "You are a Player 1"
+// let Player2Instruction = "You will start with Guessing"
 
 
 let mobilenet;
@@ -17,6 +17,71 @@ let label = 'loading model';
 // let duneYellowButton;
 // let saveButton;
 // let trainButton;
+
+ let cards = [];
+// let red = [];
+// let blue = [];
+// let green = [];
+// let black = [];
+
+let index;
+// let indexR;
+// let indexB;
+// let indexG;
+// let indexBl;
+
+function preload(){
+  for (let i = 1; i < 6; i++) {
+    cards[i] = loadImage("images/"+ i + ".png");
+  }
+	// //create an array of dog image file names
+	// yellow = [
+	// 	"images/yellow/cactus.png",
+  //   "images/yellow/dune.png", 
+  //   "images/yellow/mosque.png", 
+  //   "images/yellow/palm.png", 
+  //   "images/yellow/sun.png"
+  //   ];
+
+  //  red = [
+  //     "images/red/cactus.png",
+  //     "images/red/dune.png", 
+  //     "images/red/mosque.png", 
+  //     "images/red/palm.png", 
+  //     "images/red/sun.png"
+  //     ];
+
+  //     blue = [
+  //       "images/blue/cactus.png",
+  //       "images/blue/dune.png", 
+  //       "images/blue/mosque.png", 
+  //       "images/blue/palm.png", 
+  //       "images/blue/sun.png"
+  //       ];
+
+  //       green = [
+  //         "images/green/cactus.png",
+  //         "images/green/dune.png", 
+  //         "images/green/mosque.png", 
+  //         "images/green/palm.png", 
+  //         "images/green/sun.png"
+  //         ];
+
+  //         black = [
+  //           "images/black/cactus.png",
+  //           "images/black/dune.png", 
+  //           "images/black/mosque.png", 
+  //           "images/black/palm.png", 
+  //           "images/black/sun.png"
+  //           ];
+}
+
+//emit information of mous position everytime mouse moves
+function windowResized() {
+  resizeCanvas(windowWidth*0.8, windowWidth * 0.4);
+  background(210,209,252);
+}
+
 
 function modelReady() {
   console.log('Model is ready!!!');
@@ -34,11 +99,11 @@ function videoReady() {
 }
 
 function setup() {
-  let canvas = createCanvas(windowWidth / 2, windowHeight * 0.6);
+  let canvas = createCanvas(windowWidth*0.8, windowWidth * 0.4);
    canvas.parent('sketch-canvas');
   video = createCapture(VIDEO);
   video.hide();
-  background(0);
+  background(210,209,252);
   mobilenet = ml5.featureExtractor('MobileNet', modelReady);
 classifier = mobilenet.classification(video, { numLabels: 7 }, videoReady); //set numLabels to number expected or length of array
 
@@ -84,12 +149,41 @@ classifier = mobilenet.classification(video, { numLabels: 7 }, videoReady); //se
 //   });
 }
 
+
+function startTimer(){
+
+  index = int(random(1,5));
+  //dice throw
+  image(cards[index], windowWidth*0.425, windowWidth*0.025, windowWidth*0.35, windowWidth * 0.35);
+  // image(red[indexR], windowWidth*0.65, windowWidth*0.05, windowWidth*0.1, windowWidth * 0.1);
+  // image(green[indexG], windowWidth*0.55, windowWidth*0.15, windowWidth*0.1, windowWidth*0.1);
+  // image(blue[indexB], windowWidth*0.45, windowWidth*0.25, windowWidth*0.1, windowWidth * 0.1);
+  // image(black[indexBl], windowWidth*0.65, windowWidth*0.25, windowWidth*0.1, windowWidth * 0.1);
+
+  if (index == 1){
+    console.log("palm");
+  } else if(index == 2){
+    console.log("sun");
+  } else if(index == 3){
+    console.log("mosque");
+  } else if(index == 4){
+    console.log("mosque");
+  } else if(index == 5){
+    console.log("dune");
+  } else if(index == 6){
+    console.log("dune");
+  } 
+
+
+
+};
+
 function draw() {
-  background(0);
-  image(video, 0, 0, 320, 240);
-  fill(255);
+  //video capture
+  image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
   textSize(16);
   text(label, 10, height - 10);
+
 }
 
 // function whileTraining(loss) {

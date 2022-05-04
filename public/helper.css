@@ -99,6 +99,14 @@ button{
     position:relative;
 }
 
+/* CSS for dorm game */
+.game-container {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 #order{
     padding-top: 3%;
     text-align: center;
