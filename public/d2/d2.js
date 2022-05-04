@@ -71,6 +71,17 @@ window.addEventListener("load", () => {
     let dessert3 = document.getElementById('dessert3');
     dessert3.src = allDesserts['profiterole'];
 
+    // to track clicked items from the menu 
+    $(".appetizers").on('click', function() {
+        addAnswer($(this))
+    });
+    $(".main-courses").on('click', function() {
+        addAnswer($(this))
+    });
+    $(".desserts").on('click', function() {
+        addAnswer($(this))
+    });   
+
     socket.on('player1', () => {
         console.log('wait for another player to join');
         onePlayer();
@@ -210,7 +221,7 @@ let array = [0, 0, 0]; // boolean array for the 3 locations to add items on the 
 let num = 0; // count for number of items that have been added 
 let free = -1; // to find a free spot on the tray
 
-// function to add clicked images to tray
+// function to add dishes to tray 
 function addAnswer(img) {
     if (canAdd == true) {
         // if there are 3 items on the tray
@@ -218,17 +229,16 @@ function addAnswer(img) {
             alert("The tray is full, please remove an item from the tray first by clicking on it!");
         }
         else {
-            let image = img.src;
+            let image = img.attr('src');
 
-            // get the name of the item that the user has pressed within each category and store in respective variable;
-            if (img.className == 'appetizers') {
+            if (img.attr('class') ==  'appetizers') {
                 chosenAppetizer = getKeyByValue(allAppetizers, image);
             }
 
-            else if (img.className == 'main-courses') {
+            else if (img.attr('class') == 'main-courses') {
                 chosenMainCourse = getKeyByValue(allMainCourses, image);
             }
-            else if (img.className == 'desserts') {
+            else if (img.attr('class') == 'desserts') {
                 chosenDessert = getKeyByValue(allDesserts, image);
             }
 
@@ -242,14 +252,14 @@ function addAnswer(img) {
                     }
                 }
                 let answerBox = document.getElementById('ans' + free);
-                answerBox.src = img.src;
+                answerBox.src = img.attr('src');
                 array[free] = 1;
             }
             // if we're in the first 3 items, add them, increment the count, and change boolean to 1
             else {
                 let answerBox = document.getElementById('ans' + num);
                 console.log(answerBox, num);
-                answerBox.src = img.src;
+                answerBox.src = img.attr('src');
                 array[num] = 1;
                 num++;
             }
