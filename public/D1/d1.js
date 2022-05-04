@@ -5,106 +5,110 @@ let Player1Instruction = "You will start with Acting"
 let Player2Instruction = "You will start with Guessing"
 
 
-
-// ml5.js: Training a Convolutional Neural Network for Image Classification
-// The Coding Train / Daniel Shiffman
-// https://thecodingtrain.com/learning/ml5/8.4-cnn-image-classification.html
-// https://youtu.be/hWurN0XhzLY
-// https://editor.p5js.org/codingtrain/sketches/ogxO8har_
-// (mask) https://editor.p5js.org/codingtrain/sketches/tKLoeUD0u
-
+let mobilenet;
+let classifier;
 let video;
-let videoSize = 64;
-let ready = false;
+let label = 'loading model';
+//let none;
+// let sunRedButton;
+// let mosqueBlueButton;
+// let palmBlackButton;
+// let cactusGreenButton;
+// let duneYellowButton;
+// let saveButton;
+// let trainButton;
 
-let pixelBrain;
-let label = '';
+function modelReady() {
+  console.log('Model is ready!!!');
+}
+
+function customModelReady() {
+  console.log('Custom Model is ready!!!');
+  label = 'model ready';
+  classifier.classify(gotResults);
+}
+
+function videoReady() {
+  console.log('Video is ready!!!');
+  classifier.load('model.json', customModelReady);
+}
 
 function setup() {
   let canvas = createCanvas(windowWidth / 2, windowHeight * 0.6);
-  canvas.parent('sketch-canvas');
-  video = createCapture(VIDEO, videoReady);
-  video.size(videoSize, videoSize);
+   canvas.parent('sketch-canvas');
+  video = createCapture(VIDEO);
   video.hide();
-
-  let options = {
-    inputs: [64, 64, 4],
-    task: 'imageClassification',
-    debug: true,
-  };
-  pixelBrain = ml5.neuralNetwork(options);
-}
-
-function loaded() {
-  let options = {
-    epohcs: 50
-  }
-  pixelBrain.train(options, finishedTraining);
-}
-
-function finishedTraining() {
-  console.log('training complete');
-  classifyVideo();
-}
-
-function classifyVideo() {
-  let inputImage = {
-    image: video,
-  };
-  pixelBrain.classify(inputImage, gotResults);
-}
-
-function gotResults(error, results) {
-  if (error) {
-    return;
-  }
-  label = results[0].label;
-  classifyVideo();
-}
-
-function keyPressed() {
-  if (key == 't') {
-    pixelBrain.normalizeData();
-    pixelBrain.train({
-        epochs: 50,
-      },
-      finishedTraining
-    );
-  } else if (key == 's') {
-    pixelBrain.saveData();
-  } else if (key == 'm') {
-    addExample('mask');
-    console.log('nicemask');
-  } else if (key == 'n') {
-     console.log('please wear mask');
-    addExample('no mask');
-  }
-}
-
-function addExample(label) {
-  let inputImage = {
-    image: video,
-  };
-  let target = {
-    label,
-  };
-  console.log('Adding example: ' + label);
-  pixelBrain.addData(inputImage, target);
-}
-
-// Video is ready!
-function videoReady() {
-  ready = true;
-}
-
-function draw () {
   background(0);
-  if (ready) {
-    image(video, 0, 0, width, height);
-  }
+  mobilenet = ml5.featureExtractor('MobileNet', modelReady);
+classifier = mobilenet.classification(video, { numLabels: 7 }, videoReady); //set numLabels to number expected or length of array
 
-  textSize(64);
-  textAlign(CENTER, CENTER);
-  fill(255);
-  text(label, width / 2, height / 2);
+//     noneButton = createButton('none');
+//    noneButton.mousePressed(function() {
+//     classifier.addImage('none');
+//   });
+  
+//   sunRedButton = createButton('sun');
+//    sunRedButton.mousePressed(function() {
+//     classifier.addImage('sun');
+//   });
+
+//   mosqueBlueButton =  createButton('mosque');
+// mosqueBlueButton.mousePressed(function() {
+//     classifier.addImage('mosque');
+//   });
+  
+//       palmBlackButton = createButton('palm');
+//   palmBlackButton.mousePressed(function() {
+//       classifier.addImage('palm');
+//   });
+
+//         cactusGreenButton = createButton('cactus');
+//  cactusGreenButton.mousePressed(function() {
+//       classifier.addImage('cactus');
+//   });
+  
+//           duneYellowButton = createButton('dune');
+//   duneYellowButton.mousePressed(function() {
+//       classifier.addImage('dune');
+//   });
+  
+//   trainButton = createButton('train');
+//   trainButton.mousePressed(function() {
+//     classifier.train(whileTraining);
+//   });
+  
+
+//   saveButton = createButton('save');
+//   saveButton.mousePressed(function() {
+//     classifier.save();
+//   });
 }
+
+function draw() {
+  background(0);
+  image(video, 0, 0, 320, 240);
+  fill(255);
+  textSize(16);
+  text(label, 10, height - 10);
+}
+
+// function whileTraining(loss) {
+//   if (loss == null) {
+//     console.log('Training Complete');
+//     classifier.classify(gotResults);
+//   } else {
+//     console.log(loss);
+//   }
+// }
+
+function gotResults(error, result) {
+  if (error) {
+    console.error(error);
+  } else {
+    // updated to work with newer version of ml5
+    // label = result;
+    label = result[0].label;
+    classifier.classify(gotResults);
+  }
+}
+
