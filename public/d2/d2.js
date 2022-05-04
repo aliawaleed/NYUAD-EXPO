@@ -72,13 +72,13 @@ window.addEventListener("load", () => {
     dessert3.src = allDesserts['profiterole'];
 
     // to track clicked items from the menu 
-    $(".appetizers").on('click', function() {
+    $(".appetizers").on('click', () => {
         addAnswer($(this))
     });
-    $(".main-courses").on('click', function() {
+    $(".main-courses").on('click', () => {
         addAnswer($(this))
     });
-    $(".desserts").on('click', function() {
+    $(".desserts").on('click', () => {
         addAnswer($(this))
     });   
 
