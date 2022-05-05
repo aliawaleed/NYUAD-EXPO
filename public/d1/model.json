@@ -3151,7 +3151,7 @@
                     {
                         "class_name": "Flatten",
                         "config": {
-                            "name": "flatten_Flatten1",
+                            "name": "flatten_Flatten28",
                             "trainable": true,
                             "batch_input_shape": [
                                 null,
@@ -3186,14 +3186,14 @@
                             "activity_regularizer": null,
                             "kernel_constraint": null,
                             "bias_constraint": null,
-                            "name": "dense_Dense1",
+                            "name": "dense_Dense55",
                             "trainable": true
                         }
                     },
                     {
                         "class_name": "Dense",
                         "config": {
-                            "units": 7,
+                            "units": 6,
                             "activation": "softmax",
                             "use_bias": false,
                             "kernel_initializer": {
@@ -3214,7 +3214,7 @@
                             "activity_regularizer": null,
                             "kernel_constraint": null,
                             "bias_constraint": null,
-                            "name": "dense_Dense2",
+                            "name": "dense_Dense56",
                             "trainable": true
                         }
                     }
@@ -3879,7 +3879,7 @@
                     "dtype": "float32"
                 },
                 {
-                    "name": "dense_Dense1/kernel",
+                    "name": "dense_Dense55/kernel",
                     "shape": [
                         12544,
                         100
@@ -3887,17 +3887,17 @@
                     "dtype": "float32"
                 },
                 {
-                    "name": "dense_Dense1/bias",
+                    "name": "dense_Dense55/bias",
                     "shape": [
                         100
                     ],
                     "dtype": "float32"
                 },
                 {
-                    "name": "dense_Dense2/kernel",
+                    "name": "dense_Dense56/kernel",
                     "shape": [
                         100,
-                        7
+                        6
                     ],
                     "dtype": "float32"
                 },
@@ -4284,7 +4284,6 @@
     ],
     "ml5Specs": {
         "mapStringToIndex": [
-            "none",
             "sun",
             "mosque",
             "palm",
