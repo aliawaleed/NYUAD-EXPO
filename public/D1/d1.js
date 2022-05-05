@@ -1,8 +1,4 @@
-let roomStart = 'D1'
-
-// //Instruciton Page
-// let Player1Instruction = "You are a Player 1"
-// let Player2Instruction = "You will start with Guessing"
+let roomStart = 'D1';
 
 
 let mobilenet;
@@ -100,12 +96,12 @@ function videoReady() {
 
 function setup() {
   let canvas = createCanvas(windowWidth*0.8, windowWidth * 0.4);
-   canvas.parent('sketch-canvas');
+  canvas.parent('sketch-canvas');
   video = createCapture(VIDEO);
   video.hide();
   background(210,209,252);
   mobilenet = ml5.featureExtractor('MobileNet', modelReady);
-classifier = mobilenet.classification(video, { numLabels: 7 }, videoReady); //set numLabels to number expected or length of array
+  classifier = mobilenet.classification(video, { numLabels: 7 }, videoReady); //set numLabels to number expected or length of array
 
 //     noneButton = createButton('none');
 //    noneButton.mousePressed(function() {
@@ -149,6 +145,11 @@ classifier = mobilenet.classification(video, { numLabels: 7 }, videoReady); //se
 //   });
 }
 
+let showScenarios = true;
+
+function scenarios(){
+  text("Scenarios", windowWidth*0.5, height - 10);
+}
 
 function startTimer(){
 
@@ -183,6 +184,11 @@ function draw() {
   image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
   textSize(16);
   text(label, 10, height - 10);
+
+  if (showScenarios = true){
+    scenarios();
+
+  }
 
 }
 

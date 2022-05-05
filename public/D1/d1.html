@@ -44,9 +44,10 @@
 <!-- Instructions for the game to be displayed at the beginning -->
 <div class="rules" id="rules">
   <h1 class="rules-instructions">Instructions</h1>
-  <p class="specific-instructions"> Welcome to NYUAD Blitz <br> <br><span style="font-weight:bold"> Goal: </span> Find the card and show it to the camera!</span> <br>
+  <p class="specific-instructions"> Welcome to NYUAD Blitz <br> <br><span style="font-weight:bold"> Goal: </span> Quickly identify the correct card!</span> <br>
     <br><span style="font-weight:bold"> Instruction: </span> <Br> 
-      1. On Screen, find the most recurring item <br> 2. Check the color of the item from your physical card deck<br> 3. Find the item of that color from digital, and find the item with that color
+      1. Carefully read the three different scenarios.
+      <br> 2.Click PICK button to receive a challenge <br> 2. Identify the answer <br> 3. Pick up the answer and show it to camera
   <p id="player-instructions"> </p>
   <button id="start-button" onclick="startGame()"> START </button>
 </div>
@@ -61,7 +62,15 @@
   <!-- game container, for the menu and tray -->
   <div class="game-container" id="game-container">
     <div id="sketch-canvas">
-      <button id="getword-button" onclick="startTimer()">Draw</button>
+      <div id="scenarios">
+        <h1>Scenarios</h1>
+        <p>
+          1. All objects appearing on cards are different. Identify the color in which the sun appears in. Then, pick up the card of the same color from your deck. </p>
+      
+      <p>2. Two (or more) objects of the same type appears on the cards. Identify the object that appears the most, then identify the color associated with this object from your deck. Then, pick up the object associated with this color from your deck.</p>
+    <p>3. If you have two pairs of the same objects appearing on the cards, identify the object that is singular (odd-one-out). Then, identify the color associated with that object. Then, pick up the card of the same color from your deck. </p>    
+    </div>
+      <button id="getword-button" onclick="startTimer()">PICK</button>
     </div>
 
   </div>
