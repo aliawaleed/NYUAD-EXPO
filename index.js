@@ -274,7 +274,7 @@ io.sockets.on('connect', (socket) => {
 
     /******************** D1 ********************/
 
-  /******************** DORM ********************/
+    /******************** DORM ********************/
     // // to start the game
     socket.on('d1Start', () => {
         console.log("d1 started");
@@ -295,6 +295,11 @@ io.sockets.on('connect', (socket) => {
     })
 
 
+    // socket.on('dormScore', (score) => {
+    //     console.log("************", score);
+    //     // socket.emit("dormHighScore", score);
+    //     io.in("map").emit('dormHighScore', score);
+    // })
 
 
 })

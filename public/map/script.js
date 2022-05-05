@@ -73,6 +73,13 @@ window.addEventListener("load", () => { // on load
     let dormNum = document.getElementById('dormNum');
     dormNum.innerHTML = '(' + data + '/2)';
   });
+
+
+//   socket.on('dormHighScore', (score) => {
+//     console.log("dorm score: ", score);
+//     let dScore = document.getElementById('dScore');
+//     dScore.innerHTML = score;
+//  });
 })
 
 

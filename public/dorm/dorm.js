@@ -1,7 +1,7 @@
 let Player1Instruction = "instructions 1: This game involves a camera. Stand up and get ready! ";
 let Player2Instruction = "instructions 2: This game involves a camera. Stand up and get ready! ";
 
-let playersInstructions = "Press on the item button to start!";
+let playersInstructions = "Press on the SHOW button to start!";
 let timeLeft = 59; //initialized at 59 as the timer takes 1 second to start
 
 let myScore = 0; //to track number of correct completed orders
@@ -18,6 +18,9 @@ let items_array = [];
 let left;
 let right;
 let load_time;
+
+let myColor = "green";
+let theirColor = "red";
 
 // loading JSON data into array 
 window.addEventListener("load", () => { // on load
@@ -73,6 +76,7 @@ function twoPlayers() {
     let item = document.getElementById("generate-button");
     item.style.opacity = "1";
     item.disabled = false;
+    let players = document.getElementById('players');
     players.innerHTML = playersInstructions;
 }
 
@@ -105,12 +109,13 @@ function decrementTimerForAll() {
         //if timer is up
         if (timeLeft == -1) {
             clearTimeout(timerId);
+            // socket.emit('dormScore', myScore);
             //remove elements on the screen when time is up
             let sketch = document.getElementById('game-container');
             sketch.style.display = "none";
             left.style.display = "none";
             right.style.display = "none";
-            socket.emit('dormEnd', "");
+            socket.emit('dormEnd', "");        
         } else {
             timer.innerHTML = 'Time left: ' + timeLeft;
             timeLeft--; //decrement the time
@@ -153,16 +158,16 @@ function gotDetections(error, results) {
     }
 
     //loop through all of the results seen 
-    for (let i = 0; i < results.length; i++)
-        // console.log(results);
+    for (let i = 0; i < results.length; i++){
+        console.log(results);
         // if the element exists in our JSON file
         if (items_array.includes(results[i].label)) {
             let item = results[i];
             let label = item.label;
-
+            console.log("label: ", item.label, item.confidence);
+            // console.log(item);
             // to yield more accurate results
             if (item.confidence > 0.9) {
-                console.log("label: ", item.label, item.confidence);
                 detections[label] = [item];
                 for (let i = 0; i < items_array.length; i++) {
                     if (items_array[i] == label) {
@@ -173,6 +178,7 @@ function gotDetections(error, results) {
                         console.log("item: ", items_array[i]);
                         let strike = document.getElementsByClassName(label)[0];
                         strike.style.textDecoration = "line-through";
+                        strike.style.color = myColor;
                         items_array.splice(i, 1);
                     }
                 }
@@ -188,6 +194,7 @@ socket.on('gotItemFromServer', (label, i, score) => {
     console.log(label, i)
     let strike = document.getElementsByClassName(label)[0];
     strike.style.textDecoration = "line-through";
+    strike.style.color = theirColor;
     items_array.splice(i, 1);
     theirScore = score;
     // console.log("their order", their_orders);
@@ -216,11 +223,12 @@ function camOn() {
 
 
 function draw() {
-    //draw every frame in the video
+    // turn the camera on
     if (turnCamOn == true) {
         camOn();
         turnCamOn = false;
     }
+    //draw every frame in the video
     if (video) {
         image(video, 0, 0);
 
@@ -229,10 +237,10 @@ function draw() {
             let items = detections[label];
             for (let i = items.length - 1; i >= 0; i--) {
                 let item = items[i];
-                stroke(0, 255, 0);
-                strokeWeight(4);
-                fill(0, 255, 0, 0);
-                rect(item.x, item.y, item.width, item.height);
+                // stroke(0, 255, 0);
+                // strokeWeight(4);
+                // fill(0, 255, 0, 0);
+                // rect(item.x, item.y, item.width, item.height);
                 noStroke();
                 fill(0);
                 textSize(32);
@@ -241,3 +249,5 @@ function draw() {
         }
     }
 }
+
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader5  for loader
