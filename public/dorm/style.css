@@ -2,75 +2,96 @@
 
 
 #column {
-    font-family: 'Oswald';
-    position: absolute;
-    color: white;
-    width: 10vw;
-    height: 60vh;
-    top: 55%;
-    list-style: none;
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  font-family: 'Oswald';
+  position: absolute;
+  color: white;
+  width: 10vw;
+  height: 60vh;
+  top: 55%;
+  list-style: none;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  align-items: center;
 }
 
 .left-column {
-    left: 15%;
-    transform: translate(-50%, -50%);
+  left: 20%;
+  transform: translate(-50%, -50%);
 }
 
 .right-column {
-    left: 85%;
-    transform: translate(-50%, -50%);
+  left: 82%;
+  transform: translate(-50%, -50%);
 }
 
-#inner-text{
-    height: 100%;
+#list-item {
+  margin-bottom: 2vh;
+  font-size: 4vh;
 }
 
-/* Center the loader */
+#inner-text {
+  height: 100%;
+}
+
+/* Everything below is for the loading icon*/
 #loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: 120px;
-    height: 120px;
-    margin: -76px 0 0 -76px;
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #471010;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 120px;
+  height: 120px;
+  margin: -76px 0 0 -76px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #471010;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {-webkit-transform: rotate(0deg);}
+
+  100% {-webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+  0% {transform: rotate(0deg);}
+
+  100% {transform: rotate(360deg);}
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 0.5s;
+  animation-name: animatebottom;
+  animation-duration: 0.5s
+}
+
+@-webkit-keyframes animatebottom {
+  from {
+    bottom: -100px;
+    opacity: 0
   }
-  
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+
+  to {
+    bottom: 0px;
+    opacity: 1
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+}
+
+@keyframes animatebottom {
+  from {
+    bottom: -100px;
+    opacity: 0
   }
-  
-  /* Add animation to "page content" */
-  .animate-bottom {
-    position: relative;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: 0.5s;
-    animation-name: animatebottom;
-    animation-duration: 0.5s
+
+  to {
+    bottom: 0;
+    opacity: 1
   }
-  
-  @-webkit-keyframes animatebottom {
-    from { bottom:-100px; opacity:0 } 
-    to { bottom:0px; opacity:1 }
-  }
-  
-  @keyframes animatebottom { 
-    from{ bottom:-100px; opacity:0 } 
-    to{ bottom:0; opacity:1 }
-  }
+}

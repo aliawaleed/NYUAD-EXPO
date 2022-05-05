@@ -1,8 +1,8 @@
-let Player1Instruction = "instructions 1: This game involves a camera. Stand up and get ready! ";
-let Player2Instruction = "instructions 2: This game involves a camera. Stand up and get ready! ";
+let Player1Instruction = "1: This game involves a camera. Stand up and get ready! ";
+let Player2Instruction = "2: This game involves a camera. Stand up and get ready! ";
 
 let playersInstructions = "Press on the SHOW button to start!";
-let timeLeft = 59; //initialized at 59 as the timer takes 1 second to start
+let timeLeft = 89; //initialized at 59 as the timer takes 1 second to start
 
 let myScore = 0; //to track number of correct completed orders
 let theirScore = 0;
@@ -17,8 +17,11 @@ let items_array = [];
 //columns for words
 let left;
 let right;
+
+
 let load_time;
 
+// set font color for both players
 let myColor = "green";
 let theirColor = "red";
 
@@ -28,20 +31,20 @@ window.addEventListener("load", () => { // on load
         .then(response => response.json()) //returning promise object 
         .then((data) => {
             allItems = data.items;
-            // adding everyone in the array
+            // adding items from the JSON file in the arrow
             for (let i = 0; i < allItems.length; i++) {
                 items_array.push(allItems[i].item);
             }
-
             let length = items_array.length;
             left = document.getElementsByClassName("left-column")[0]; //////////// solved with: https://bobbyhadz.com/blog/javascript-typeerror-appendchild-is-not-a-function - console.log(left);
             right = document.getElementsByClassName("right-column")[0];
             left.style.display = "none";
             right.style.display = "none";
-            // console.log(left)
+            // create list elements for the items in the array and add to both columns
             for (let i = 0; i < length; i++) {
                 let obj = document.createElement('li'); //create an li for the ingredients
                 obj.classList.add(items_array[i]);
+                obj.setAttribute('id', 'list-item');
                 obj.textContent = items_array[i].charAt(0).toUpperCase() + items_array[i].slice(1); // to capitalize the first letter
                 if (i < length / 2) {
                     left.appendChild(obj);
@@ -51,13 +54,13 @@ window.addEventListener("load", () => { // on load
                 }
             }
         })
-    allow_start = false;
+    allow_start = false; //to disallow one player from starting the game alone
     let item = document.getElementById("generate-button");
     item.style.opacity = "0.6";
     item.disabled = true;
     let inner_text = document.getElementById("inner-text");
     inner_text.style.display = "none";
-    startLoading();
+    startLoading(); //prints loading icon on the screen
 })
 
 // to show loading page until the model is loaded
@@ -65,13 +68,14 @@ function startLoading() {
     load_time = setTimeout(showPage, 2500);
 }
 
+// when done loading show the instructions
 function showPage() {
     document.getElementById("rules-instructions").innerHTML = "Instructions";
     document.getElementById("loader").style.display = "none";
     document.getElementById("inner-text").style.display = "block";
 }
 
-//two players are in
+// two players are in
 function twoPlayers() {
     let item = document.getElementById("generate-button");
     item.style.opacity = "1";
@@ -81,7 +85,7 @@ function twoPlayers() {
 }
 
 function emitCanStart() {
-    socket.emit('dormCanStart', ''); //start game for the rest of the users
+    socket.emit('dormCanStart', ''); // to start game for the rest of the users
 }
 
 // permission to start the game
@@ -100,7 +104,6 @@ socket.on('dormStartTimerFromServer', () => {
 })
 
 function decrementTimerForAll() {
-    console.log("game started"); // shows how many orders the other player completed 
     startTimer();
     //to decrement timer
     let timerId = setInterval(decrementTimer, 1000);
@@ -109,13 +112,14 @@ function decrementTimerForAll() {
         //if timer is up
         if (timeLeft == -1) {
             clearTimeout(timerId);
+            // sessionstorage.setItem("dormScore", myScore);
             // socket.emit('dormScore', myScore);
             //remove elements on the screen when time is up
             let sketch = document.getElementById('game-container');
             sketch.style.display = "none";
             left.style.display = "none";
             right.style.display = "none";
-            socket.emit('dormEnd', "");        
+            socket.emit('dormEnd', "");
         } else {
             timer.innerHTML = 'Time left: ' + timeLeft;
             timeLeft--; //decrement the time
@@ -123,12 +127,12 @@ function decrementTimerForAll() {
     }
 }
 
-//function to start a 30 second timer and have it initialized on the screen
+//function to start a 90 second timer and have it initialized on the screen
 function startTimer() {
     if (allow_start == true) {
         socket.emit('dormStart', ''); //start game for the rest of the users
         let timer = document.getElementById('timer');
-        timer.innerHTML = 'Time left: 60'; //preset before the timer starts
+        timer.innerHTML = 'Time left: 90'; //preset before the timer starts
         printItems();
     }
     else {
@@ -157,9 +161,9 @@ function gotDetections(error, results) {
         console.error(error);
     }
 
+    console.log(results);
     //loop through all of the results seen 
-    for (let i = 0; i < results.length; i++){
-        console.log(results);
+    for (let i = 0; i < results.length; i++) {
         // if the element exists in our JSON file
         if (items_array.includes(results[i].label)) {
             let item = results[i];
@@ -167,7 +171,7 @@ function gotDetections(error, results) {
             console.log("label: ", item.label, item.confidence);
             // console.log(item);
             // to yield more accurate results
-            if (item.confidence > 0.9) {
+            if (item.confidence > 0.88) {
                 detections[label] = [item];
                 for (let i = 0; i < items_array.length; i++) {
                     if (items_array[i] == label) {
@@ -232,21 +236,22 @@ function draw() {
     if (video) {
         image(video, 0, 0);
 
-        let labels = Object.keys(detections);
-        for (let label of labels) {
-            let items = detections[label];
-            for (let i = items.length - 1; i >= 0; i--) {
-                let item = items[i];
-                // stroke(0, 255, 0);
-                // strokeWeight(4);
-                // fill(0, 255, 0, 0);
-                // rect(item.x, item.y, item.width, item.height);
-                noStroke();
-                fill(0);
-                textSize(32);
-                text(item.label, item.x + 10, item.y + 24);
-            }
-        }
+        // to print the detected item on the screen
+        // let labels = Object.keys(detections);
+        // for (let label of labels) {
+        //     let items = detections[label];
+        //     for (let i = items.length - 1; i >= 0; i--) {
+        //         let item = items[i];
+        // stroke(0, 255, 0);
+        // strokeWeight(4);
+        // fill(0, 255, 0, 0);
+        // rect(item.x, item.y, item.width, item.height);
+        // noStroke();
+        // fill(0);
+        // textSize(32);
+        // text(item.label, item.x + 10, item.y + 24);
+        // }
+        // }
     }
 }
 

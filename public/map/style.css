@@ -116,7 +116,7 @@ html, body {
 }
 
 #title{
-    font-size: 70px;
+    font-size: 10vh;
     font-family: "Acme";
     position: absolute;
     left: 6%;
