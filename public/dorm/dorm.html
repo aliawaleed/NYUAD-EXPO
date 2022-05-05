@@ -17,14 +17,14 @@
     <title> Dorm Scavenger Hunt</title>
 </head>
 
+<body>
+    <!--Background Container -->
+    <div class="background-container">
+        <img src="/dorm/images/dorm.png" alt="D2-img">
 
-<!--Background Container -->
-<div class="background-container">
-    <img src="/dorm/images/dorm.png" alt="D2-img">
-
-    <!-- Home Button -->
-    <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="goHome(this)"></div>
-</div>
+        <!-- Home Button -->
+        <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="goHome(this)"></div>
+    </div>
 
     <!-- Title -->
     <div id="title">
@@ -32,43 +32,49 @@
         <p class="score" id="score"> My score: 0 | Their score: 0</p>
     </div>
 
-<!-- Instructions for the game to be displayed at the beginning -->
-<div class="rules" id="rules">
-    <h1 class="rules-instructions">Instructions</h1>
-    <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span>
-    <p id="player-instructions"> </p>
-    <button id="start-button" onclick="startGame()"> START </button>
-</div>
+    <!-- Instructions for the game to be displayed at the beginning -->
+    <div class="rules" id="rules">
+        <h1 class="rules-instructions" id="rules-instructions"> Please wait! </h1>
+        <div id="inner-text">        
+            <p class="specific-instructions"> <span style="font-weight:bold"> Goal: Given a list of items you can find in your room, try to find as many as possible under one minute! If the other player finds it first, any item found by either player is deleted from the list and cannot be obtained anymore! </span>
+            <p id="player-instructions"> </p>
+            <button id="start-button" onclick="startGame()"> START </button>
+        </div>
+    </div>
 
+    <div id="loader"></div>
 
-<!-- Top part of the game, showing the order and timer -->
-<div class="container" id="container">
-    <div class="left-column" id="column"></div>
+    <!-- Top part of the game, showing the order and timer -->
+    <div class="container" id="container">
+        <div class="left-column" id="column"></div>
 
         <div class="item" , id="item">
-        <!-- <p class="generated" , id="generated"> </p> -->
-        <button id="generate-button" onclick="startTimer()"> item </button>
-        <p id="timer"></p>
+            <!-- <p class="generated" , id="generated"> </p> -->
+            <button id="generate-button" onclick="startTimer()"> item </button>
+            <p id="timer"></p>
+        </div>
+
+        <div class="game-container" id="game-container">
+            <div class="p5" id="p5"></div>
+        </div>
+
+        <div class="right-column" id="column"></div>
+
+        <!-- Game instructions -->
+        <div class="instructions" id="instructions">
+            <p id="players"> Please wait for another player to join! </p>
+        </div>
     </div>
 
-    <div class="game-container" id="game-container">
-        <div class="p5" id="p5"></div>
+    <!-- Printing results and end of game -->
+    <div class="end" id="end">
+        <h1 class="game-over"> Game Over! </h1>
+        <p class="winner" id="winner"></p>
+        <p class="results" id="results"></p>
+        <button id="Home" onclick="goHome(this)"> Home </button>
     </div>
+</body>
 
-    <div class="right-column" id="column"></div>
 
-    <!-- Game instructions -->
-    <div class="instructions" id="instructions">
-        <p id="players"> Please wait for another player to join! </p>
-    </div>
-</div>
-
-<!-- Printing results and end of game -->
-<div class="end" id="end">
-    <h1 class="game-over"> Game Over! </h1>
-    <p class="winner" id="winner"></p>
-    <p class="results" id="results"></p>
-    <button id="Home" onclick="goHome(this)"> Home </button>
-</div>
 
 </html>

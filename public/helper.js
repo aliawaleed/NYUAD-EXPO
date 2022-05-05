@@ -19,7 +19,6 @@ let rules;
 let players;
 let end;
 let inst;
-
 let turnCamOn = false; 
 
 

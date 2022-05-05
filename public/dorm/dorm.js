@@ -1,5 +1,5 @@
-let Player1Instruction = "instructions 1";
-let Player2Instruction = "instructions 2";
+let Player1Instruction = "instructions 1: This game involves a camera. Stand up and get ready! ";
+let Player2Instruction = "instructions 2: This game involves a camera. Stand up and get ready! ";
 
 let playersInstructions = "Press on the item button to start!";
 let timeLeft = 59; //initialized at 59 as the timer takes 1 second to start
@@ -17,6 +17,7 @@ let items_array = [];
 //columns for words
 let left;
 let right;
+let load_time;
 
 // loading JSON data into array 
 window.addEventListener("load", () => { // on load
@@ -40,7 +41,7 @@ window.addEventListener("load", () => { // on load
                 obj.classList.add(items_array[i]);
                 obj.textContent = items_array[i].charAt(0).toUpperCase() + items_array[i].slice(1); // to capitalize the first letter
                 if (i < length / 2) {
-                    left.appendChild(obj); 
+                    left.appendChild(obj);
                 }
                 else {
                     right.appendChild(obj);
@@ -51,7 +52,21 @@ window.addEventListener("load", () => { // on load
     let item = document.getElementById("generate-button");
     item.style.opacity = "0.6";
     item.disabled = true;
+    let inner_text = document.getElementById("inner-text");
+    inner_text.style.display = "none";
+    startLoading();
 })
+
+// to show loading page until the model is loaded
+function startLoading() {
+    load_time = setTimeout(showPage, 2500);
+}
+
+function showPage() {
+    document.getElementById("rules-instructions").innerHTML = "Instructions";
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("inner-text").style.display = "block";
+}
 
 //two players are in
 function twoPlayers() {
@@ -130,11 +145,6 @@ socket.on('dormEndFromServer', () => {
     displayResults();
 })
 
-//loading the Coco ssd dataset
-function preload() {
-    detector = ml5.objectDetector('cocossd');
-}
-
 // when object detection has been made
 function gotDetections(error, results) {
     //in case there is an error
@@ -185,14 +195,17 @@ socket.on('gotItemFromServer', (label, i, score) => {
     scores.textContent = "My score: " + myScore + "   |   Their score: " + score;
 })
 
+//loading the Coco ssd dataset
+function preload() {
+    detector = ml5.objectDetector('cocossd');
+}
+
 function setup() {
     var canvas = createCanvas(640, 480);
     canvas.parent('p5'); //add to div to position it correctly on the screen
-    // for webcam
-    
 }
 
-
+// turn on webcam
 function camOn() {
     video = createCapture(VIDEO);
     video.size(640, 480);
@@ -204,11 +217,11 @@ function camOn() {
 
 function draw() {
     //draw every frame in the video
-    if(turnCamOn == true) {
+    if (turnCamOn == true) {
         camOn();
         turnCamOn = false;
     }
-    if(video) {
+    if (video) {
         image(video, 0, 0);
 
         let labels = Object.keys(detections);
@@ -227,5 +240,4 @@ function draw() {
             }
         }
     }
-    
 }
