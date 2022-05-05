@@ -4,22 +4,44 @@
     display:relative;
 }
 
-#game-container{
-    background-color: orange;
+.rules{
+    background-color:white;
+    width: 60%;
+    color:black;
+}
+
+.specific-instructions{
+    text-align: justify;
+    color:black;
 }
 
 
 #getword-button{
      position:absolute;
-     top:50%;
-     left:50%;
-     transform:translate(-50%,-50%);
+     bottom:10%;
+     right:25%;
 }
 
+#instructionC{
+    position: relative;
+    color:black;
+    width:55%;
+}
 
 #scenarios{
+    display:relative;
+}
+
+#scenariosText{
     position:absolute;
+    color:black;
+    width:40%;
     top:50%;
-    left:50%;
-    transform:translate(-20%,-50%);
+    left:53%;
+    transform:translate(10%,-50%);
+}
+
+#example{
+    position: relative;
+    width:40%;
 }

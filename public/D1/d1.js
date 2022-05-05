@@ -38,7 +38,7 @@ window.addEventListener("load", () => {
 //emit information of mous position everytime mouse moves
 function windowResized() {
   resizeCanvas(windowWidth*0.8, windowWidth * 0.4);
-  background(210,209,252);
+  background(255);
 }
 
 
@@ -62,7 +62,7 @@ function setup() {
   canvas.parent('sketch-canvas');
   video = createCapture(VIDEO);
   video.hide();
-  background(210,209,252);
+  background(255);
   mobilenet = ml5.featureExtractor('MobileNet', modelReady);
   classifier = mobilenet.classification(video, { numLabels: 7 }, videoReady); //set numLabels to number expected or length of array
 }
@@ -127,6 +127,8 @@ function startTimer(){
 
 };
 
+
+
 function draw() {
   //video capture
   image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
@@ -137,9 +139,11 @@ function draw() {
 
 
 function gotResults(error, result) {
-if(result[0].confidence >0.6) {
+
+  classifier.classify(gotResults);
+  if(result[0].confidence > 0.98) {
     label = result[0].label;
-    classifier.classify(gotResults);
+    console.log[label];
   }
 }
 
