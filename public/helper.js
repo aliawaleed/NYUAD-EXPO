@@ -19,6 +19,7 @@ let rules;
 let players;
 let end;
 let inst;
+let scores;
 let turnCamOn = false; 
 
 
@@ -33,11 +34,14 @@ window.addEventListener("load", () => { // on load
    players = document.getElementById('players');
    end = document.getElementById('end');
    inst = document.getElementById("player-instructions");
+   scores = document.getElementById('score');
+
 
    game.style.display = "none";
    rules.style.display = "block";
    players.style.display = "none";
    end.style.display = "none";
+   scores.style.display = "none";
 
    // Assign player with their respective arrows
    socket.on('player1', () => {
@@ -68,6 +72,7 @@ function startGame() {
    rules.style.display = "none";
    game.style.display = "block";
    players.style.display = "block";
+   scores.style.display = "block";
    turnCamOn = true;
    // when the second player presses on the start button
    if (allow_start == true) {
@@ -76,8 +81,7 @@ function startGame() {
 }
 
 function displayResults() {
-   let finalScore = document.getElementById('score');
-   finalScore.style.display = "none";
+   scores.style.display = "none";
    let end = document.getElementById('end');
    end.style.display = "block";
    let timer = document.getElementById('timer');
