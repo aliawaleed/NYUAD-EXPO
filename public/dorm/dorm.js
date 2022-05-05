@@ -47,7 +47,6 @@ window.addEventListener("load", () => { // on load
                 }
             }
         })
-
     allow_start = false;
     let item = document.getElementById("generate-button");
     item.style.opacity = "0.6";
@@ -194,7 +193,7 @@ function setup() {
 }
 
 
-function temp() {
+function camOn() {
     video = createCapture(VIDEO);
     video.size(640, 480);
     video.hide();
@@ -205,9 +204,9 @@ function temp() {
 
 function draw() {
     //draw every frame in the video
-    if(buttonClickedStart ==1) {
-        temp();
-        buttonClickedStart = 0;
+    if(turnCamOn == true) {
+        camOn();
+        turnCamOn = false;
     }
     if(video) {
         image(video, 0, 0);

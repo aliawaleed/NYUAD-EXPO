@@ -20,6 +20,9 @@ let players;
 let end;
 let inst;
 
+let turnCamOn = false; 
+
+
 //boolean
 let start = false;
 let gameOn = true; //to check if the game is on
@@ -66,6 +69,7 @@ function startGame() {
    rules.style.display = "none";
    game.style.display = "block";
    players.style.display = "block";
+   turnCamOn = true;
    // when the second player presses on the start button
    if (allow_start == true) {
       emitCanStart();
