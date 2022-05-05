@@ -3233,7 +3233,7 @@
     "weightsManifest": [
         {
             "paths": [
-                "./model.weights.bin"
+                "./d1/model.weights.bin"
             ],
             "weights": [
                 {

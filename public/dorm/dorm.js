@@ -1,5 +1,6 @@
 let Player1Instruction = "instructions 1";
 let Player2Instruction = "instructions 2";
+
 let playersInstructions = "Press on the item button to start!";
 let timeLeft = 59; //initialized at 59 as the timer takes 1 second to start
 
@@ -189,6 +190,11 @@ function setup() {
     var canvas = createCanvas(640, 480);
     canvas.parent('p5'); //add to div to position it correctly on the screen
     // for webcam
+    
+}
+
+
+function temp() {
     video = createCapture(VIDEO);
     video.size(640, 480);
     video.hide();
@@ -196,23 +202,31 @@ function setup() {
     detector.detect(video, gotDetections);
 }
 
+
 function draw() {
     //draw every frame in the video
-    image(video, 0, 0);
+    if(buttonClickedStart ==1) {
+        temp();
+        buttonClickedStart = 0;
+    }
+    if(video) {
+        image(video, 0, 0);
 
-    let labels = Object.keys(detections);
-    for (let label of labels) {
-        let items = detections[label];
-        for (let i = items.length - 1; i >= 0; i--) {
-            let item = items[i];
-            stroke(0, 255, 0);
-            strokeWeight(4);
-            fill(0, 255, 0, 0);
-            rect(item.x, item.y, item.width, item.height);
-            noStroke();
-            fill(0);
-            textSize(32);
-            text(item.label, item.x + 10, item.y + 24);
+        let labels = Object.keys(detections);
+        for (let label of labels) {
+            let items = detections[label];
+            for (let i = items.length - 1; i >= 0; i--) {
+                let item = items[i];
+                stroke(0, 255, 0);
+                strokeWeight(4);
+                fill(0, 255, 0, 0);
+                rect(item.x, item.y, item.width, item.height);
+                noStroke();
+                fill(0);
+                textSize(32);
+                text(item.label, item.x + 10, item.y + 24);
+            }
         }
     }
+    
 }

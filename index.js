@@ -274,7 +274,18 @@ io.sockets.on('connect', (socket) => {
 
     /******************** D1 ********************/
 
+  /******************** DORM ********************/
+    // // to start the game
+    socket.on('d1Start', () => {
+        console.log("d1 started");
+        socket.to("D1").emit('d1StartTimerFromServer', '');
+        // io.in("dorm").emit('dormStartDataFromServer', '');
+    })
 
+    // allows users to start the game based on the number
+    socket.on('d1CanStart', () => {
+        io.in("D1").emit('d1CanStartDataFromServer', '');
+    })
 
     /******************** all the room start ********************/
     // to start the game

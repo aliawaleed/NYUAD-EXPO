@@ -46,6 +46,7 @@ window.addEventListener("load", () => { // on load
    // set instructions for the second player
    socket.on('player2', () => {
       inst.textContent = Player2Instruction;
+      console.log('you are player 2');
    })
 
    //To allow starting the game when two players are in
