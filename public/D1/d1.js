@@ -137,9 +137,7 @@ function draw() {
 
 
 function gotResults(error, result) {
-  if (error) {
-    console.error(error);
-  } else {
+if(result[0].confidence >0.6) {
     label = result[0].label;
     classifier.classify(gotResults);
   }

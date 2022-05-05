@@ -143,7 +143,7 @@ function gotDetections(error, results) {
     }
 
     //loop through all of the results seen 
-    for (let i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++)
         // console.log(results);
         // if the element exists in our JSON file
         if (items_array.includes(results[i].label)) {
