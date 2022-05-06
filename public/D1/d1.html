@@ -37,18 +37,21 @@
 
     <!-- Title -->
     <div id="title">
-      <p class="title"> <span style="font-weight:bold"> D1 </span> | Blitz Sun</p>
-      <p class="score" id="score"> My score: 0 | Their score: 0</p>
+      <p class="title"> <span style="font-weight:bold"> D1 </span> | Find the Card!</p>
+      <p class="score" id="score"> </p>
   </div>
 
 <!-- Instructions for the game to be displayed at the beginning -->
 <div class="rules" id="rules">
-  <h1 class="rules-instructions">How to Play?</h1>
-  <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> Show the answer card to the camera!</span> <br></p> 
+  <h1 class="rules-instructions">How to Play?</h1> 
+  <a href="/d1/images/card.pdf" download>
+  <input type="button" class="download" value="Download & Print"> 
+  </a>
+  <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> Show the correct answer to the camera!</span></p> 
   <div class="game-instructions">
   <img id="example" src="/d1/images/example.png" alt="example">
     <p id="instructionC">
-      1. Identify the object that appears the most(dune) <br> 2. Identify the color associated with this object from your deck(yellow) <br> 3. Pick up the object associated with this color from the clue(palm)
+      1. Find the object that appears the most(dune) <br> 2. Identify the color associated with this object from your deck(yellow) <br> 3. The answer is object associated with this color from the clue(palm)
        <p>
       </div>  
   <button id="start-button" onclick="startGame()"> START </button>
@@ -65,7 +68,9 @@
   <div class="game-container" id="game-container">
     <div id="sketch-canvas">
       <p id="player-instructions"> </p>
+      <div id="rectangle"></div>
       <button id="getword-button" onclick="startTimer()">PICK</button>
+      <p id="timer"></p>
     </div>
 
   </div>

@@ -5,6 +5,7 @@
 .rules h1{
     margin:0;
     padding:0;
+    text-align: left;
     color: #471010;
 }
 
@@ -21,6 +22,7 @@
 #instructionC {
     color:black;
     text-align: left;
+    line-height:2vw;
     margin-left:50%;
     width:55%;
     font-size:1.4vw;
@@ -36,6 +38,49 @@
 #start-button{
     position:absolute;
     bottom:1.5vw;
-    left:17vw;
+    left:19vw;
+    font-size:1.5vw;
+    width:7vw;
+    height:4vw;
 
+}
+
+#getword-button {
+    position:absolute;
+    left:57vw;
+    top:50%;
+    width: 7%;
+    padding: 0.5%;
+}
+
+#rectangle{
+    position:absolute;
+    background-color: white;
+    width:40vw;
+    left:40vw;
+    opacity: 0;
+    height:40vw;
+}
+
+.download {
+        background-color: #E1AAAA;
+        border: none;
+        color: white;
+        padding: 1vw 1vw;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 1.3vw;
+        cursor: pointer;
+        position:absolute;
+        top:3vw;
+        right:3vw;
+}
+
+#player-instructions{
+    position:absolute;
+    background-color: tomato;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
 }

@@ -4,8 +4,6 @@ let Player2Instruction = "2: This game involves a camera. Stand up and get ready
 let playersInstructions = "Press on the SHOW button to start!";
 let timeLeft = 89; //initialized at 59 as the timer takes 1 second to start
 
-let myScore = 0; //to track number of correct completed orders
-let theirScore = 0;
 
 let video;
 let detector;

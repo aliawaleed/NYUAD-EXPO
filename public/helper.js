@@ -21,7 +21,7 @@ let end;
 let inst;
 let scores;
 let turnCamOn = false; 
-
+let results;
 
 //boolean
 let start = false;
@@ -35,6 +35,7 @@ window.addEventListener("load", () => { // on load
    end = document.getElementById('end');
    inst = document.getElementById("player-instructions");
    scores = document.getElementById('score');
+   results = document.getElementById('results');
 
 
    game.style.display = "none";
@@ -66,6 +67,7 @@ window.addEventListener("load", () => { // on load
       alert("There are 2 players in the game already! Please try again later!");
       window.location = '/map/index.html';
    })
+
 })
 
 //function to start game
@@ -75,6 +77,8 @@ function startGame() {
    players.style.display = "block";
    scores.style.display = "block";
    turnCamOn = true;
+
+   player1_start = true;
    // when the second player presses on the start button
    if (allow_start == true) {
       emitCanStart();
@@ -89,7 +93,8 @@ function displayResults() {
    timer.style.display = "none";
    let players = document.getElementById('players');
    players.style.display = "none";
-
+   game.style.display = "none";
+   rules.style.display = "none";
    let winner = document.getElementById('winner');
 
    //compare the order numbers to print the winner
@@ -102,7 +107,6 @@ function displayResults() {
    else {
       winner.innerHTML = "It's a draw!";
    }
-   let results = document.getElementById('results');
    results.innerHTML = 'Them: ' + theirScore + ' You: ' + myScore;
 }
 

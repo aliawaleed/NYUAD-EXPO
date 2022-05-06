@@ -92,7 +92,7 @@ io.sockets.on('connect', (socket) => {
             else if (value == 2) {
                 console.log("Client 2: ", socket.name, socket.id);
                 socket.emit('player2', socket.name); //emit info to this specific socket
-                io.in(key).emit('player2Start', '');
+                io.in(key).emit('player2Start', '');//player 2 click start button
                 io.in(key).emit('message', ''); //send to all sockets in the room
             }
         }
@@ -274,7 +274,6 @@ io.sockets.on('connect', (socket) => {
 
     /******************** D1 ********************/
 
-    /******************** DORM ********************/
     // // to start the game
     socket.on('d1Start', () => {
         console.log("d1 started");
@@ -287,6 +286,22 @@ io.sockets.on('connect', (socket) => {
         io.in("D1").emit('d1CanStartDataFromServer', '');
     })
 
+    // allows users to start the game based on the number
+    socket.on('index', (index) => {
+        io.in("D1").emit('indexFromServer', index);
+    })
+    // allows users to start the game based on the number
+    socket.on('correct', () => {
+        io.in("D1").emit('correctFromServer', '');
+        socket.broadcast.emit('theirscoreadd', '');
+        socket.emit('scoreadd', '');
+    })
+
+    // when the timer is up send to each user how many meals the other user made
+    socket.on('d1End', () => {
+        console.log('completed');
+        socket.to("D1").emit('d1EndFromServer', "");
+    })
     /******************** all the room start ********************/
     // to start the game
     socket.on('roomStart', (data) => {

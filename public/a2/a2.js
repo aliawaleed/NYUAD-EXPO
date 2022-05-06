@@ -79,7 +79,7 @@ function onePlayer() {
 function twoPlayers() {
    majorInput.disabled = false;
    submitButton.style.opacity = "1";
-   players.innerHTML = 'Start Playing! '; //preset before the timer starts
+   inst = "";
 }
 
 socket.on('A2canStartDataFromServer', () => {

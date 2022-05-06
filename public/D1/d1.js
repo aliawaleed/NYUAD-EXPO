@@ -1,11 +1,12 @@
 let roomStart = 'D1';
 
-let Player1Instruction = "You are a player 1 Wait for the 2nd Player to join";
+let Player1Instruction = "Wait for Another Player to join";
 let Player2Instruction = "You can Start Now";
 
 //HTML elements
 let scenarios; 
 let pick;
+let rectangle;
 
 //ml5 model trainning related
 let mobilenet;
@@ -16,6 +17,12 @@ let label = 'loading model';
 //random card selection 
 let cards = [];
 let index;
+let timeLeft = 30; 
+let timer;
+
+//score
+let myScore = 0; 
+let theirScore= 0;
 
 function preload(){
   for (let i = 1; i < 6; i++) {
@@ -26,12 +33,12 @@ function preload(){
 window.addEventListener("load", () => {
   scenarios = document.getElementById('scenarios');
   pick = document.getElementById('getword-button');
+  timer = document.getElementById('timer');
+  rectangle = document.getElementById('rectangle');
 
   allow_start = false;
   pick.style.opacity = "0.6";
   pick.disabled = true;
-
-
 });
 
 
@@ -40,6 +47,35 @@ function windowResized() {
   resizeCanvas(windowWidth*0.8, windowWidth * 0.4);
   background(255);
 }
+
+
+//to ensure starting the game only once for the other users (that didn't press on the order button)
+let started = 0;
+socket.on('d1StartTimerFromServer', () => {
+    if (started == 0) {
+        decrementTimerForAll();
+        timer.innerHTML = 'Time left: 90'; //preset before the timer starts
+    }
+    started = 1; // so that the timer does not start again 
+})
+
+function decrementTimerForAll() {
+    startTimer();
+    //to decrement timer
+    let timerId = setInterval(decrementTimer, 1000);
+
+    function decrementTimer() {
+        //if timer is up
+        if (timeLeft == -1) {
+            clearTimeout(timerId);
+            socket.emit('d1End', "");
+        } else {
+            timer.innerHTML = 'Time left: ' + timeLeft;
+            timeLeft--; //decrement the time
+        }
+    }
+}
+
 
 
 function modelReady() {
@@ -71,24 +107,13 @@ function setup() {
 function twoPlayers() {
   pick.style.opacity = "1";
   pick.disabled = false;
-  players.innerHTML = playersInstructions;
-}
-
-//function to start a 30 second timer and have it initialized on the screen
-function startTimer() {
-  if (allow_start == true) {
-      socket.emit('dormStart', ''); //start game for the rest of the users
-      let timer = document.getElementById('timer');
-      timer.innerHTML = 'Time left: 60'; //preset before the timer starts
-      printItems();
-  }
-  else {
-      alert("Please wait for another player to join!");
-  }
+  inst.textContent = "";
 }
 
 function emitCanStart() {
   socket.emit('d1CanStart', ''); //start game for the rest of the users
+  let score = document.getElementById('score');
+  score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
 }
 
 // permission to start the game
@@ -99,34 +124,14 @@ socket.on('d1CanStartDataFromServer', () => {
 
 let thiscard;
 
-function startTimer(){
 
+function startTimer(){
   if(allow_start == true) {
+    socket.emit('d1Start', ''); //start game for the rest of the users
   index = int(random(1,5));
   //dice throw
   image(cards[index], windowWidth*0.425, windowWidth*0.025, windowWidth*0.35, windowWidth * 0.35);
-
-
-  if (index == 1){
-    console.log("palm");
-    thiscard = "palm"
-
-  } else if(index == 2){
-    console.log("sun");
-    thiscard = "sun"
-  } else if(index == 3){
-    console.log("mosque");
-    thiscard = "mosque"
-  } else if(index == 4){
-    console.log("mosque");
-    thiscard = "mosque"
-  } else if(index == 5){
-    console.log("dune");
-    thiscard = "dune"
-  } else if(index == 6){
-    console.log("dune");
-    thiscard = "dune"
-  } 
+  socket.emit('index',index);
 }
   else {
     alert("Please wait for another player to join!");
@@ -135,12 +140,37 @@ function startTimer(){
 };
 
 
+// permission to start the game
+socket.on('indexFromServer', (index) => {
+  pick.style.opacity = "0";
+  pick.disabled = true;
+  rectangle.style.opacity = "0";
+
+  if (index == 1){
+    console.log("new deck palm");
+    thiscard = "palm"
+
+  } else if(index == 2){
+    console.log("new deck sun");
+    thiscard = "mosque"
+  } else if(index == 3){
+    console.log("new deck mosque");
+    thiscard = "palm"
+  } else if(index == 4){
+    console.log("new deck mosque");
+    thiscard = "mosque"
+  } else if(index == 5){
+    console.log("new deck dune");
+    thiscard = "dune"
+  } else if(index == 6){
+    console.log("new deck dune");
+    thiscard = "palm"
+  } 
+})
 
 function draw() {
   //video capture
   image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
-  textSize(16);
-  text(label, 10, height - 10);
 }
 
 let thislabel;
@@ -152,7 +182,54 @@ function gotResults(error, result) {
     label = result[0].label;
     console.log[label];
     thislabel = label;
-    console.log(thislabel + thiscard);
+    checkMatch();
+
   } 
 }
 
+
+function checkMatch(){
+  if (thislabel == thiscard){
+    console.log('match');
+    thiscard = 'none';
+    console.log('match2');
+    socket.emit('correct', '');
+    pick.style.opacity = "1";
+    pick.disabled = false; 
+    rectangle.style.opacity = "1";
+  }
+}
+
+
+
+// socket.emit('correct','');
+// label = '';
+
+// permission to start the game
+socket.on('correctFromServer', () => {
+  console.log('correctforeveryone');
+  inst.textContent = "Correct!";
+
+})
+
+
+   // permission to start the game
+   socket.on('scoreadd', () => {
+    console.log('addscore');
+    myScore++;
+    score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+  })
+
+   // permission to start the game
+   socket.on('theirscoreadd', () => {
+    console.log('theirscoreadd');
+    theirScore++;
+    score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+  })
+
+
+
+// when the game ends and the server the other user
+socket.on('d1EndFromServer', () => {
+  displayResults();
+})
