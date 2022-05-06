@@ -13,9 +13,9 @@ socket.on('connect', () => {
 })
 
 // assigning key-value pairs for the image sources of the different food categories
-let allAppetizers = { 'salad': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/22476/salad-clipart-xl.png', 'soup': 'https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/59674/egg-soup-clipart-xl.png', 'fries': 'https://www.i2clipart.com/cliparts/d/c/4/5/clipart-pommes-frites-french-fries-512x512-dc45.png' };
-let allMainCourses = { 'burger': 'https://i.pinimg.com/originals/3a/f9/bf/3af9bf97ef3708b1738468c775f7def4.png', 'salmon': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Grilled_Steak_PNG_Clipart.png?m=1434276761', 'pasta': 'https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Fast-Food-PNG-Clipart/Pasta_PNG_Clipart_Image.png?m=1435200901' };
-let allDesserts = { 'cake': 'https://clipart.world/wp-content/uploads/2020/12/Piece-Cake-clipart-transparent.png', 'acai': 'https://i.pinimg.com/originals/7e/2f/7d/7e2f7d5b8f44cb0fd0ba3e766dc21448.png', 'profiterole': 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM' };
+let allAppetizers = { 'salad': '/d2/images/salad.png', 'soup': '/d2/images/soup.png', 'fries': '/d2/images/fries.png' };
+let allMainCourses = { 'burger': '/d2/images/burger.png', 'salmon': '/d2/images/salmon.png', 'pasta': '/d2/images/pasta.png' };
+let allDesserts = { 'cake': '/d2/images/cake.png', 'acai': '/d2/images/acai.png', 'profiterole': '/d2/images/profiterole.png' };
 
 let myCompletedOrders = 0; //to track number of correct completed orders
 let their_orders = 0;
@@ -72,13 +72,14 @@ window.addEventListener("load", () => {
     dessert3.src = allDesserts['profiterole'];
 
     // to track clicked items from the menu 
-    $(".appetizers").on('click', () => {
+    $(".appetizers").on('click', function(){
         addAnswer($(this))
     });
-    $(".main-courses").on('click', () => {
+
+    $(".main-courses").on('click', function() {
         addAnswer($(this))
     });
-    $(".desserts").on('click', () => {
+    $(".desserts").on('click', function() {
         addAnswer($(this))
     });   
 
@@ -258,7 +259,7 @@ function addAnswer(img) {
             // if we're in the first 3 items, add them, increment the count, and change boolean to 1
             else {
                 let answerBox = document.getElementById('ans' + num);
-                console.log(answerBox, num);
+                // console.log(answerBox, num);
                 answerBox.src = img.attr('src');
                 array[num] = 1;
                 num++;

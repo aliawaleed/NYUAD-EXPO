@@ -235,7 +235,6 @@ function draw() {
     //draw every frame in the video
     if (video) {
         image(video, 0, 0);
-
         // to print the detected item on the screen
         // let labels = Object.keys(detections);
         // for (let label of labels) {
