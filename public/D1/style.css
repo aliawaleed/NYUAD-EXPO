@@ -1,47 +1,41 @@
-
-#sketch-canvas {
-    padding-right:10%;
-    display:relative;
+.rules {
+    background-color: white;
 }
 
-.rules{
-    background-color:white;
-    width: 60%;
-    color:black;
+.rules h1{
+    margin:0;
+    padding:0;
+    color: #471010;
 }
 
 .specific-instructions{
     text-align: justify;
+    margin-top:1vw;
+    margin-bottom:2vw;
+    padding:0;
     color:black;
+    font-size: 1.3vw;
+
 }
 
-
-#getword-button{
-     position:absolute;
-     bottom:10%;
-     right:25%;
-}
-
-#instructionC{
-    position: relative;
+#instructionC {
     color:black;
+    text-align: left;
+    margin-left:50%;
     width:55%;
+    font-size:1.4vw;
 }
 
-#scenarios{
-    display:relative;
-}
-
-#scenariosText{
+#example {
+    width:13vw;
     position:absolute;
-    color:black;
-    width:40%;
-    top:50%;
-    left:53%;
-    transform:translate(10%,-50%);
+    left:5vw;
+    top:12vw;
 }
 
-#example{
-    position: relative;
-    width:40%;
+#start-button{
+    position:absolute;
+    bottom:1.5vw;
+    left:17vw;
+
 }

@@ -1,7 +1,7 @@
 let roomStart = 'D1';
 
-let Player1Instruction = "instructions 1";
-let Player2Instruction = "instructions 2";
+let Player1Instruction = "You are a player 1 Wait for the 2nd Player to join";
+let Player2Instruction = "You can Start Now";
 
 //HTML elements
 let scenarios; 
@@ -71,7 +71,7 @@ function setup() {
 function twoPlayers() {
   pick.style.opacity = "1";
   pick.disabled = false;
-  //players.innerHTML = playersInstructions;
+  players.innerHTML = playersInstructions;
 }
 
 //function to start a 30 second timer and have it initialized on the screen
@@ -97,11 +97,11 @@ socket.on('d1CanStartDataFromServer', () => {
   twoPlayers();
 })
 
+let thiscard;
 
 function startTimer(){
 
   if(allow_start == true) {
-  scenarios.style.display = "none";
   index = int(random(1,5));
   //dice throw
   image(cards[index], windowWidth*0.425, windowWidth*0.025, windowWidth*0.35, windowWidth * 0.35);
@@ -109,16 +109,23 @@ function startTimer(){
 
   if (index == 1){
     console.log("palm");
+    thiscard = "palm"
+
   } else if(index == 2){
     console.log("sun");
+    thiscard = "sun"
   } else if(index == 3){
     console.log("mosque");
+    thiscard = "mosque"
   } else if(index == 4){
     console.log("mosque");
+    thiscard = "mosque"
   } else if(index == 5){
     console.log("dune");
+    thiscard = "dune"
   } else if(index == 6){
     console.log("dune");
+    thiscard = "dune"
   } 
 }
   else {
@@ -134,9 +141,9 @@ function draw() {
   image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
   textSize(16);
   text(label, 10, height - 10);
-
 }
 
+let thislabel;
 
 function gotResults(error, result) {
 
@@ -144,6 +151,8 @@ function gotResults(error, result) {
   if(result[0].confidence > 0.98) {
     label = result[0].label;
     console.log[label];
-  }
+    thislabel = label;
+    console.log(thislabel + thiscard);
+  } 
 }
 

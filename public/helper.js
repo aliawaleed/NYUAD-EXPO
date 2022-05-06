@@ -58,6 +58,7 @@ window.addEventListener("load", () => { // on load
    //To allow starting the game when two players are in
    socket.on('message', () => {
       allow_start = true;
+      console.log('allowstart_true');
    })
 
    // Kick users out when there are more than 2 players in the game
