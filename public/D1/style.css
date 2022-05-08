@@ -53,6 +53,16 @@
     padding: 0.5%;
 }
 
+#help-button {
+    position:absolute;
+    left:67vw;
+    top:-5%;
+    width: 15%;
+    padding: 0.5%;
+    color:rgb(31, 31, 31);
+    background-color: rgb(216, 216, 216);
+}
+
 #rectangle{
     position:absolute;
     background-color: white;
@@ -63,7 +73,7 @@
 }
 
 .download {
-        background-color: #E1AAAA;
+        background-color: #864747;
         border: none;
         color: white;
         padding: 1vw 1vw;

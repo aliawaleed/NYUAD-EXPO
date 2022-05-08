@@ -7,6 +7,8 @@ let Player2Instruction = "You can Start Now";
 let scenarios; 
 let pick;
 let rectangle;
+let startButton;
+let downlaodButton;
 
 //ml5 model trainning related
 let mobilenet;
@@ -20,6 +22,9 @@ let index;
 let timeLeft = 30; 
 let timer;
 
+//card and label
+let thiscard;
+
 //score
 let myScore = 0; 
 let theirScore= 0;
@@ -32,6 +37,8 @@ function preload(){
 
 window.addEventListener("load", () => {
   scenarios = document.getElementById('scenarios');
+  startButton = document.getElementById('start-button');
+  downloadButton = document.getElementById('download-button');
   pick = document.getElementById('getword-button');
   timer = document.getElementById('timer');
   rectangle = document.getElementById('rectangle');
@@ -122,8 +129,6 @@ socket.on('d1CanStartDataFromServer', () => {
   twoPlayers();
 })
 
-let thiscard;
-
 
 function startTimer(){
   if(allow_start == true) {
@@ -140,7 +145,20 @@ function startTimer(){
 };
 
 
-// permission to start the game
+function popup(){
+  rules.style.display = "block";
+  downloadButton.style.opacity = "0";
+  downloadButton.disabled = true;
+  startButton.style.opacity = "0";
+  startButton.disabled = true;
+}
+
+function popout(){
+  rules.style.display = "none";
+}
+
+
+
 socket.on('indexFromServer', (index) => {
   pick.style.opacity = "0";
   pick.disabled = true;
@@ -171,6 +189,7 @@ socket.on('indexFromServer', (index) => {
 function draw() {
   //video capture
   image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
+  text(label, 10, height - 10);
 }
 
 let thislabel;
@@ -201,17 +220,12 @@ function checkMatch(){
 }
 
 
-
-// socket.emit('correct','');
-// label = '';
-
 // permission to start the game
 socket.on('correctFromServer', () => {
   console.log('correctforeveryone');
   inst.textContent = "Correct!";
 
 })
-
 
    // permission to start the game
    socket.on('scoreadd', () => {

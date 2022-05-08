@@ -45,7 +45,7 @@
 <div class="rules" id="rules">
   <h1 class="rules-instructions">How to Play?</h1> 
   <a href="/d1/images/card.pdf" download>
-  <input type="button" class="download" value="Download & Print"> 
+  <input type="button" class="download" id="download-button" value="Download & Print"> 
   </a>
   <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> Show the correct answer to the camera!</span></p> 
   <div class="game-instructions">
@@ -70,6 +70,7 @@
       <p id="player-instructions"> </p>
       <div id="rectangle"></div>
       <button id="getword-button" onclick="startTimer()">PICK</button>
+      <button id="help-button" onmouseover="popup()" onmouseleave="popout()">How to Play?</button>
       <p id="timer"></p>
     </div>
 
