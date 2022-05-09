@@ -116,18 +116,15 @@ function twoPlayers() {
   pick.style.opacity = "1";
   pick.disabled = false;
   inst.textContent = "";
-}
-
-function emitCanStart() {
-  socket.emit('d1CanStart', ''); //start game for the rest of the users
-  let score = document.getElementById('score');
-  score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+  allow_start = true;
 }
 
 // permission to start the game
-socket.on('d1CanStartDataFromServer', () => {
+socket.on('gameCanStartDataFromServer', () => {
   console.log("two players are in");
   twoPlayers();
+  let score = document.getElementById('score');
+  score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
 })
 
 

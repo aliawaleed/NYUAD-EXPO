@@ -80,6 +80,7 @@ function twoPlayers() {
     item.disabled = false;
     let players = document.getElementById('players');
     players.innerHTML = playersInstructions;
+    allow_start = true;
 }
 
 function emitCanStart() {
@@ -87,7 +88,7 @@ function emitCanStart() {
 }
 
 // permission to start the game
-socket.on('dormCanStartDataFromServer', () => {
+socket.on('gameCanStartDataFromServer', () => {
     console.log("two players are in");
     twoPlayers();
 })
@@ -159,7 +160,7 @@ function gotDetections(error, results) {
         console.error(error);
     }
 
-    console.log(results);
+    // console.log(results);
     //loop through all of the results seen 
     for (let i = 0; i < results.length; i++) {
         // if the element exists in our JSON file
