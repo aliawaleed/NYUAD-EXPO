@@ -42,33 +42,19 @@ window.addEventListener("load", () => { // on load
    finished.style.display = "none";
    rules.style.display = "block";
 
-
-   socket.on('player1', () => {
-      console.log('wait for another player to join');
-      inst.textContent = "Wait for Player 2 to Join!";
-      onePlayer();
-   })
-
-   socket.on('player2Start', () => {
-      allow_start = true;
-   })
-
-
    socket.on('morePlayers', () => {
       alert("There are 2 players in the game already! Please try again later!");
       window.location = '/map/index.html';
    })
-})
 
-//function to disable game until 2 players are in
-function onePlayer() {
    getwordButton.disabled = true;
    getwordButton.style.opacity = "0.6";
    drawing = false;
    msgInput.disabled = true;
    sendButton.style.opacity = "0.6";
    console.log('not started yet');
-}
+   inst.textContent = "Wait for Player 2 to Join!";
+})
 
 //two players are in
 function twoPlayers() {
@@ -77,15 +63,27 @@ function twoPlayers() {
    msgInput.disabled = false;
    sendButton.style.opacity = "1";
    inst.style.display = "block";
+   inst.innerHTML = 'Click the Draw button to start Drawing!'; //ask players to start
+   allow_start = true;
 }
 
 socket.on('C2canStartDataFromServer', () => {
    twoPlayers();
-   inst.style.display = "block";
+})
+
+let usersIn = 0;
+
+socket.on('gameUsersInFromServer', () => {
+   usersIn++;
+   console.log("users in", usersIn);
+   if (usersIn == 2) {
+      socket.emit('C2canStart', ''); //start game for the rest of the users
+   }
 })
 
 //function to start game
 function startGame() {
+   socket.emit("userClickedStart", sessionStorage.getItem('room'));
    let rules = document.getElementById('rules');
    rules.style.display = "none";
    let game = document.getElementById('main-container');
@@ -93,11 +91,7 @@ function startGame() {
    completed.style.display = "block";
    timer.style.display = "block";
    inst.style.display = "block";
-   inst.innerHTML = 'Click Draw Button to start Drawing'; //ask players to 
    game.style.display = "block";
-   if (allow_start == true) {
-      socket.emit('C2canStart', ''); //start game for the rest of the users
-   }
 }
 
 //function to start a 30 second timer and have it initialized on the screen
@@ -115,25 +109,27 @@ function startTimer() {
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
 socket.on('C2startDataFromServer', () => {
-   if (started == 0) {
-      console.log("game started"); // shows how many words the other player guessedcorrect
-      startTimer();
-      //to decrement timer
-      let timerId = setInterval(countdown, 1000);
+   if (allow_start == true) {
+      if (started == 0) {
+         console.log("game started"); // shows how many words the other player guessedcorrect
+         startTimer();
+         //to decrement timer
+         let timerId = setInterval(countdown, 1000);
 
-      function countdown() {
-         if (timeLeft == -1) {
-            clearTimeout(timerId);
-            // alert("Time is up!");
-            socket.emit('C2finish', myCompletedWords);
-         } else {
-            timer.innerHTML = 'Time Left: ' + timeLeft;
-            console.log(timeLeft);
-            timeLeft--;
+         function countdown() {
+            if (timeLeft == -1) {
+               clearTimeout(timerId);
+               // alert("Time is up!");
+               socket.emit('C2finish', myCompletedWords);
+            } else {
+               timer.innerHTML = 'Time Left: ' + timeLeft;
+               console.log(timeLeft);
+               timeLeft--;
+            }
          }
       }
+      started = 1;
    }
-   started = 1;
 })
 
 socket.on('C2finishDataFromServer', (theirCompletedWords) => {
@@ -156,7 +152,7 @@ function setup() {
    background(255);
    socket.on('mouseDataFromServer', (data) => {
       drawWithData(data);
-      inst.innerHTML = ''; 
+      inst.innerHTML = '';
    })
 }
 
@@ -218,7 +214,6 @@ socket.on('msg', function (data) {
    }
 });
 
-
 let drawthis = document.getElementById("draw_this");
 
 // Listen for word named 'displayrandomword' from the server - only applied to the drawer
@@ -236,7 +231,7 @@ socket.on('displayrandomword', function (data) {
    sendButton.disabled = true;
    msgInput.disabled = true;
    msgInput.style.opacity = 0.2;
-   sendButton.style.opacity(0.2);
+   sendButton.style.opacity = 0.2;
    inst.innerHTML = 'You are Drawing!'; //Start drawing
    //A perosn who draws can't guess the word
 });
