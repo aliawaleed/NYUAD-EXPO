@@ -69,6 +69,7 @@ socket.on('gameUsersInFromServer', () => {
     usersIn++;
     console.log("users in", usersIn);
     if (usersIn == 2) {
+      inst.textContent = Player2Instruction;
         socket.emit('gameCanStart', sessionStorage.getItem('room')); //start game for the rest of the users
     }
 })

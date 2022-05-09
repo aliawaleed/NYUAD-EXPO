@@ -23,6 +23,8 @@ let index;
 let timeLeft = 30; 
 let timer;
 
+index = int(random(1,5));
+
 //card and label
 let thiscard;
 
@@ -115,7 +117,6 @@ function setup() {
 function twoPlayers() {
   pick.style.opacity = "1";
   pick.disabled = false;
-  inst.textContent = "";
   allow_start = true;
 }
 
@@ -130,8 +131,8 @@ socket.on('gameCanStartDataFromServer', () => {
 
 function startTimer(){
   if(allow_start == true) {
+    inst.textContent = '';
     socket.emit('d1Start', ''); //start game for the rest of the users
-  index = int(random(1,5));
   //dice throw
   image(cards[index], windowWidth*0.425, windowWidth*0.025, windowWidth*0.35, windowWidth * 0.35);
   socket.emit('index',index);
@@ -211,9 +212,6 @@ function checkMatch(){
     thiscard = 'none';
     console.log('match2');
     socket.emit('correct', '');
-    pick.style.opacity = "1";
-    pick.disabled = false; 
-    rectangle.style.opacity = "1";
   }
 }
 
@@ -222,6 +220,9 @@ function checkMatch(){
 socket.on('correctFromServer', () => {
   console.log('correctforeveryone');
   inst.textContent = "Correct!";
+  pick.style.opacity = "1";
+  pick.disabled = false; 
+  rectangle.style.opacity = "1";
 
 })
 
