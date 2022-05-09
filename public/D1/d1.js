@@ -189,7 +189,6 @@ socket.on('indexFromServer', (index) => {
 function draw() {
   //video capture
   image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
-  text(label, 10, height - 10);
 }
 
 let thislabel;

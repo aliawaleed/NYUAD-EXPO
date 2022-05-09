@@ -37,7 +37,6 @@ window.addEventListener("load", () => { // on load
    scores = document.getElementById('score');
    results = document.getElementById('results');
 
-
    game.style.display = "none";
    rules.style.display = "block";
    players.style.display = "none";
