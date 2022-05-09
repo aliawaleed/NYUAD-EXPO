@@ -151,16 +151,6 @@ io.sockets.on('connect', (socket) => {
         console.log('completed');
         socket.to("dorm").emit('dormEndFromServer', "");
     })
-
-    // allows users to start the game based on the number
-    socket.on('gameCanStart', (room) => {
-        io.in(room).emit('gameCanStartDataFromServer', '');
-    })
-
-    socket.on('userClickedStart', (room) => {
-        console.log('clicked start', room);
-        io.in(room).emit("gameUsersInFromServer", '');
-    })
     /******************** D2 ********************/
     // to actually start the game
     socket.on('D2start', () => {
@@ -282,17 +272,11 @@ io.sockets.on('connect', (socket) => {
 
 
     /******************** D1 ********************/
-
     // // to start the game
     socket.on('d1Start', () => {
         console.log("d1 started");
         socket.to("D1").emit('d1StartTimerFromServer', '');
         // io.in("dorm").emit('dormStartDataFromServer', '');
-    })
-
-    // allows users to start the game based on the number
-    socket.on('d1CanStart', () => {
-        io.in("D1").emit('d1CanStartDataFromServer', '');
     })
 
     // allows users to start the game based on the number
@@ -316,6 +300,17 @@ io.sockets.on('connect', (socket) => {
     socket.on('roomStart', (data) => {
         console.log(data);
         io.in(data).emit('startDataFromServer', '');
+    })
+
+    /******************** for both D1 and Dorm ********************/
+    // allows users to start the game based on the number
+    socket.on('gameCanStart', (room) => {
+        io.in(room).emit('gameCanStartDataFromServer', '');
+    })
+
+    socket.on('userClickedStart', (room) => {
+        console.log('clicked start', room);
+        io.in(room).emit("gameUsersInFromServer", '');
     })
 
 

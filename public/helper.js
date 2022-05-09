@@ -55,12 +55,6 @@ window.addEventListener("load", () => { // on load
       console.log('you are player 2');
    })
 
-   //To allow starting the game when two players are in
-   // socket.on('message', () => {
-   //    allow_start = true;
-   //    console.log('allowstart_true');
-   // })
-
    // Kick users out when there are more than 2 players in the game
    socket.on('morePlayers', () => {
       alert("There are 2 players in the game already! Please try again later!");
@@ -89,10 +83,6 @@ function startGame() {
    turnCamOn = true;
 
    player1_start = true;
-   // when the second player presses on the start button
-   // if (allow_start == true) {
-   //    emitCanStart();
-   // }
 }
 
 function displayResults() {
