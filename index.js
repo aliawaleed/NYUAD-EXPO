@@ -142,11 +142,6 @@ io.sockets.on('connect', (socket) => {
         // io.in("dorm").emit('dormStartDataFromServer', '');
     })
 
-    // allows users to start the game based on the number
-    socket.on('dormCanStart', () => {
-        io.in("dorm").emit('dormCanStartDataFromServer', '');
-    })
-
     socket.on('gotItem', (label, i, score) => {
         socket.to("dorm").emit("gotItemFromServer", label, i, score);
     })
@@ -155,6 +150,16 @@ io.sockets.on('connect', (socket) => {
     socket.on('dormEnd', () => {
         console.log('completed');
         socket.to("dorm").emit('dormEndFromServer', "");
+    })
+
+    // allows users to start the game based on the number
+    socket.on('gameCanStart', (room) => {
+        io.in(room).emit('gameCanStartDataFromServer', '');
+    })
+
+    socket.on('userClickedStart', (room) => {
+        console.log('clicked start', room);
+        io.in(room).emit("gameUsersInFromServer", '');
     })
     /******************** D2 ********************/
     // to actually start the game
