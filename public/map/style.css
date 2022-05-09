@@ -116,11 +116,11 @@ html, body {
 }
 
 #title{
-    font-size: 10vh;
-    font-family: "Acme";
+    font-size: 5vw;
+    font-family: 'Monoton', cursive;
     position: absolute;
-    left: 6%;
-    top: 22%;
+    left: 9%;
+    top: 29%;
 }
 
 /* #all-scores{
