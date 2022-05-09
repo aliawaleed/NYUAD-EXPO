@@ -43,18 +43,6 @@ window.addEventListener("load", () => { // on load
    end.style.display = "none";
    scores.style.display = "none";
 
-   // Assign player with their respective arrows
-   socket.on('player1', () => {
-      console.log('wait for another player to join');
-      inst.textContent = Player1Instruction;
-   })
-
-   // set instructions for the second player
-   socket.on('player2', () => {
-      inst.textContent = Player2Instruction;
-      console.log('you are player 2');
-   })
-
    // Kick users out when there are more than 2 players in the game
    socket.on('morePlayers', () => {
       alert("There are 2 players in the game already! Please try again later!");
@@ -69,8 +57,8 @@ socket.on('gameUsersInFromServer', () => {
     usersIn++;
     console.log("users in", usersIn);
     if (usersIn == 2) {
-      inst.textContent = Player2Instruction;
-        socket.emit('gameCanStart', sessionStorage.getItem('room')); //start game for the rest of the users
+      // inst.textContent = Player2Instruction;
+      socket.emit('gameCanStart', sessionStorage.getItem('room')); //start game for the rest of the users
     }
 })
 

@@ -5,7 +5,7 @@ let Player1Instruction = "Wait for Another Player to join";
 let Player2Instruction = "You can Start Now";
 
 //HTML elements
-let scenarios; 
+let scenarios;
 let pick;
 let rectangle;
 let startButton;
@@ -20,7 +20,7 @@ let label = 'loading model';
 //random card selection 
 let cards = [];
 let index;
-let timeLeft = 30; 
+let timeLeft = 89;
 let timer;
 
 
@@ -30,12 +30,12 @@ index = Math.floor(Math.random() * 5) + 1;
 let thiscard;
 
 //score
-let myScore = 0; 
-let theirScore= 0;
+let myScore = 0;
+let theirScore = 0;
 
-function preload(){
+function preload() {
   for (let i = 1; i < 6; i++) {
-    cards[i] = loadImage("images/"+ i + ".png");
+    cards[i] = loadImage("images/" + i + ".png");
   }
 }
 
@@ -50,49 +50,47 @@ window.addEventListener("load", () => {
   allow_start = false;
   pick.style.opacity = "0.6";
   pick.disabled = true;
+  inst.textContent = Player1Instruction;
 
 
   pick.addEventListener('click', function () {
-      //dice throw
-    socket.emit('index',index);
-
+    //dice throw
+    socket.emit('index', index);
   });
-
 });
 
 
 //emit information of mous position everytime mouse moves
 function windowResized() {
-  resizeCanvas(windowWidth*0.8, windowWidth * 0.4);
+  resizeCanvas(windowWidth * 0.8, windowWidth * 0.4);
   background(255);
 }
-
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
 socket.on('d1StartTimerFromServer', () => {
-    if (started == 0) {
-        decrementTimerForAll();
-        timer.innerHTML = 'Time left: 90'; //preset before the timer starts
-    }
-    started = 1; // so that the timer does not start again 
+  if (started == 0) {
+    decrementTimerForAll();
+    timer.innerHTML = 'Time left: 90'; //preset before the timer starts
+  }
+  started = 1; // so that the timer does not start again 
 })
 
 function decrementTimerForAll() {
   startTimer();
-    //to decrement timer
-    let timerId = setInterval(decrementTimer, 1000);
+  //to decrement timer
+  let timerId = setInterval(decrementTimer, 1000);
 
-    function decrementTimer() {
-        //if timer is up
-        if (timeLeft == -1) {
-            clearTimeout(timerId);
-            socket.emit('d1End', "");
-        } else {
-            timer.innerHTML = 'Time left: ' + timeLeft;
-            timeLeft--; //decrement the time
-        }
+  function decrementTimer() {
+    //if timer is up
+    if (timeLeft == -1) {
+      clearTimeout(timerId);
+      socket.emit('d1End', "");
+    } else {
+      timer.innerHTML = 'Time left: ' + timeLeft;
+      timeLeft--; //decrement the time
     }
+  }
 }
 
 
@@ -113,7 +111,7 @@ function videoReady() {
 }
 
 function setup() {
-  let canvas = createCanvas(windowWidth*0.8, windowWidth * 0.4);
+  let canvas = createCanvas(windowWidth * 0.8, windowWidth * 0.4);
   canvas.parent('sketch-canvas');
   video = createCapture(VIDEO);
   video.hide();
@@ -129,22 +127,23 @@ function twoPlayers() {
   allow_start = true;
   let score = document.getElementById('score');
   score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+  inst.textContent = Player2Instruction;
 }
 
 
-function startTimer(){
-  if(allow_start == true) {
+function startTimer() {
+  if (allow_start == true) {
     inst.textContent = '';
     socket.emit('d1Start', ''); //start game for the rest of the users
-}
+  }
   else {
     alert("Please wait for another player to join!");
-}
+  }
 
 };
 
 
-function popup(){
+function popup() {
   rules.style.display = "block";
   downloadButton.style.opacity = "0";
   downloadButton.disabled = true;
@@ -152,7 +151,7 @@ function popup(){
   startButton.disabled = true;
 }
 
-function popout(){
+function popout() {
   rules.style.display = "none";
 }
 
@@ -163,33 +162,33 @@ socket.on('indexFromServer', (index) => {
   pick.disabled = true;
   rectangle.style.opacity = "0";
   console.log(index);
-  image(cards[index], windowWidth*0.425, windowWidth*0.025, windowWidth*0.35, windowWidth * 0.35);
+  image(cards[index], windowWidth * 0.425, windowWidth * 0.025, windowWidth * 0.35, windowWidth * 0.35);
 
-  if (index == 1){
+  if (index == 1) {
     console.log("new deck palm");
     thiscard = "palm"
 
-  } else if(index == 2){
+  } else if (index == 2) {
     console.log("new deck sun");
     thiscard = "mosque"
-  } else if(index == 3){
+  } else if (index == 3) {
     console.log("new deck mosque");
     thiscard = "palm"
-  } else if(index == 4){
+  } else if (index == 4) {
     console.log("new deck mosque");
     thiscard = "mosque"
-  } else if(index == 5){
+  } else if (index == 5) {
     console.log("new deck dune");
     thiscard = "dune"
-  } else if(index == 6){
+  } else if (index == 6) {
     console.log("new deck dune");
     thiscard = "palm"
-  } 
+  }
 })
 
 function draw() {
   //video capture
-  image(video, 0, 0, windowWidth*0.4, windowWidth * 0.4);
+  image(video, 0, 0, windowWidth * 0.4, windowWidth * 0.4);
   text(label, 10, height - 10);
 }
 
@@ -198,18 +197,18 @@ let thislabel;
 function gotResults(error, result) {
 
   classifier.classify(gotResults);
-  if(result[0].confidence > 0.98) {
+  if (result[0].confidence > 0.98) {
     label = result[0].label;
     console.log[label];
     thislabel = label;
     checkMatch();
 
-  } 
+  }
 }
 
 
-function checkMatch(){
-  if (thislabel == thiscard){
+function checkMatch() {
+  if (thislabel == thiscard) {
     console.log('match');
     thiscard = 'none';
     console.log('match2');
@@ -223,24 +222,24 @@ socket.on('correctFromServer', () => {
   console.log('correctforeveryone');
   inst.textContent = "Correct!";
   pick.style.opacity = "1";
-  pick.disabled = false; 
+  pick.disabled = false;
   rectangle.style.opacity = "1";
 
 })
 
-   // permission to start the game
-   socket.on('scoreadd', () => {
-    console.log('addscore');
-    myScore++;
-    score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
-  })
+// permission to start the game
+socket.on('scoreadd', () => {
+  console.log('addscore');
+  myScore++;
+  score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+})
 
-   // permission to start the game
-   socket.on('theirscoreadd', () => {
-    console.log('theirscoreadd');
-    theirScore++;
-    score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
-  })
+// permission to start the game
+socket.on('theirscoreadd', () => {
+  console.log('theirscoreadd');
+  theirScore++;
+  score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+})
 
 
 

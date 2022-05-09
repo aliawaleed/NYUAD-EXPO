@@ -1,9 +1,10 @@
-let Player1Instruction = "1: This game involves a camera. Stand up and get ready! ";
-let Player2Instruction = "2: This game involves a camera. Stand up and get ready! ";
+let initial_instructions = "This game involves a camera. Stand up and get ready! ";
 
 let playersInstructions = "Press on the SHOW button to start!";
 let timeLeft = 89; //initialized at 59 as the timer takes 1 second to start
 
+let myScore = 0;
+let theirScore = 0;
 
 let video;
 let detector;
@@ -15,7 +16,6 @@ let items_array = [];
 //columns for words
 let left;
 let right;
-
 
 let load_time;
 
@@ -58,6 +58,8 @@ window.addEventListener("load", () => { // on load
     item.disabled = true;
     let inner_text = document.getElementById("inner-text");
     inner_text.style.display = "none";
+    let inst = document.getElementById("player-instructions");
+    inst.textContent = initial_instructions;
     startLoading(); //prints loading icon on the screen
 })
 
@@ -228,22 +230,6 @@ function draw() {
     //draw every frame in the video
     if (video) {
         image(video, 0, 0);
-        // to print the detected item on the screen
-        // let labels = Object.keys(detections);
-        // for (let label of labels) {
-        //     let items = detections[label];
-        //     for (let i = items.length - 1; i >= 0; i--) {
-        //         let item = items[i];
-        // stroke(0, 255, 0);
-        // strokeWeight(4);
-        // fill(0, 255, 0, 0);
-        // rect(item.x, item.y, item.width, item.height);
-        // noStroke();
-        // fill(0);
-        // textSize(32);
-        // text(item.label, item.x + 10, item.y + 24);
-        // }
-        // }
     }
 }
 
