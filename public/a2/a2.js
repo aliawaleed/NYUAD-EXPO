@@ -50,21 +50,15 @@ window.addEventListener("load", () => { // on load
    rules.style.display = "block";
    players.style.display = "none";
 
-
-   socket.on('player1', () => {
-      players.textContent = "You are player 1! Wait for Player 2 to Join!";
-      console.log('wait for another player to join');
-      onePlayer();
-   })
-   socket.on('player2Start', () => {
-      allow_start = true;
-      // twoPlayers();
-   })
    socket.on('morePlayers', () => {
       alert("There are 2 players in the game already! Please try again later!");
       window.location = '/map/index.html';
    })
 
+   majorInput.disabled = true;
+   submitButton.style.opacity = "0.6";
+   console.log('not started yet');
+   players.textContent = "You are player 1! Wait for Player 2 to Join!";
 })
 
 //function to disable game until 2 players are in
@@ -79,16 +73,28 @@ function onePlayer() {
 function twoPlayers() {
    majorInput.disabled = false;
    submitButton.style.opacity = "1";
-   inst = "";
+   players.textContent = " Start adding majors and press submit!";
+   allow_start = true;
 }
 
 socket.on('A2canStartDataFromServer', () => {
    twoPlayers();
 })
 
+let usersIn = 0;
+
+socket.on('gameUsersInFromServer', () => {
+   usersIn++;
+   console.log("users in", usersIn);
+   if (usersIn == 2) {
+      socket.emit('A2canStart', ''); //start game for the rest of the users
+   }
+})
+
 
 //function to start game
 function startGame() {
+   socket.emit("userClickedStart", sessionStorage.getItem('room'));
    let rules = document.getElementById('rules');
    rules.style.display = "none";
    let game = document.getElementById('main-container');
@@ -97,9 +103,6 @@ function startGame() {
    game.style.display = "block";
    completed.style.display = "block";
    players.style.display = "block";
-   if (allow_start == true) {
-      socket.emit('A2canStart', ''); //start game for the rest of the users
-   }
 }
 
 //function to start a 60 second timer and have it initialized on the screen
@@ -118,25 +121,27 @@ function startTimer() {
 let started = 0;
 
 socket.on('A2startDataFromServer', () => {
-   if (started == 0) {
-      players.style.display = "none";
-      console.log("game started"); // shows how many orders the other player completed 
-      startTimer();
-      //to decrement timer
-      let timerId = setInterval(countdown, 1000);
-
-      function countdown() {
-         if (timeLeft == -1) {
-            clearTimeout(timerId);
-            // alert("Time is up!");
-            socket.emit('A2finish', myCorrectMajors);
-         } else {
-            timer.innerHTML = 'Time Left: ' + timeLeft;
-            timeLeft--;
+   if (allow_start == true) {
+      if (started == 0) {
+         players.style.display = "none";
+         console.log("game started"); // shows how many orders the other player completed 
+         startTimer();
+         //to decrement timer
+         let timerId = setInterval(countdown, 1000);
+   
+         function countdown() {
+            if (timeLeft == -1) {
+               clearTimeout(timerId);
+               // alert("Time is up!");
+               socket.emit('A2finish', myCorrectMajors);
+            } else {
+               timer.innerHTML = 'Time Left: ' + timeLeft;
+               timeLeft--;
+            }
          }
       }
+      started = 1;
    }
-   started = 1;
 })
 
 socket.on('A2finishDataFromServer', (theirCompletedColors) => {
