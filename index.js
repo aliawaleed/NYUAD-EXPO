@@ -183,7 +183,6 @@ io.sockets.on('connect', (socket) => {
         console.log('clicked start', usersIn);
         socket.to("D2").emit("usersInFromServer", usersIn);
     })
-
     /******************** C2 ********************/
     socket.on('C2start', () => {
         console.log("C2 started");
