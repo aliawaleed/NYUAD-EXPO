@@ -23,6 +23,7 @@ let index;
 let timeLeft = 30; 
 let timer;
 
+
 index = Math.floor(Math.random() * 5) + 1;
 
 //card and label
@@ -49,6 +50,14 @@ window.addEventListener("load", () => {
   allow_start = false;
   pick.style.opacity = "0.6";
   pick.disabled = true;
+
+
+  pick.addEventListener('click', function () {
+      //dice throw
+    socket.emit('index',index);
+
+  });
+
 });
 
 
@@ -70,7 +79,7 @@ socket.on('d1StartTimerFromServer', () => {
 })
 
 function decrementTimerForAll() {
-    startTimer();
+  startTimer();
     //to decrement timer
     let timerId = setInterval(decrementTimer, 1000);
 
@@ -127,9 +136,6 @@ function startTimer(){
   if(allow_start == true) {
     inst.textContent = '';
     socket.emit('d1Start', ''); //start game for the rest of the users
-  //dice throw
-  image(cards[index], windowWidth*0.425, windowWidth*0.025, windowWidth*0.35, windowWidth * 0.35);
-  socket.emit('index',index);
 }
   else {
     alert("Please wait for another player to join!");
@@ -156,6 +162,8 @@ socket.on('indexFromServer', (index) => {
   pick.style.opacity = "0";
   pick.disabled = true;
   rectangle.style.opacity = "0";
+  console.log(index);
+  image(cards[index], windowWidth*0.425, windowWidth*0.025, windowWidth*0.35, windowWidth * 0.35);
 
   if (index == 1){
     console.log("new deck palm");
