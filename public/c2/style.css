@@ -22,7 +22,7 @@ html, body {
 #mainHome {
     cursor: pointer;
     position:absolute;
-    top: 4vw;
+    top: 2vw;
     left: 7vw;
     width: 3%;
     height: 5%;
@@ -131,12 +131,23 @@ button{
 /* sketch */
 #sketch-container {
     padding:5vh 0vw;
-    display: flex;
+    display: relative;
     width:70%;
     margin:0;
     flex-direction: column;
     align-items: center;
     float:left;
+}
+
+#player-instructions{
+    position:absolute;
+    width:30vw;
+    text-align: center;
+    color: tomato;
+    top: 45%;
+    left: 30%;
+    font-size: 2vw;
+    transform: translate(-50%, -50%);
 }
 
 .getwordbutton{

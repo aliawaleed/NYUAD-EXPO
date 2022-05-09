@@ -31,15 +31,13 @@ let completed = document.getElementById('completed-words');
 let allow_start = false;
 let start = false;
 
-//show player status
-let players = document.getElementById('players');
-
+let inst = document.getElementById("player-instructions");
 
 //onload start showing rules only
 window.addEventListener("load", () => { // on load  
    game.style.display = "none";
    completed.style.display = "none";
-   players.style.display = "none";
+   inst.style.display = "none";
    timer.style.display = "none";
    finished.style.display = "none";
    rules.style.display = "block";
@@ -47,8 +45,7 @@ window.addEventListener("load", () => { // on load
 
    socket.on('player1', () => {
       console.log('wait for another player to join');
-      let players = document.getElementById("players");
-      players.textContent = "You are player 1! Wait for Player 2 to Join!";
+      inst.textContent = "Wait for Player 2 to Join!";
       onePlayer();
    })
 
@@ -79,14 +76,12 @@ function twoPlayers() {
    getwordButton.style.opacity = "1";
    msgInput.disabled = false;
    sendButton.style.opacity = "1";
-   players.style.display = "block";
-   players.innerHTML = 'Start Playing! '; //preset before the timer starts
+   inst.style.display = "block";
 }
 
 socket.on('C2canStartDataFromServer', () => {
    twoPlayers();
-   players.style.display = "block";
-   players.innerHTML = 'Start Playing! '; //preset before the timer starts
+   inst.style.display = "block";
 })
 
 //function to start game
@@ -97,7 +92,8 @@ function startGame() {
    let timer = document.getElementById('timer');
    completed.style.display = "block";
    timer.style.display = "block";
-   players.style.display = "block";
+   inst.style.display = "block";
+   inst.innerHTML = 'Click Draw Button to start Drawing'; //ask players to 
    game.style.display = "block";
    if (allow_start == true) {
       socket.emit('C2canStart', ''); //start game for the rest of the users
@@ -120,7 +116,6 @@ function startTimer() {
 let started = 0;
 socket.on('C2startDataFromServer', () => {
    if (started == 0) {
-      players.style.display = "none";
       console.log("game started"); // shows how many words the other player guessedcorrect
       startTimer();
       //to decrement timer
@@ -161,6 +156,7 @@ function setup() {
    background(255);
    socket.on('mouseDataFromServer', (data) => {
       drawWithData(data);
+      inst.innerHTML = ''; 
    })
 }
 
@@ -237,11 +233,12 @@ socket.on('displayrandomword', function (data) {
    let receiveword = data;
    currentword = receiveword;
    drawthis.innerHTML = receiveword;
-
-   //A perosn who draws can't guess the word
    sendButton.disabled = true;
    msgInput.disabled = true;
-   sendButton.style.opacity(0.6);
+   msgInput.style.opacity = 0.2;
+   sendButton.style.opacity(0.2);
+   inst.innerHTML = 'You are Drawing!'; //Start drawing
+   //A perosn who draws can't guess the word
 });
 
 
@@ -253,6 +250,7 @@ socket.on('randomwordguess', function (data) {
    //when a client received randomword, then the rest of the client can't access getwordButton
    getwordButton.disabled = true;
    getwordButton.style.opacity = "0.6";
+   inst.innerHTML = 'Start Guessing!'; //preset before the timer starts
    msgInput.disabled = false;
    sendButton.disabled = false;
    drawing = false;
@@ -270,6 +268,8 @@ socket.on('matchingword', function (data) {
    sendButton.disabled = false;
    //Empty drawthis text
    drawthis.innerHTML = "";
+   inst.innerHTML = 'If you want to draw, click draw button'; //preset before the timer starts
+   inst.textContent = "Correct!";
 })
 
 socket.on('scoreadd', function (data) {
