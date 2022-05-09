@@ -128,12 +128,6 @@ io.sockets.on('connect', (socket) => {
         io.sockets.emit('positionDataFromServer', pos); //send the same data back to all clients
     })
 
-    // to start the game
-    socket.on('fieldStart', () => {
-        console.log("Field started");
-        io.in("Field").emit('fieldStartDataFromServer', '');
-    })
-
     /******************** DORM ********************/
     // // to start the game
     socket.on('dormStart', () => {
@@ -174,9 +168,9 @@ io.sockets.on('connect', (socket) => {
         socket.to("D2").emit('finishDataFromServer', completed);
     })
 
-    socket.on('clickedStart', () => {
+    socket.on('clickedStart', (room) => {
         console.log('clicked start');
-        io.in("D2").emit("usersInFromServer", '');
+        io.in(room).emit("usersInFromServer", '');
     })
     /******************** C2 ********************/
     socket.on('C2start', () => {

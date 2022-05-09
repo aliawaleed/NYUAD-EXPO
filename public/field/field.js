@@ -9,7 +9,6 @@ let end;
 let inst;
 
 //boolean
-let start = false;
 let gameOn = true; //to check if the game is on
 
 //listen for confirmation of socket; confirms that the client is connected
@@ -46,7 +45,7 @@ window.addEventListener("load", () => { // on load
     // To allow starting the game when two players are in
     socket.on('player2', () => {
         inst.textContent = "You are player 2! Use the RIGHT arrow key to win!";
-        allow_start = true;
+        // allow_start = true;
     })
 
     // Kick users out when there are more than 2 players in the game
@@ -56,24 +55,30 @@ window.addEventListener("load", () => { // on load
     })
 })
 
+let usersIn = 0;
+
+socket.on('gameUsersInFromServer', () => {
+    usersIn++;
+    console.log("users in", usersIn);
+    if (usersIn == 2) {
+        socket.emit('gameCanStart', sessionStorage.getItem('room')); //start game for the rest of the users
+    }
+})
+
+socket.on('gameCanStartDataFromServer', () => {
+    console.log("two players are in");
+    allow_start = true;
+    players.innerHTML = 'START!';
+    start = true;
+})
+
 //function to start game
 function startGame() {
     rules.style.display = "none";
     game.style.display = "block";
     players.style.display = "block";
-    // to allow the game to start when the second player presses on the start button
-    if (allow_start == true) {
-        console.log("two players are in");
-        socket.emit('fieldStart', ''); //start game for the rest of the users
-    }
+    socket.emit("userClickedStart", sessionStorage.getItem('room'));
 }
-
-// permission to start the game
-socket.on('fieldStartDataFromServer', () => {
-    console.log("you can start now");
-    players.innerHTML = 'START!';
-    start = true;
-})
 
 // to go back to the home page
 function home() {
@@ -118,7 +123,7 @@ function setup() {
 
 // check if right or left arrow keys are pressed
 function keyPressed() {
-    if (start == true) {
+    if (allow_start == true) {
         if (keyIsDown(RIGHT_ARROW)) { //if right arrow key is pressed, move to the right
             x += 60;
         }

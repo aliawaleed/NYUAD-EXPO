@@ -124,7 +124,7 @@ socket.on('usersInFromServer', () => {
 //function to start game
 function startGame() {
     // usersIn++;
-    socket.emit("clickedStart", '');
+    socket.emit("clickedStart", sessionStorage.getItem('room'));
     let rules = document.getElementById('rules');
     rules.style.display = "none";
     let completed = document.getElementById('completed-orders');
