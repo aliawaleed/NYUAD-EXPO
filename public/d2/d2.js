@@ -88,11 +88,6 @@ window.addEventListener("load", () => {
         onePlayer();
     })
 
-    // when 2 players have joined
-    socket.on('message', () => {
-        allow_start = true;
-    })
-
     // when there are more than 2 players in the room, send the player back to the map
     socket.on('morePlayers', () => {
         alert("There are 2 players in the game already! Please try again later!");
@@ -117,21 +112,31 @@ function twoPlayers() {
     submit.style.opacity = "1";
     let players = document.getElementById('players');
     players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
+    allow_start = true;
 }
+
+let usersIn = 0;
+
+socket.on('usersInFromServer', (usersIn) => {
+    usersIn++;
+    console.log("users in", usersIn);
+    if (usersIn == 2) {
+        socket.emit('canStart', ''); //start game for the rest of the users
+    }
+})
 
 //function to start game
 function startGame() {
+    usersIn++;
+    socket.emit("clickedStart", usersIn);
     let rules = document.getElementById('rules');
     rules.style.display = "none";
     let completed = document.getElementById('completed-orders');
     completed.style.display = "block";
     let game = document.getElementById('container');
     game.style.display = "block";
-    // when the second player presses on the start button
-    if (allow_start == true) {
-        socket.emit('canStart', ''); //start game for the rest of the users
-    }
 }
+
 
 // allow the game to start
 socket.on('canStartDataFromServer', () => {
@@ -186,31 +191,33 @@ function startTimer() {
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
 socket.on('startDataFromServer', () => {
-    if (started == 0) {
-        console.log("game started"); // shows how many orders the other player completed 
-        startTimer();
-        //to decrement timer
-        let timerId = setInterval(decrementTimer, 1000);
-
-        function decrementTimer() {
-            //if timer is up
-            if (timeLeft == -1) {
-                clearTimeout(timerId);
-                //remove elements on the screen when time is up
-                let menu = document.getElementById('game-container');
-                let tray = document.getElementById('container');
-                menu.style.display = "none";
-                tray.style.display = "none";
-
-                // alert("Time is up!");
-                socket.emit('finish', myCompletedOrders);
-            } else {
-                timer.innerHTML = 'Time left: ' + timeLeft;
-                timeLeft--; //decrement the time
+    if (allow_start == true) {
+        if (started == 0) {
+            console.log("game started"); // shows how many orders the other player completed 
+            startTimer();
+            //to decrement timer
+            let timerId = setInterval(decrementTimer, 1000);
+    
+            function decrementTimer() {
+                //if timer is up
+                if (timeLeft == -1) {
+                    clearTimeout(timerId);
+                    //remove elements on the screen when time is up
+                    let menu = document.getElementById('game-container');
+                    let tray = document.getElementById('container');
+                    menu.style.display = "none";
+                    tray.style.display = "none";
+    
+                    // alert("Time is up!");
+                    socket.emit('finish', myCompletedOrders);
+                } else {
+                    timer.innerHTML = 'Time left: ' + timeLeft;
+                    timeLeft--; //decrement the time
+                }
             }
         }
+        started = 1; // so that the timer does not start again 
     }
-    started = 1; // so that the timer does not start again 
 })
 
 //to get the key given the value of it
