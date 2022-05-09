@@ -301,7 +301,7 @@ io.sockets.on('connect', (socket) => {
     socket.on('gameCanStart', (room) => {
         io.in(room).emit('gameCanStartDataFromServer', '');
     })
-
+    // also for other rooms
     socket.on('userClickedStart', (room) => {
         console.log('clicked start', room);
         io.in(room).emit("gameUsersInFromServer", '');
@@ -313,7 +313,6 @@ io.sockets.on('connect', (socket) => {
     //     // socket.emit("dormHighScore", score);
     //     io.in("map").emit('dormHighScore', score);
     // })
-
 
 })
 
