@@ -87,12 +87,6 @@ function emitCanStart() {
     socket.emit('dormCanStart', ''); // to start game for the rest of the users
 }
 
-// permission to start the game
-socket.on('gameCanStartDataFromServer', () => {
-    console.log("two players are in");
-    twoPlayers();
-})
-
 //to ensure starting the game only once for the other users (that didn't press on the order button)
 let started = 0;
 socket.on('dormStartTimerFromServer', () => {

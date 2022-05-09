@@ -86,6 +86,12 @@ function startGame() {
    player1_start = true;
 }
 
+// permission to start the game
+socket.on('gameCanStartDataFromServer', () => {
+   console.log("two players are in");
+   twoPlayers();
+ })
+
 function displayResults() {
    scores.style.display = "none";
    let end = document.getElementById('end');

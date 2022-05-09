@@ -23,7 +23,7 @@ let index;
 let timeLeft = 30; 
 let timer;
 
-index = int(random(1,5));
+index = Math.floor(Math.random() * 5) + 1;
 
 //card and label
 let thiscard;
@@ -118,15 +118,9 @@ function twoPlayers() {
   pick.style.opacity = "1";
   pick.disabled = false;
   allow_start = true;
-}
-
-// permission to start the game
-socket.on('gameCanStartDataFromServer', () => {
-  console.log("two players are in");
-  twoPlayers();
   let score = document.getElementById('score');
   score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
-})
+}
 
 
 function startTimer(){
