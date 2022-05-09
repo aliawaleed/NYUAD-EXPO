@@ -179,6 +179,11 @@ io.sockets.on('connect', (socket) => {
         socket.to("D2").emit('finishDataFromServer', completed);
     })
 
+    socket.on('clickedStart', (usersIn) => {
+        console.log('clicked start', usersIn);
+        socket.to("D2").emit("usersInFromServer", usersIn);
+    })
+
     /******************** C2 ********************/
     socket.on('C2start', () => {
         console.log("C2 started");
