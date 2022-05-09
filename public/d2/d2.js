@@ -85,7 +85,6 @@ window.addEventListener("load", () => {
 
     socket.on('player1', () => {
         console.log('wait for another player to join');
-        onePlayer();
     })
 
     // when there are more than 2 players in the room, send the player back to the map
@@ -93,31 +92,28 @@ window.addEventListener("load", () => {
         alert("There are 2 players in the game already! Please try again later!");
         window.location = '/map/index.html';
     })
-})
 
-
-//function to disable game until 2 players are in
-function onePlayer() {
+    // dim buttons before game is allowed to start
     let submit = document.getElementById("submit-button");
     submit.style.opacity = "0.6";
     let order = document.getElementById("generate-button");
     order.style.opacity = "0.6";
-}
+})
 
 //two players are in
 function twoPlayers() {
+    let players = document.getElementById('players');
+    players.innerHTML = 'Press on the ORDER button to begin! ';
     let submit = document.getElementById("submit-button");
     let order = document.getElementById("generate-button");
     order.style.opacity = "1";
     submit.style.opacity = "1";
-    let players = document.getElementById('players');
-    players.innerHTML = 'Press on the ORDER button to begin! '; //preset before the timer starts
     allow_start = true;
 }
 
 let usersIn = 0;
 
-socket.on('usersInFromServer', (usersIn) => {
+socket.on('usersInFromServer', () => {
     usersIn++;
     console.log("users in", usersIn);
     if (usersIn == 2) {
@@ -127,8 +123,8 @@ socket.on('usersInFromServer', (usersIn) => {
 
 //function to start game
 function startGame() {
-    usersIn++;
-    socket.emit("clickedStart", usersIn);
+    // usersIn++;
+    socket.emit("clickedStart", '');
     let rules = document.getElementById('rules');
     rules.style.display = "none";
     let completed = document.getElementById('completed-orders');
