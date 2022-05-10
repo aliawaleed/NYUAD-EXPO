@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script> <!-- add sockets library -->
+  <!-- Two below for ML5 -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <!-- <script src="/libs/p5js/p5-0.9.0/addons/p5.dom.min.js"></script> -->
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <script src="../helper.js"></script>
+  <script src="d1.js"></script>
+  <link rel="stylesheet" href="../helper.css">
+  <link rel="stylesheet" href="style.css">
+  <title>D1 Charades</title>
+</head>
+
+
+<!--Background Container -->
+<div class="background-container">
+  <img src="/d1/images/d1.png" alt="D1-img">
+
+  <!-- Home Button -->
+  <div><img src="/images/home.png" alt="home button" id="mainHome" onclick="goHome(this)"></div>
+</div>
+
+
+    <!-- Title -->
+    <div id="title">
+      <p class="title"> <span style="font-weight:bold"> D1 </span> | Find the Card!</p>
+      <p class="score" id="score"> </p>
+  </div>
+
+<!-- Instructions for the game to be displayed at the beginning -->
+<div class="rules" id="rules">
+  <h1 class="rules-instructions">How to Play?</h1> 
+  <a href="/d1/images/card.pdf" download>
+  <input type="button" class="download" id="download-button" value="Download & Print"> 
+  </a>
+  <p class="specific-instructions"> <span style="font-weight:bold"> Goal: </span> Find the correct card and show it to the camera!</span></p> 
+  <div class="game-instructions">
+  <img id="example" src="/d1/images/example.png" alt="example">
+    <p id="instructionC">
+      1. Find the item that appears the most (dune) <br> 2. Identify the color associated with this item from your deck (yellow) <br> 3. The answer is the item associated with this color from the clue (palm)
+       <p>
+      </div>  
+  <button id="start-button" onclick="startGame()"> START </button>
+</div>
+
+
+<!-- Top part of the game, showing the order and timer -->
+<div class="container" id="container">
+   <div class="order" , id="order">
+            <p id="timer"></p>
+  </div>
+
+  <!-- game container, for the menu and tray -->
+  <div class="game-container" id="game-container">
+    <div id="sketch-canvas">
+      <div id="rectangle"></div>
+      <p id="player-instructions"></p>
+      <button id="getword-button" onclick="startTimer()">PICK</button>
+      <button id="help-button" onmouseover="popup()" onmouseleave="popout()">How to play?</button>
+      <p id="timer"></p>
+    </div>
+
+  </div>
+  <!-- Game instructions -->
+  <div class="instructions" id="instructions">
+    <p id="players"></p>
+  </div>
+</div>
+
+<!-- Printing results and end of game -->
+<div class="end" id="end">
+  <h1 class="game-over"> Game Over! </h1>
+  <p class="winner" id="winner"></p>
+  <p class="results" id="results"></p>
+  <button id="Home" onclick="goHome(this)"> Home </button>
+</div>
+
+</html>
