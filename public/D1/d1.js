@@ -1,6 +1,3 @@
-let roomStart = 'D1';
-
-
 let Player1Instruction = "Wait for Another Player to join";
 let Player2Instruction = "You can Start Now";
 
@@ -19,12 +16,9 @@ let label = 'loading model';
 
 //random card selection 
 let cards = [];
-let index;
+let index = Math.floor(Math.random() * 5) + 1;
 let timeLeft = 89;
 let timer;
-
-
-index = Math.floor(Math.random() * 5) + 1;
 
 //card and label
 let thiscard;
@@ -45,13 +39,12 @@ window.addEventListener("load", () => {
   downloadButton = document.getElementById('download-button');
   pick = document.getElementById('getword-button');
   timer = document.getElementById('timer');
-  rectangle = document.getElementById('rectangle');
+  rectangle = document.getElementById('rectangle'); 
 
   allow_start = false;
   pick.style.opacity = "0.6";
   pick.disabled = true;
   inst.textContent = Player1Instruction;
-
 
   pick.addEventListener('click', function () {
     //dice throw
@@ -64,6 +57,7 @@ window.addEventListener("load", () => {
 function windowResized() {
   resizeCanvas(windowWidth * 0.8, windowWidth * 0.4);
   background(255);
+  image(cards[index], windowWidth * 0.425, windowWidth * 0.025, windowWidth * 0.35, windowWidth * 0.35);
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
@@ -189,7 +183,7 @@ socket.on('indexFromServer', (index) => {
 function draw() {
   //video capture
   image(video, 0, 0, windowWidth * 0.4, windowWidth * 0.4);
-  text(label, 10, height - 10);
+  //text(label, 10, height - 10);
 }
 
 let thislabel;
