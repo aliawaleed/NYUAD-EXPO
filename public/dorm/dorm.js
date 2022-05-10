@@ -3,6 +3,7 @@ let initial_instructions = "This game involves a camera. Stand up and get ready!
 let playersInstructions = "Press on the SHOW button to start!";
 let timeLeft = 89; //initialized at 59 as the timer takes 1 second to start
 
+// for player scores
 let myScore = 0;
 let theirScore = 0;
 
@@ -52,6 +53,7 @@ window.addEventListener("load", () => { // on load
                 }
             }
         })
+    // initial states
     allow_start = false; //to disallow one player from starting the game alone
     let item = document.getElementById("generate-button");
     item.style.opacity = "0.6";
@@ -75,7 +77,7 @@ function showPage() {
     document.getElementById("inner-text").style.display = "block";
 }
 
-// two players are in
+// when two players are in
 function twoPlayers() {
     let item = document.getElementById("generate-button");
     item.style.opacity = "1";
@@ -83,10 +85,6 @@ function twoPlayers() {
     let players = document.getElementById('players');
     players.innerHTML = playersInstructions;
     allow_start = true;
-}
-
-function emitCanStart() {
-    socket.emit('dormCanStart', ''); // to start game for the rest of the users
 }
 
 //to ensure starting the game only once for the other users (that didn't press on the order button)
@@ -135,6 +133,7 @@ function startTimer() {
     }
 }
 
+// add list of items on the screen and change instructions to start game
 function printItems() {
     let startInstructions = document.getElementById('players');
     let button = document.getElementById('generate-button');
@@ -169,6 +168,7 @@ function gotDetections(error, results) {
             if (item.confidence > 0.88) {
                 detections[label] = [item];
                 for (let i = 0; i < items_array.length; i++) {
+                    // check if item found is in our array
                     if (items_array[i] == label) {
                         myScore++;
                         let scores = document.getElementById('score');
