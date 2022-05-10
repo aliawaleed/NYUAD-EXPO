@@ -232,7 +232,7 @@ socket.on('displayrandomword', function (data) {
    msgInput.disabled = true;
    msgInput.style.opacity = 0.2;
    sendButton.style.opacity = 0.2;
-   inst.innerHTML = 'You are Drawing!'; //Start drawing
+   inst.innerHTML = 'Start Drawing Here!'; //Start drawing
    //A perosn who draws can't guess the word
 });
 
@@ -264,7 +264,7 @@ socket.on('matchingword', function (data) {
    //Empty drawthis text
    drawthis.innerHTML = "";
    inst.innerHTML = 'If you want to draw, click draw button'; //preset before the timer starts
-   inst.textContent = "Correct!";
+   inst.textContent = "Correct! Click draw button";
 })
 
 socket.on('scoreadd', function (data) {
