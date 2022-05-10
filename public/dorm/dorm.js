@@ -41,7 +41,7 @@ window.addEventListener("load", () => { // on load
             right.style.display = "none";
             // create list elements for the items in the array and add to both columns
             for (let i = 0; i < length; i++) {
-                let obj = document.createElement('li'); //create an li for the ingredients
+                let obj = document.createElement('li'); //create an li for the objects
                 obj.classList.add(items_array[i]);
                 obj.setAttribute('id', 'list-item');
                 obj.textContent = items_array[i].charAt(0).toUpperCase() + items_array[i].slice(1); // to capitalize the first letter
