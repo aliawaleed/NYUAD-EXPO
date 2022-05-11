@@ -28,7 +28,8 @@ let majorInput = document.getElementById('name');
 let players = document.getElementById('players');
 let timeLeft = 59;
 
-let myCorrectMajors = 0; //to track number of correct majors guessed
+let myScore = 0; //to track number of correct majors guessed
+let theirScore = 0;
 let completed = document.getElementById('completed-orders');
 let color;
 
@@ -75,6 +76,7 @@ function twoPlayers() {
    submitButton.style.opacity = "1";
    players.textContent = " Start adding majors and press submit!";
    allow_start = true;
+   completed.innerHTML =  'Them: ' + theirScore + ' You: ' + myScore;
 }
 
 socket.on('A2canStartDataFromServer', () => {
@@ -133,7 +135,7 @@ socket.on('A2startDataFromServer', () => {
             if (timeLeft == -1) {
                clearTimeout(timerId);
                // alert("Time is up!");
-               socket.emit('A2finish', myCorrectMajors);
+               socket.emit('A2finish', myScore);
             } else {
                timer.innerHTML = 'Time Left: ' + timeLeft;
                timeLeft--;
@@ -146,7 +148,7 @@ socket.on('A2startDataFromServer', () => {
 
 socket.on('A2finishDataFromServer', (theirCompletedColors) => {
    let finalScore = document.getElementById('finalScore');
-   finalScore.innerHTML = 'Them: ' + theirCompletedColors + ' You: ' + myCorrectMajors;
+   finalScore.innerHTML = 'Them: ' + theirCompletedColors + ' You: ' + myScore;
    game.style.display = "none";
    finished.style.display = "block";
    rules.style.display = "none";
@@ -231,11 +233,21 @@ socket.on('majoradd', (data) => {
    pushBubble();
 })
 
+
+// permission to start the game
 socket.on('scoreadd', (data) => {
-   console.log(myCorrectMajors);
-   myCorrectMajors++;
-   completed.textContent = "Points: " + myCorrectMajors;
-})
+   console.log('addscore');
+   myScore++;
+   completed.innerHTML =  'Them: ' + theirScore + ' You: ' + myScore;
+ })
+ 
+ // permission to start the game
+ socket.on('theirscoreadd', () => {
+   console.log('theirscoreadd');
+   theirScore++;
+   completed.innerHTML =  'Them: ' + theirScore + ' You: ' + myScore;
+ })
+ 
 
 //declare Bubble Array
 let Bubbles = [];

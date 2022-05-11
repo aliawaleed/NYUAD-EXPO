@@ -47,7 +47,7 @@ window.addEventListener("load", () => {
   pick.disabled = true;
   inst.textContent = Player1Instruction;
 
-  pick.addEventListener('click', function () {
+  pick.addEventListener('click', function() {
     //dice throw
     index = Math.floor(Math.random() * 5) + 1;
     while (index == current) {
@@ -221,7 +221,6 @@ function checkMatch() {
 // permission to start the game
 socket.on('correctFromServer', () => {
   console.log('correctforeveryone');
-  inst.textContent = "Correct!";
   pick.style.opacity = "1";
   pick.disabled = false;
   rectangle.style.opacity = "1";
@@ -233,6 +232,7 @@ socket.on('scoreadd', () => {
   console.log('addscore');
   myScore++;
   score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+  inst.textContent = "You Got it Correct!";
 })
 
 // permission to start the game
@@ -240,6 +240,7 @@ socket.on('theirscoreadd', () => {
   console.log('theirscoreadd');
   theirScore++;
   score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
+  inst.textContent = "They Got it Correct!";
 })
 
 

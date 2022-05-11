@@ -247,6 +247,8 @@ socket.on('randomwordguess', function (data) {
    getwordButton.style.opacity = "0.6";
    inst.innerHTML = 'Start Guessing!'; //preset before the timer starts
    msgInput.disabled = false;
+   msgInput.style.opacity = 1;
+   sendButton.style.opacity = 1;
    sendButton.disabled = false;
    drawing = false;
 });
@@ -265,6 +267,11 @@ socket.on('matchingword', function (data) {
    drawthis.innerHTML = "";
    inst.innerHTML = 'If you want to draw, click draw button'; //preset before the timer starts
    inst.textContent = "Correct! Click draw button";
+   drawing = false;
+   sendButton.disabled = true;
+   msgInput.disabled = true;
+   msgInput.style.opacity = 0.2;
+   sendButton.style.opacity = 0.2;
 })
 
 socket.on('scoreadd', function (data) {

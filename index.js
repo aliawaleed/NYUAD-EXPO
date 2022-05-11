@@ -251,7 +251,9 @@ io.sockets.on('connect', (socket) => {
     socket.on('majoradd', (data) => {
         console.log('this is the major received' + data);
         io.in("A2").emit('majoradd', data);
-        socket.emit('scoreadd', data);
+        socket.broadcast.emit('theirscoreadd', '');
+        socket.emit('scoreadd', '');
+
     });
 
     socket.on('color', (data) => {
