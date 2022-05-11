@@ -132,7 +132,9 @@ function keyPressed() {
         }
         let pos = { x: x };
         //emit this information to the server
-        socket.emit('positionData', pos);//send to all the connected clients
+        if (stopGame == false) {
+            socket.emit('positionData', pos);//send to all the connected clients
+        }
     }
     else { // alert players if arrow keys are pressed before the game starts
         if (keyCode == 37 || keyCode == 39) {
@@ -140,6 +142,8 @@ function keyPressed() {
         }
     }
 }
+
+let stopGame = false;
 
 function drawData(pos) {
     clear(); // to avoid printing the rope again in the background since the p5 window is transparent
@@ -174,9 +178,11 @@ function drawData(pos) {
         let winner;
         if (pos.x <= 20) { //if player 1 won and passed the triangle on the left side
             winner = "Player 1 won!";
+            stopGame = true;
         }
         if (pos.x >= windowWidth - 20) { //if player 1 won and passed the triangle on the right side
             winner = "Player 2 won!";
+            stopGame = true;
         }
         let displayWinner = document.getElementById('winner');
         displayWinner.textContent = winner;
