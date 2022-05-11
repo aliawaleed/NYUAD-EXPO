@@ -16,7 +16,8 @@ let label = 'loading model';
 
 //random card selection 
 let cards = [];
-let index = Math.floor(Math.random() * 5) + 1;
+let index;
+let current = -1;
 let timeLeft = 89;
 let timer;
 
@@ -33,7 +34,7 @@ function preload() {
   }
 }
 
-window.addEventListener("load", () => {
+window.addEventListener("load", () => { 
   scenarios = document.getElementById('scenarios');
   startButton = document.getElementById('start-button');
   downloadButton = document.getElementById('download-button');
@@ -48,6 +49,11 @@ window.addEventListener("load", () => {
 
   pick.addEventListener('click', function () {
     //dice throw
+    index = Math.floor(Math.random() * 5) + 1;
+    while (index == current) {
+      index = Math.floor(Math.random() * 5) + 1;
+    }
+    current = index;
     socket.emit('index', index);
   });
 });
@@ -151,11 +157,12 @@ function popout() {
 
 
 
-socket.on('indexFromServer', (index) => {
+socket.on('indexFromServer', (num) => {
   pick.style.opacity = "0";
   pick.disabled = true;
   rectangle.style.opacity = "0";
   console.log(index);
+  index = num;
   image(cards[index], windowWidth * 0.425, windowWidth * 0.025, windowWidth * 0.35, windowWidth * 0.35);
 
   if (index == 1) {
