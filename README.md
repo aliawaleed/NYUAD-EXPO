@@ -6,7 +6,7 @@ EXPLORE NYUAD Documentation
 * Run the browser pointing to `localhost:2000`
 
 ## Title
-[NYUAD EXPO](https://nyuad-expo-final.glitch.me/)
+[NYUAD EXPO](https://explore-nyuad.glitch.me/)
 
 ## Description and Inspiration 
 This is a multiplayer game that is inspired by Expo 2020. Similar to the idea of how visitors went around the different pavilions to experience the unique cultures of countries from all over the world, this game is meant to allow players to digitally explore the NYU Abu Dhabi campus. They do that by exploring 6 different pavilions that consist of D2: the dining hall, C2: the campus center, A2: a classroom, Dorm: a dorm room on campus, D1: An outside area and the Outdoor Field. In each of the pavilions, they get to play a 2-player game encompassing aspects related to the NYU Abu Dhabi campus.
