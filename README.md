@@ -398,6 +398,74 @@ socket.on('canStartDataFromServer', () => {
 })
 ```
 
+### Project 3 Challenges
+* Dorm: Displaying list in the columns on sides of the webcam, I kept getting an "appendChild is not a function" error
+When adding the objects in the JavaScript file. To solve this problem, I kept console.logging the column divs to try to find a solution and I researched until I came across [this link](https://bobbyhadz.com/blog/javascript-typeerror-appendchild-is-not-a-function) which I then used also by console.logging until I reached that the div in my case should be reached using “document.getElementsByClassName("left-column")[0]”; adding [0] after some trial and error fixed this issue. 
+
+* Dorm: Striking out elements from array for both users
+I had trouble removing the item from the array for both users to make sure that the same item cannot be obtained more than once and is removed straight away after either of the users finds it. This is the first time I had to emit more than one aspect at a time, as I needed to commit the name of the word that was detected, the index of it in the array had to also be gotten so that the other user could get the information from the server and remove that specific item from the array. I solved this issue using the code segment below, where I also had the same issue mentioned above but was able to fix it.
+
+```
+      socket.emit('gotItem', label, i, myScore);
+      let strike = document.getElementsByClassName(label)[0];
+      strike.style.textDecoration = "line-through";
+      strike.style.color = myColor;
+      items_array.splice(i, 1);
+```
+
+* D2: adding items to tray in JS
+In the feedback received from Professor Mathura in Project 2, it would be better to call on the function once in the JS file and loop through to add the specific dish to the tray without needing to make changes in the html file every time a change has to be made. Since I had more than one ID and Classname for the elements and had more than one of each, I researched until I reached the solution below, which I had to load in a jquery library for:
+
+```
+$(".appetizers").on('click', function() {
+        addAnswer($(this))
+    });
+ ```
+ 
+ an issue with the library loaded is that it was not supported in HTTPS and so when we changed to HTTP, the games using a camera stopped working and so I found another, newer version of the library that I loaded in instead.
+
+Another change that had to be made was as follows, to access the different attributes of the elements given to the addAnswer() function:
+
+```
+let image = img.attr('src');
+
+      if (img.attr('class') ==  'appetizers') {
+          chosenAppetizer = getKeyByValue(allAppetizers, image);
+      }
+```
+
+* Dorm: Model loading and blocking user interactions
+I had a problem where whenever the game starts, the ML5 model and trained data set take a few seconds to load where any click on the screen is not considered. I tried loading it in at the very beginning and saving it into session storage but I had some issues retrieving the data so instead, I decided to show a loading icon at the beginning. Most of the loader code was adapted from [this link](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader5) and amended based on the design and time needed. 
+
+* All games: Game Start condition
+A bug that we had that would sometimes arise was allowing users to start the game only after both players have clicked on the Start button and not when they entered the HTML page. Our problem would occur if both players are on the instructions page and then one of us presses start, at that point, they actually do have the ability to start the game. To fix this, I added two new emissions and made some other changes:
+
+At the client side when user presses start button:
+```
+socket.emit("userClickedStart", sessionStorage.getItem('room'));
+```
+
+At the server side when they receive the emission:
+```
+socket.on('userClickedStart', (room) => {
+        console.log('clicked start', room);
+        io.in(room).emit("gameUsersInFromServer", '');
+}
+```
+
+At the client side when the clients receive the information from the server:
+```
+let usersIn = 0;
+
+socket.on('gameUsersInFromServer', () => {
+   usersIn++;
+   console.log("users in", usersIn);
+   if (usersIn == 2) {
+      socket.emit('A2canStart', ''); //start game for the rest of the users
+   }
+})
+```
+
 ## User Testing
 ### Goals
 * Do the users understand the games?
@@ -416,6 +484,11 @@ D2
 
 Field 
 * Game took a long time as the triangle wasn't moving quickly -> moved it in larger increments
+
+Dorm
+* Show which user got which item
+* The accuracy is set too high, decreasing the confidence level would make the game run smoother
+* Not very clear that the user should stand up and move to find items
 
 Overall
 * Show how many players are in each room  -> changed the map into a room and emitted the information from the other rooms
@@ -446,12 +519,18 @@ C2
 * That using boolean variables and boolean arrays is very useful and have many implications -
 * User testing allows you to see problems from other people's eyes and is very useful, to always prioritize the user experience as at the end of the day the product should be catered towards them
 * Working with a partner was very helpful as we would think of everything together and I learned a lot helping with their code since I would try to understand some parts from scratch and help them accordingly
+* I Learned how to use ML5 and the different applications of it and went through many libraries within it and documentation that made me a better learner
 
-### The Next Steps:
-* Maintain highscores for all of the users that played the game
-* Fix issue of number of people not showing on map when the users that have been on the game press on the home button
-* Fix the tray position for larger screens
-* Add the names of the users to be identifiable
+### The Next Steps (Project 2):
+* Maintain highscores for all of the users that played the game - we felt that it is unnecessary and not fair across games
+* Fix issue of number of people not showing on map when the users that have been on the game press on the home button -- completed
+* Fix the tray position for larger screens -- completed
+* Add the names of the users to be identifiable -- would be nicer to implement 
+
+### The Next Steps (Project 3)
+* Add the names of the users to be identifiable - would be nicer to implement 
+* In the dorm - Make it clearer for the users that they need to get up and move
+* Maybe for the dorm room add more items that are NYU Abu Dhabi specific, such as ID or room card
 
 ## References 
 Appetizers links: 
@@ -470,3 +549,4 @@ Desserts links:
 [Profiterole](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/03d1e79f-6f8e-4a3b-8d2b-67a2687e4b06/d58uknl-04aaec66-d0a3-4ad6-b2ae-dcf81a539b8a.png/v1/fill/w_512,h_512,strp/choux_creme_icon_by_yamshing_d58uknl-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6IlwvZlwvMDNkMWU3OWYtNmY4ZS00YTNiLThkMmItNjdhMjY4N2U0YjA2XC9kNTh1a25sLTA0YWFlYzY2LWQwYTMtNGFkNi1iMmFlLWRjZjgxYTUzOWI4YS5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.DDdK8pQ3fvbfPz7-b3flNBINMqfZ0WU-Uf_yGGeMNmM) 
 
 Link for timer code: https://stackoverflow.com/questions/4435776/simple-clock-that-counts-down-from-30-seconds-and-executes-a-function-afterward
+Link for the loader code: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader5
