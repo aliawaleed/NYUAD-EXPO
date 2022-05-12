@@ -24,10 +24,10 @@ let load_time;
 let myColor = "green";
 let theirColor = "red";
 
-// loading JSON data into array 
+// loading JSON data into array
 window.addEventListener("load", () => { // on load
     fetch("./items.json") //fetch the information from the json file
-        .then(response => response.json()) //returning promise object 
+        .then(response => response.json()) //returning promise object
         .then((data) => {
             allItems = data.items;
             // adding items from the JSON file in the arrow
@@ -93,7 +93,7 @@ socket.on('dormStartTimerFromServer', () => {
     if (started == 0) {
         decrementTimerForAll();
     }
-    started = 1; // so that the timer does not start again 
+    started = 1; // so that the timer does not start again
 })
 
 function decrementTimerForAll() {
@@ -155,7 +155,7 @@ function gotDetections(error, results) {
         console.error(error);
     }
 
-    //loop through all of the results seen 
+    //loop through all of the results seen
     for (let i = 0; i < results.length; i++) {
         // if the element exists in our JSON file
         if (items_array.includes(results[i].label)) {
@@ -186,7 +186,7 @@ function gotDetections(error, results) {
     detector.detect(video, gotDetections);
 }
 
-// receiving the data from the server for the number of completed orders of the other user 
+// receiving the data from the server for the number of completed orders of the other user
 socket.on('gotItemFromServer', (label, i, score) => {
     console.log(label, i)
     let strike = document.getElementsByClassName(label)[0];
@@ -230,5 +230,3 @@ function draw() {
         image(video, 0, 0);
     }
 }
-
-// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader5  for loader
