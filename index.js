@@ -283,7 +283,7 @@ io.sockets.on('connect', (socket) => {
     socket.on('correct', () => {
         io.in("D1").emit('correctFromServer', '');
         socket.broadcast.emit('theirscoreadd', '');
-        socket.emit('scoreadd', '');
+        socket.emit('d1scoreadd', '');
     })
 
     // when the timer is up send to each user how many meals the other user made

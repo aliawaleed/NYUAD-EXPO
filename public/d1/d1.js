@@ -1,5 +1,5 @@
 let Player1Instruction = "Wait for Another Player to join";
-let Player2Instruction = "You can Start Now";
+let Player2Instruction = "You can Start Now. Click Pick";
 
 //HTML elements
 let scenarios;
@@ -27,6 +27,7 @@ let thiscard;
 //score
 let myScore = 0;
 let theirScore = 0;
+
 
 function preload() {
   for (let i = 1; i < 6; i++) {
@@ -225,28 +226,23 @@ socket.on('correctFromServer', () => {
   pick.style.opacity = "1";
   pick.disabled = false;
   rectangle.style.opacity = "1";
-  pick.click();
+
 })
 
 // permission to start the game
-socket.on('scoreadd', () => {
-scoreadd();
-})
-
-function scoreadd(){
+socket.on('d1scoreadd', () => {
   console.log('addscore');
   myScore++;
   score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
-  inst.innerHTML = "You Good it Correct";
-}
-setTimeout(scoreadd, 3000);
+  inst.innerHTML = "You Got it Correct. Click Pick!";
+})
 
 // permission to start the game
 socket.on('theirscoreadd', () => {
   console.log('theirscoreadd');
   theirScore++;
   score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
-  inst.textContent = "They Got it Correct!";
+  inst.textContent = "They Got it Correct. Click Pick!";
 })
 
 
