@@ -317,8 +317,6 @@ function submitOrder() {
 
 // when the game ends and the server the other user
 socket.on('finishDataFromServer', (theirCompletedOrders) => {
-    let mainHome = document.getElementById('mainHome');
-    mainHome.style.display = "none";
     let complete = document.getElementById('completed-orders');
     complete.style.display = "none";
     let end = document.getElementById('end');

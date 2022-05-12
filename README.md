@@ -1,4 +1,4 @@
-Project 2 Documentation
+EXPLORE NYUAD Documentation
 ----------------------
 
 ### SETUP 
@@ -9,9 +9,9 @@ Project 2 Documentation
 [NYUAD EXPO](https://nyuad-expo-final.glitch.me/)
 
 ## Description and Inspiration 
-This is a multiplayer game that is inspired by Expo 2020. Similar to the idea of how visitors went around the different pavilions to experience the unique cultures of countries from all over the world, this game is meant to allow players to digitally explore the NYU Abu Dhabi campus. They do that by exploring 4 different pavilions that consist of D2: the dining hall, C2: the campus center, A2: a classroom, and the Outdoor Field. In each of the pavilions, they get to play a 2-player game encompassing aspects related to the NYU Abu Dhabi campus.
+This is a multiplayer game that is inspired by Expo 2020. Similar to the idea of how visitors went around the different pavilions to experience the unique cultures of countries from all over the world, this game is meant to allow players to digitally explore the NYU Abu Dhabi campus. They do that by exploring 6 different pavilions that consist of D2: the dining hall, C2: the campus center, A2: a classroom, Dorm: a dorm room on campus, D1: An outside area and the Outdoor Field. In each of the pavilions, they get to play a 2-player game encompassing aspects related to the NYU Abu Dhabi campus.
 
-On the landing page, users join by adding in their name and get redirected to another page that displays a map of campus showing 4 clickable locations and the number of players inside each. The players can then click on the pavilion of their choice and get redirected to a specific game page. At the D2 pavilion, players are given orders that are specific to what D2, and the goal is to complete as many orders as possible within 1 minute. At C2 palm trees, players get to play Pictionary with relevant NYU Abu Dhabi words. In the A2 classroom, players play a game where they need to collectively write down all majors on campus and get to see the final score. Finally, on the Field, players get to play a digital version of tug of war against each other.
+On the landing page, users join by adding in their name and get redirected to another page that displays a map of campus showing 6 clickable locations and the number of players inside each. The players can then click on the pavilion of their choice and get redirected to a specific game page. At the D2 pavilion, players are given orders that are specific to what D2 makes, and the goal is to complete as many orders as possible within 1 minute. At C2 palm trees, players get to play Pictionary with relevant NYU Abu Dhabi words. In the A2 classroom, players play a game where they need to collectively write down all majors on campus and get to see the final score. At the dorm room, the game uses machine learning to detect objects that students can find in their dorm room and they should find as many as possible. In D1, the users play a tricky game of thinking using icons of different objects across Abu Dhabi to try to find a matching card from 5, the goal is to get it before the other user. Finally, on the Field, players get to play a digital version of tug of war against each other.
 
 Landing Page        |  Home/Map Page with user count    
 :-------------------------:|:-------------------------:
@@ -189,6 +189,99 @@ results.innerHTML = 'Them: ' + theirCompletedOrders + ' You: ' + myCompletedOrde
 I also helped Soojin fix a few aspects in her code, such as what elements to display and when, especially when the instructions are shown, and also emitted the color data to make sure that each user is only assigned one random color that is constant and reflected on the screen for the other user, sending it alongside the major and circle when the user submits. 
 
 Lastly, I standardized the format of the instructions for all games, fixed the code, and added comments. 
+
+### Project 3 Additions
+The first thing I worked on was an issue that has been frustrating us since Project 2 that we weren’t able to fix; showing the number of users in each room on the map. Although it was working to some extent, it was not accurate when the users went to the map as they technically never “joined” the map and so the value was only decremented when they joined in another room. I tried to fix the problem in many different ways until I finally reached a solution.
+
+The issue was that the user never joined the map as it was never saved to session storage when they clicked on the home button, which redirects to the map. I then made sure that it decrements correctly when they leave and added the line below for all of the games when going back to the map, mid-game, or at the end of the game. 
+```
+sessionStorage.setItem('room', "map"); //save to session storage
+```
+Next, I created the files for the new dorm game while Soojin created the helper.js and helper.css files and then added some functions to both of the helper files. I then added temporary divs on the map for both of the newly added games, mine and Soojin’s, and setup the JS functions needed to display the number of people in both rooms on the map. I also created the necessary emissions to make sure that they are working properly and redirecting correctly, emitting connection and disconnection information, and displaying the number of people in each room on the map. 
+
+Working on the new dorm game
+
+Ideally, the dorm game would be played from inside someone’s dorm and the goal is to find as many items as possible from the printed list on the screen before the time is up. This game uses a camera where the user can see themselves and ML5 is used to detect the object in front of the screen. 
+
+First, I set up the initial code for the game. I loaded in the necessary files for both, ML5 and p5 as both libraries are needed together for this game. I then added all of the necessary containers in the HTML for the start screen, game screen, and end screen, also focusing on the styling to maintain the common theme between all games. 
+
+Next, I worked on the JS side of the game, which is the actual game using ML5 and P5. I set up the initial code following [Dan Shiffman’s tutorial](https://thecodingtrain.com/learning/ml5/1.3-object-detection.html) and made the necessary changes before working on the game mechanics. The first thing was the setup() function which sets up the canvas, the camera, and the detector, which I later changed so that the camera is not turned on as soon as the HTML file is open but rather after the user reads the instructions and presses on the start button. In this game, I am using the Coco SSD model that is pre-trained on specific objects for accurate detection. Then there’s the code for detecting objects on the screen which I made major changes to so that it’s specific to our game and removed all unnecessary functions. Initially, in the draw() function, I also printed the name of the item displayed on the screen for reference but later removed it. Since the dataset consists of many words that are not all relevant to the game, I made my own JSON file that contains the objects that can be found in a student’s dorm room and connected that file to the game where I loaded the data in the JS file and added it to an array for later comparison. Whenever an object is detected on the screen from the Coco SSD model, I loop through my list and compare the item if it’s available and if yes, then this item is valid. I also worked a lot on the styling of the page and added relevant functions to the helper.js file.
+
+Next, I implemented the timer for the dorm game and created a specifyItem() function that randomizes the display of a word from our list on the screen which I later changed as I believed that the player would not be able to proceed and could get stuck on an item if they don’t have it in their room; will not be able to get any more points. I also learned how to look over Dan Schiffman’s code, understand it line-by-line and make changes again based on our expectations of the game.
+
+Then, I added some comments to the server as some of the functions we wrote earlier were a bit confusing for us. I then worked on setting up a scoreboard and sending the data to the server, however, we discussed this and realized that it’s better not to have one as some of the games weren’t collaborative and others, such as Tug of War, only gave one point, so it did not make sense to us to maintain a scoreboard. In the dorm code, as stated earlier, randomizing one item on the screen did not really make sense so instead, I created two columns at the sides of the webcam display and added half of the list words to the left column and half on the right column so that both users can see all words at the same time and try to find as many as possible before the time is up. Adding the items to the columns was done in the load function by creating and adding “li” elements but I kept getting an “appendChild is not a function Error”, which is discussed in the challenges below. 
+
+The code segment for adding the items to the list could be found below, where I split the list into 2, and added each half to a column, setting the attributes and printing the words with a capital letter at the beginning. 
+
+```
+            let length = items_array.length;
+            left = document.getElementsByClassName("left-column")[0];
+            right = document.getElementsByClassName("right-column")[0];
+            left.style.display = "none";
+            right.style.display = "none";
+            for (let i = 0; i < length; i++) {
+                let obj = document.createElement('li'); 
+                obj.classList.add(items_array[i]);
+                obj.setAttribute('id', 'list-item');
+                obj.textContent = items_array[i].charAt(0).toUpperCase() + items_array[i].slice(1);                
+                if (i < length / 2) {
+                    left.appendChild(obj);
+                }
+                else {
+                    right.appendChild(obj);
+                }
+            }
+```
+
+When the detections were accurate and going through, I started working on the emissions of the data and ensuring that no one player can start before the second player joins and also presses start, also working on the timer and decrementing it for the other user.
+
+When detecting the objects in front of the screen, I checked if the label of the most accurate item displayed on the screen is included in our array, and only then I would work with this object/word. Inside that function, I checked to see the confidence and only claimed an object was correct if the confidence is greater than 0.88, as this was the best value based on trial and error. It is still not the most accurate for a few of the words, but the chance of this being incorrect is very minor and so 0.88 was the best option. If the item is found, I incremented the score and emitted the data to the other user with the array index. This index is used to .splice(), or remove the element from the array for both users so that each item is only found once and removed straight away. The words are also striked-through from the list of items printed on the screen with a green color if the first-person player gets it and red if the other person does. Below is the segment of code for this functionality:
+```
+if (items_array.includes(results[i].label)) {
+            let item = results[i];
+            let label = item.label;
+            // to yield more accurate results
+            if (item.confidence > 0.88) {
+                detections[label] = [item];
+                for (let i = 0; i < items_array.length; i++) {
+                    // check if item found is in our array
+                    if (items_array[i] == label) {
+                        myScore++;
+                        let scores = document.getElementById('score');
+                        scores.textContent = "My score: " + myScore + "   |   Their score: " + theirScore;
+                        socket.emit('gotItem', label, i, myScore);
+                        let strike = document.getElementsByClassName(label)[0];
+                        strike.style.textDecoration = "line-through";
+                        strike.style.color = myColor;
+                        items_array.splice(i, 1);
+                    }
+                }
+            }
+```
+With most of the functionality completed, I went back to the Field code to see if there is room for improvement. When user-testing, I noticed that when users refresh the page or press on any button, it is often annoying as an alert is printed, and so I added one line to check if the buttons being clicked are specifically the left and right arrow buttons. 
+
+```
+        if (keyCode == 37 || keyCode == 39) {
+            alert("Please wait for another player to join!");
+        }
+
+```
+I then worked on perfecting all of the games. In the dorm, I added some more necessary emissions to ensure that I could strike through the words correctly, displayed the end screen with the results, changed class names that were copied from other games to make more sense, and changed some variable names for the same reason.  For the other games, I also changed variable names and fixed styling to maintain a common feel between all games.
+
+Next, since most of the functionality for the d1 and dorm game were complete, I edited the images for the map once again, using Figma, to crop it to the size of the specific areas, and added these images to the map, fixing their position on top of the darkened one using trial and error. 
+
+Following the professor’s feedback, I worked on the D2 code to avoid the repetition of the addAnswer() function for each and every item on the menu and rather based it on the class names, loading them in as the page is opened and checking the clicks. I had some trouble working on that, also described below. 
+
+Another aspect that was annoying to me in the dorm game is that the camera would automatically turn on when the user joins the room rather than after they click start, since it was called in the setup function. This was solved with the professor’s help by creating a separate function outside to only be called when the start button was pressed. Another issue was that the model took so much time to load and the screen would freeze, making it unclear to the user, to solve this problem, I added a loading visual, explained below. 
+
+When testing out the game, I tried to show all of the objects to the screen to see the reliability of the detector, and this made me notice a bunch of errors in the objects being detected. Examples include scissors being written as that rather than “scissor”, two-word objects that weren’t compare correctly, such as “cell phone”, and so on. 
+
+Another minor change that I made was in the d2 code, where the items on the menu were loaded as sources each time from online sources on the internet, making it difficult to play and test the game in the absence of an internet connection, so I downloaded all of the images and added their paths instead. I also worked a lot on the styling as I noticed that it wasn’t displayed well on the projector, so, also using trial and error, I fixed the display for all screen sizes, excluding phones, since the games are all meant to be played on a laptop, or landscape screens in general.  
+
+Another problem that we encountered across all games was the condition we set to start the game, where players are only allowed to start when both players have clicked on the start button and are able to see the game screen. This only worked when one player joined and clicked start, and after they did press start the other player went in, but it didn’t work when both players were on the instructions page and then one of them pressed start, this player was still able to play the game. With changing the condition, several aspects of the code had to be rearranged. The solution for the start condition problem is also in the challenges section below. 
+
+When setting up and fixing the condition in Soojin’s new game in D1, I came across a few errors, including the randomization of the set of cards being displayed where she was using “index = int(random(1,5));”, which did not work properly from my device and printed errors, so I changed it to “index = Math.floor(Math.random() * 5) + 1;” instead. 
+
 
 ## Challenges 
 * Tug of War: resetting transparent background 

@@ -155,7 +155,6 @@ function gotDetections(error, results) {
         console.error(error);
     }
 
-    // console.log(results);
     //loop through all of the results seen 
     for (let i = 0; i < results.length; i++) {
         // if the element exists in our JSON file
@@ -163,7 +162,6 @@ function gotDetections(error, results) {
             let item = results[i];
             let label = item.label;
             console.log("label: ", item.label, item.confidence);
-            // console.log(item);
             // to yield more accurate results
             if (item.confidence > 0.88) {
                 detections[label] = [item];
