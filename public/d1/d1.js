@@ -221,19 +221,25 @@ function checkMatch() {
 // permission to start the game
 socket.on('correctFromServer', () => {
   console.log('correctforeveryone');
+
   pick.style.opacity = "1";
   pick.disabled = false;
   rectangle.style.opacity = "1";
-
+  pick.click();
 })
 
 // permission to start the game
 socket.on('scoreadd', () => {
+scoreadd();
+})
+
+function scoreadd(){
   console.log('addscore');
   myScore++;
   score.innerHTML = 'My score:' + myScore + '| Their score:' + theirScore;
-  inst.textContent = "You Got it Correct!";
-})
+  inst.innerHTML = "You Good it Correct";
+}
+setTimeout(scoreadd, 3000);
 
 // permission to start the game
 socket.on('theirscoreadd', () => {
